@@ -157,7 +157,7 @@
                 <p>
                     <a href="files/projet de modele de demande d'adhésion.pdf" class="slider btn btn-primary">Modéle de demande</a>
                     <a href="#" class="slider btn btn-primary border">Adherer à la CNEE</a>
-                    <a href="#" class="slider btn btn-primary ">Se connecter</a>
+                    <a href="/login" class="slider btn btn-primary ">Se connecter</a>
                 </p>
               </div>
           </div>
