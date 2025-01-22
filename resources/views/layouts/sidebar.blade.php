@@ -140,7 +140,7 @@
                 <div class="collapse" id="forms">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="forms/forms.html">
+                      <a href="{{route('profil.index')}}">
                         <span class="sub-item">Gestion des profils</span>
                       </a>
                     </li>
