@@ -111,7 +111,7 @@
                 </div>
               </li>
               <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#sidebarLayouts">
+                <a href="{{route('entreprise.index')}}">
                   <i class="fas fa-th-list"></i>
                   <p>Gestion Entreprise</p>
                 
