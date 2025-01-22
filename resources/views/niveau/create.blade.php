@@ -41,24 +41,73 @@
           @include('layouts.nav')
           <!-- End Navbar -->
         </div>
-
-        <!-- <div class="container">
+        <div class="container">
           <div class="page-inner">
             <div
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
+              <div>
+                <h3 class="fw-bold mb-3">Gestion des niveaux</h3>
+                <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
+              </div>
+              <!-- <div class="ms-md-auto py-2 py-md-0">
             
-              <div class="ms-md-auto py-2 py-md-0">
-                <a href="#" class="btn btn-label-info btn-round me-2">Manage</a>
-                <a href="#" class="btn btn-primary btn-round">Add Customer</a>
+                <a href="#" class="btn btn-primary btn-round">Ajouter</a>
+              </div> -->
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                 
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6 col-6">
+                        <div class="form-group">
+                          <label for="email2">Email Address</label>
+                          <input
+                            type="email" class="form-control" id="email2" placeholder="Enter Email" />
+                         
+                        </div>
+                        <div class="form-group">
+                          <label for="password">Password</label>
+                          <input
+                            type="password"
+                            class="form-control"
+                            id="password"
+                            placeholder="Password"
+                          />
+                        </div>
+                     
+                      </div>
+                      <div class="col-md-6 col-6">
+                        
+                        <div class="form-group">
+                          <label for="password">Password</label>
+                          <input type="password" class="form-control" id="password" placeholder="Password" />
+                        </div>
+                        <div class="form-group">
+                          <label for="password">Password</label>
+                          <input  type="password" class="form-control" id="password"  placeholder="Password"  />
+                        </div>
+                        </div>
+                    
+                      </div>
+                     
+                    </div>
+                  </div>
+                  <div class="card-action">
+                    <button class="btn btn-success">Enregister</button>
+                  
+                  </div>
+                </div>
               </div>
             </div>
-       
            
             
             
           </div>
-        </div> -->
+        </div>
+     
  <!--! footer-->
         @include('layouts.footer')
       </div>

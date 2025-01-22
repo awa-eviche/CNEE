@@ -134,7 +134,7 @@
                   >
                     <div class="avatar-sm">
                       <img
-                        src="assets/img/profile.jpg"
+                        src="{{ asset('assets/img/profile.jpg')}}"
                         alt="..."
                         class="avatar-img rounded-circle"
                       />
@@ -150,7 +150,7 @@
                         <div class="user-box">
                           <div class="avatar-lg">
                             <img
-                              src="assets/img/profile.jpg"
+                              src="{{ asset('assets/img/profile.jpg') }}"
                               alt="image profile"
                               class="avatar-img rounded"
                             />

@@ -8,7 +8,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#"> Linkedin </a>
+                  <a class="nav-link" href="#"> LinkedIN </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#"> X </a>

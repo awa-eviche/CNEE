@@ -11,5 +11,9 @@ class EntrepriseController extends Controller
        
         return view('entreprise.index');
     }
-
+    public function create()
+    {
+          
+        return view('entreprise.create');
+    }
 }

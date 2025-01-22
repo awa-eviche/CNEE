@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EntrepriseController;
+use App\Http\Controllers\NiveauxController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,7 +23,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::resource('entreprise',EntrepriseController::class);
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -32,6 +33,7 @@ Route::middleware('auth')->group(function () {
 Route::group([],function () {
     
     Route::resource('entreprise', EntrepriseController::class);
+    Route::resource('niveau', NiveauxController::class);
    
     });
 require __DIR__.'/auth.php';
