@@ -35,17 +35,17 @@
                   aria-expanded="false"
                 >
                   <i class="fas fa-home"></i>
-                  <p>Dashboard</p>
-                  <span class="caret"></span>
+                  <p>Tableau de Bord</p>
+                  <!--span class="caret"></span-->
                 </a>
                 <div class="collapse" id="dashboard">
-                  <ul class="nav nav-collapse">
+                  <!--ul class="nav nav-collapse">
                     <li>
                       <a href="../demo1/index.html">
                         <span class="sub-item">Dashboard 1</span>
                       </a>
                     </li>
-                  </ul>
+                  </ul-->
                 </div>
               </li>
               <li class="nav-section">
@@ -57,11 +57,11 @@
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#base">
                   <i class="fas fa-layer-group"></i>
-                  <p>Base</p>
-                  <span class="caret"></span>
+                  <p>Gestion Utilisateur</p>
+                 
                 </a>
                 <div class="collapse" id="base">
-                  <ul class="nav nav-collapse">
+                  <!--ul class="nav nav-collapse">
                     <li>
                       <a href="components/avatars.html">
                         <span class="sub-item">Avatars</span>
@@ -107,17 +107,17 @@
                         <span class="sub-item">Typography</span>
                       </a>
                     </li>
-                  </ul>
+                  </ul-->
                 </div>
               </li>
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#sidebarLayouts">
                   <i class="fas fa-th-list"></i>
-                  <p>Sidebar Layouts</p>
-                  <span class="caret"></span>
+                  <p>Gestion Entreprise</p>
+                
                 </a>
                 <div class="collapse" id="sidebarLayouts">
-                  <ul class="nav nav-collapse">
+                  <!--ul class="nav nav-collapse">
                     <li>
                       <a href="sidebar-style-2.html">
                         <span class="sub-item">Sidebar Style 2</span>
@@ -128,20 +128,25 @@
                         <span class="sub-item">Icon Menu</span>
                       </a>
                     </li>
-                  </ul>
+                  </ul-->
                 </div>
               </li>
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#forms">
                   <i class="fas fa-pen-square"></i>
-                  <p>Forms</p>
+                  <p>Gestion Demandeurs</p>
                   <span class="caret"></span>
                 </a>
                 <div class="collapse" id="forms">
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="forms/forms.html">
-                        <span class="sub-item">Basic Form</span>
+                        <span class="sub-item">Gestion des profils</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="forms/forms.html">
+                        <span class="sub-item">Gestion des niveaux</span>
                       </a>
                     </li>
                   </ul>
@@ -150,19 +155,19 @@
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#tables">
                   <i class="fas fa-table"></i>
-                  <p>Tables</p>
+                  <p>Gestion CNEE</p>
                   <span class="caret"></span>
                 </a>
                 <div class="collapse" id="tables">
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="tables/tables.html">
-                        <span class="sub-item">Basic Table</span>
+                        <span class="sub-item">Profils demandes</span>
                       </a>
                     </li>
                     <li>
                       <a href="tables/datatables.html">
-                        <span class="sub-item">Datatables</span>
+                        <span class="sub-item">Profils retenus</span>
                       </a>
                     </li>
                   </ul>
@@ -170,12 +175,12 @@
               </li>
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#maps">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <p>Maps</p>
-                  <span class="caret"></span>
+                <i class="fas fa-file"></i>
+                  <p>Gestion Allocation</p>
+                 
                 </a>
                 <div class="collapse" id="maps">
-                  <ul class="nav nav-collapse">
+                  <!--ul class="nav nav-collapse">
                     <li>
                       <a href="maps/googlemaps.html">
                         <span class="sub-item">Google Maps</span>
@@ -186,10 +191,10 @@
                         <span class="sub-item">Jsvectormap</span>
                       </a>
                     </li>
-                  </ul>
+                  </ul-->
                 </div>
               </li>
-              <li class="nav-item">
+              <!--li class="nav-item">
                 <a data-bs-toggle="collapse" href="#charts">
                   <i class="far fa-chart-bar"></i>
                   <p>Charts</p>
@@ -209,22 +214,22 @@
                     </li>
                   </ul>
                 </div>
-              </li>
-              <li class="nav-item">
+              </li-->
+              <!--li class="nav-item">
                 <a href="widgets.html">
                   <i class="fas fa-desktop"></i>
                   <p>Widgets</p>
                   <span class="badge badge-success">4</span>
                 </a>
-              </li>
-              <li class="nav-item">
+              </li-->
+              <!--li class="nav-item">
                 <a href="../../documentation/index.html">
                   <i class="fas fa-file"></i>
                   <p>Documentation</p>
                   <span class="badge badge-secondary">1</span>
                 </a>
-              </li>
-              <li class="nav-item">
+              </li-->
+              <!--li class="nav-item">
                 <a data-bs-toggle="collapse" href="#submenu">
                   <i class="fas fa-bars"></i>
                   <p>Menu Levels</p>
@@ -274,7 +279,7 @@
                     </li>
                   </ul>
                 </div>
-              </li>
+              </li-->
             </ul>
           </div>
         </div>
