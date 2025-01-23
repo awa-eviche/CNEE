@@ -30,7 +30,7 @@
               <li class="nav-item active">
                 <a
                   data-bs-toggle="collapse"
-                  href="#dashboard"
+                  href="/dashboard"
                   class="collapsed"
                   aria-expanded="false"
                 >
@@ -132,26 +132,27 @@
                 </div>
               </li>
               <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#forms">
-                  <i class="fas fa-pen-square"></i>
-                  <p>Gestion Demandeurs</p>
-                  <span class="caret"></span>
-                </a>
-                <div class="collapse" id="forms">
-                  <ul class="nav nav-collapse">
-                    <li>
-                      <a href="{{route('profil.index')}}">
-                        <span class="sub-item">Gestion des profils</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="{{route('niveau.index')}}">
-                        <span class="sub-item">Gestion des niveaux</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li>
+  <a data-bs-toggle="collapse" href="#forms" aria-expanded="false">
+    <i class="fas fa-pen-square"></i>
+    <p>Gestion Demandeurs</p>
+    <span class="caret"></span>
+  </a>
+  <div class="collapse" id="forms">
+    <ul class="nav nav-collapse">
+      <li>
+        <a href="{{ route('profil.index') }}">
+          <span class="sub-item">Gestion des profils</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ route('niveau.index') }}">
+          <span class="sub-item">Gestion des niveaux</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</li>
+
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#tables">
                   <i class="fas fa-table"></i>
@@ -161,12 +162,12 @@
                 <div class="collapse" id="tables">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="tables/tables.html">
+                      <a href="#">
                         <span class="sub-item">Profils demandes</span>
                       </a>
                     </li>
                     <li>
-                      <a href="tables/datatables.html">
+                      <a href="#">
                         <span class="sub-item">Profils retenus</span>
                       </a>
                     </li>
@@ -174,7 +175,7 @@
                 </div>
               </li>
               <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#maps">
+                <a data-bs-toggle="collapse" href="#">
                 <i class="fas fa-file"></i>
                   <p>Gestion Allocation</p>
                  
