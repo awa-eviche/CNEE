@@ -61,37 +61,18 @@
                  
                   <div class="card-body">
                     <div class="row">
+                    <form action="{{ route('niveau.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
                       <div class="col-md-6 col-6">
                         <div class="form-group">
-                          <label for="email2">Email Address</label>
+                          <label for="libelle">Niveau Etude</label>
                           <input
-                            type="email" class="form-control" id="email2" placeholder="Enter Email" />
-                         
+                            type="text" class="form-control" id="libelle" placeholder="Enter niveau etude" name="libelle"/>  
                         </div>
-                        <div class="form-group">
-                          <label for="password">Password</label>
-                          <input
-                            type="password"
-                            class="form-control"
-                            id="password"
-                            placeholder="Password"
-                          />
-                        </div>
+                       
                      
                       </div>
-                      <div class="col-md-6 col-6">
-                        
-                        <div class="form-group">
-                          <label for="password">Password</label>
-                          <input type="password" class="form-control" id="password" placeholder="Password" />
-                        </div>
-                        <div class="form-group">
-                          <label for="password">Password</label>
-                          <input  type="password" class="form-control" id="password"  placeholder="Password"  />
-                        </div>
-                        </div>
-                    
-                      </div>
+                   
                      
                     </div>
                   </div>
@@ -103,7 +84,7 @@
               </div>
             </div>
            
-            
+            </form>
             
           </div>
         </div>

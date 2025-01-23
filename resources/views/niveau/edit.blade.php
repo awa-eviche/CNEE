@@ -17,7 +17,7 @@
             <div class="logo-header" data-background-color="dark">
               <a href="index.html" class="logo">
                 <img
-                  src="assets/img/kaiadmin/logo_light.svg"
+                  src="{{ asset('assets/img/kaiadmin/logo_light.svg')}}"
                   alt="navbar brand"
                   class="navbar-brand"
                   height="20"
@@ -49,64 +49,46 @@
               <div>
                 <h3 class="fw-bold mb-3">Gestion des profils</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
-              </div>
-              <div class="ms-md-auto py-2 py-md-0 " >
-            
-                <a href="{{route('profil.create')}}" class="btn btn-primary btn-round">Ajouter un nouveau profil</a>
-              </div> 
+            </div>
             </div>
             <div class="row">
-              <div class="col-md-12">
-                <div class="card">
-                  <div class="card-header">
-                    <h4 class="card-title" style="text-align:center">Liste des profils</h4>
-                  </div>
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table
-                        id="basic-datatables"
-                        class="display table table-striped table-hover"
-                      >
-                        <thead>
-                          <tr>
-                            <th>Libelle</th>
-                            <th>Actions</th>
-                          </tr>
-                        </thead>
-                        <tfoot>
-                        </tfoot>
-<tbody>
-@foreach ($niveau as $niv)
-    <tr>
-        <td>{{ $niv->libelle ?? ' - ' }}</td>
-        <td>
-            <!-- Bouton Modifier -->
-            <a href="{{ route('niveau.edit', $niv->id) }}" class="btn btn-sm btn-primary"  class="col-md-6 col-6">
-                Modifier
-            </a>
+            <form action="{{ route('niveau.update', $niveau->id) }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    @method('PUT')
 
-            <!-- Bouton Supprimer -->
-            <form action="{{ route('niveau.destroy', $niv->id) }}" method="POST" style="display: inline;">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Voulez-vous vraiment supprimer ce niveau ?')">
-                    Supprimer
-                </button>
-            </form>
-        </td>
-    </tr>
-@endforeach
-</tbody>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-                      </table>
-                    </div>
-                  </div>
+    <h3 class="bg-gray-100 p-2 text-sm font-bold text-first-orange">
+        Modification du profil
+    </h3>
+    <div class="col-md-6 col-6">
+    <div class="form-group">
+        <label for="libelle">Intitulé du Profil</label>
+        <input
+            type="text"
+            class="form-control"
+            id="libelle"
+            name="libelle"
+            value="{{ old('libelle', $niveau->libelle) }}"
+            required
+        />
+    </div>
+
+    <div class="card-action">
+        <button type="submit" class="btn btn-success">Enregistrer</button>
+    </div>
+</form>
+
                 </div>
               </div>
-
-             
-
-              
             </div>
            
             
@@ -375,70 +357,6 @@
         lineWidth: "2",
         lineColor: "#ffa534",
         fillColor: "rgba(255, 165, 52, .14)",
-      });
-    </script>
-      <script>
-      $(document).ready(function () {
-        $("#basic-datatables").DataTable({
-    language: {
-      lengthMenu: "Afficher _MENU_ entrées",
-      paginate: {
-        previous: "Précédent",
-        next: "Suivant"
-      }
-    }
-  });
-        $("#multi-filter-select").DataTable({
-          pageLength: 5,
-          initComplete: function () {
-            this.api()
-              .columns()
-              .every(function () {
-                var column = this;
-                var select = $(
-                  '<select class="form-select"><option value=""></option></select>'
-                )
-                  .appendTo($(column.footer()).empty())
-                  .on("change", function () {
-                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
-
-                    column
-                      .search(val ? "^" + val + "$" : "", true, false)
-                      .draw();
-                  });
-
-                column
-                  .data()
-                  .unique()
-                  .sort()
-                  .each(function (d, j) {
-                    select.append(
-                      '<option value="' + d + '">' + d + "</option>"
-                    );
-                  });
-              });
-          },
-        });
-
-        // Add Row
-        $("#add-row").DataTable({
-          pageLength: 5,
-        });
-
-        var action =
-          '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-
-        $("#addRowButton").click(function () {
-          $("#add-row")
-            .dataTable()
-            .fnAddData([
-              $("#addName").val(),
-              $("#addPosition").val(),
-              $("#addOffice").val(),
-              action,
-            ]);
-          $("#addRowModal").modal("hide");
-        });
       });
     </script>
   </body>

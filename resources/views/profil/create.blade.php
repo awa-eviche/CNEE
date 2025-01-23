@@ -56,7 +56,7 @@
               </div> -->
             </div>
             <div class="row">
-            <form action="{{ route('profil.store') }}" method="POST" enctype="multipart/form-data" >
+            <form action="{{ route('profil.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
               <div class="col-md-12">
                 <div class="card">
