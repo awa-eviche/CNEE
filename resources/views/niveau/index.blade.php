@@ -69,35 +69,39 @@
     style="table-layout: fixed; width: 100%;">
     <thead>
         <tr>
-            <th style="width: 70%;">Libellé</th>
-            <th style="width: 30%;">Actions</th>
+            <th style="width: 50%;">Libellé</th>
+            <th style="width: 50%;">Actions</th>
         </tr>
     </thead>
     <tfoot>
         <tr>
             <th style="width: 50%;">Libellé</th>
-            <th style="width: 70%;">Actions</th>
+            <th style="width: 50%;">Actions</th>
         </tr>
     </tfoot>
     <tbody>
         @foreach ($niveau as $niv)
         <tr>
             <td>{{ $niv->libelle ?? ' - ' }}</td>
-            <td>
-                <!-- Bouton Modifier -->
-                <a href="{{ route('niveau.edit', $niv->id) }}" class="btn btn-sm btn-primary">
-                    Modifier
-                </a>
+            <td class="text-center">
+    
+    <div class="d-flex justify-content-center gap-2">
+       
+        <a href="{{ route('niveau.edit', $niv->id) }}" class="btn btn-sm btn-primary">
+            Modifier
+        </a>
 
-                <!-- Bouton Supprimer -->
-                <form action="{{ route('niveau.destroy', $niv->id) }}" method="POST" style="display: inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Voulez-vous vraiment supprimer ce niveau ?')">
-                        Supprimer
-                    </button>
-                </form>
-            </td>
+        
+        <form action="{{ route('niveau.destroy', $niv->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Voulez-vous vraiment supprimer ce niveau ?')">
+                Supprimer
+            </button>
+        </form>
+    </div>
+</td>
+
         </tr>
         @endforeach
     </tbody>

@@ -69,7 +69,7 @@
                         <thead>
                         <tr>
             <th style="width: 50%;">Libellé</th>
-            <th style="width: 70%;">Actions</th>
+            <th style="width: 50%;">Actions</th>
         </tr>
                         </thead>
                         <tfoot>
@@ -81,23 +81,25 @@
                         </tfoot>
 <tbody>
 @foreach ($profils as $profil)
-    <tr>
+    <tr >
         <td>{{ $profil->libelle ?? ' - ' }}</td>
-        <td>
-            <!-- Bouton Modifier -->
-            <a href="{{ route('profil.edit', $profil->id) }}" class="btn btn-sm btn-primary"  class="col-md-6 col-6">
-                Modifier
-            </a>
+        <td class="text-center">
+    
+    <div class="d-flex justify-content-center gap-2">
+       
+        <a href="{{ route('profil.edit', $profil->id) }}" class="btn btn-sm btn-primary">
+            Modifier
+        </a>
+        <form action="{{ route('profil.destroy', $profil->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Voulez-vous vraiment supprimer ce profil ?')">
+                Supprimer
+            </button>
+        </form>
+    </div>
+</td>
 
-            <!-- Bouton Supprimer -->
-            <form action="{{ route('profil.destroy', $profil->id) }}" method="POST" style="display: inline;">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Voulez-vous vraiment supprimer ce profil ?')">
-                    Supprimer
-                </button>
-            </form>
-        </td>
     </tr>
 @endforeach
 </tbody>
