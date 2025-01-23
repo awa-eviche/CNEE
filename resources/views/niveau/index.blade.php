@@ -47,58 +47,62 @@
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
               <div>
-                <h3 class="fw-bold mb-3">Gestion des profils</h3>
+                <h3 class="fw-bold mb-3">Gestion des niveaux</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
               </div>
               <div class="ms-md-auto py-2 py-md-0 " >
             
-                <a href="{{route('profil.create')}}" class="btn btn-primary btn-round">Ajouter un nouveau profil</a>
+                <a href="{{route('niveau.create')}}" class="btn btn-primary btn-round">Ajouter un niveau</a>
               </div> 
             </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4 class="card-title" style="text-align:center">Liste des profils</h4>
+                    <h4 class="card-title" style="text-align:center">Liste des niveaux</h4>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table
-                        id="basic-datatables"
-                        class="display table table-striped table-hover"
-                      >
-                        <thead>
-                          <tr>
-                            <th>Libelle</th>
-                            <th>Actions</th>
-                          </tr>
-                        </thead>
-                        <tfoot>
-                        </tfoot>
-<tbody>
-@foreach ($niveau as $niv)
-    <tr>
-        <td>{{ $niv->libelle ?? ' - ' }}</td>
-        <td>
-            <!-- Bouton Modifier -->
-            <a href="{{ route('niveau.edit', $niv->id) }}" class="btn btn-sm btn-primary"  class="col-md-6 col-6">
-                Modifier
-            </a>
+                    <table
+    id="basic-datatables"
+    class="display table table-striped table-hover"
+    style="table-layout: fixed; width: 100%;">
+    <thead>
+        <tr>
+            <th style="width: 70%;">Libellé</th>
+            <th style="width: 30%;">Actions</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th style="width: 50%;">Libellé</th>
+            <th style="width: 70%;">Actions</th>
+        </tr>
+    </tfoot>
+    <tbody>
+        @foreach ($niveau as $niv)
+        <tr>
+            <td>{{ $niv->libelle ?? ' - ' }}</td>
+            <td>
+                <!-- Bouton Modifier -->
+                <a href="{{ route('niveau.edit', $niv->id) }}" class="btn btn-sm btn-primary">
+                    Modifier
+                </a>
 
-            <!-- Bouton Supprimer -->
-            <form action="{{ route('niveau.destroy', $niv->id) }}" method="POST" style="display: inline;">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Voulez-vous vraiment supprimer ce niveau ?')">
-                    Supprimer
-                </button>
-            </form>
-        </td>
-    </tr>
-@endforeach
-</tbody>
+                <!-- Bouton Supprimer -->
+                <form action="{{ route('niveau.destroy', $niv->id) }}" method="POST" style="display: inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Voulez-vous vraiment supprimer ce niveau ?')">
+                        Supprimer
+                    </button>
+                </form>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
 
-                      </table>
                     </div>
                   </div>
                 </div>

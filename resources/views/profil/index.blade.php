@@ -65,15 +65,19 @@
                     <div class="table-responsive">
                       <table
                         id="basic-datatables"
-                        class="display table table-striped table-hover"
-                      >
+                        class="display table table-striped table-hover"    style="table-layout: fixed; width: 100%;"  >
                         <thead>
-                          <tr>
-                            <th>Libelle</th>
-                            <th>Actions</th>
-                          </tr>
+                        <tr>
+            <th style="width: 50%;">Libellé</th>
+            <th style="width: 70%;">Actions</th>
+        </tr>
                         </thead>
                         <tfoot>
+                        <tr>
+                            <th>Libellé</th>
+                            <th>Actions</th>
+                            
+                          </tr>
                         </tfoot>
 <tbody>
 @foreach ($profils as $profil)
