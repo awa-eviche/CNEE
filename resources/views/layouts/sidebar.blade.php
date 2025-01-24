@@ -74,7 +74,8 @@
                     </li>
                     <li>
                       <a href="components/gridsystem.html">
-                        <span class="sub-item">Grid System</span>
+                        <span class="sub-item"
+                        >Grid System</span>
                       </a>
                     </li>
                     <li>
