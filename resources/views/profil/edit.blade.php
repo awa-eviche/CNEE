@@ -87,7 +87,7 @@
     </div>
 
     <div class="card-action">
-        <button type="submit" class="btn btn-success">Enregistrer</button>
+        <button type="submit" class="btn btn-success">Modifier</button>
     </div>
 </form>
 
