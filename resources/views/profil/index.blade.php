@@ -464,6 +464,6 @@
             });
         @endif
     });
-</script>
+</script><!--! footer-->
   </body>
 </html>
