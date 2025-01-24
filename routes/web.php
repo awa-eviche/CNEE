@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EntrepriseController;
 use App\Http\Controllers\NiveauxController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\DemandeurController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,6 +37,7 @@ Route::group([],function () {
     Route::resource('entreprise', EntrepriseController::class);
     Route::resource('profil', ProfilController::class);
     Route::resource('niveau', NiveauxController::class);
+    Route::resource('demandeur', DemandeurController::class);
    
     });
 require __DIR__.'/auth.php';

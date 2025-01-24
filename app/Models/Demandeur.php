@@ -22,6 +22,7 @@ class Demandeur extends Model
         "email",
         "profil_id",
         "niveaux_id",
+        "cv",
        
     ];
 

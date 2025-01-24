@@ -149,6 +149,11 @@
           <span class="sub-item">Gestion des niveaux</span>
         </a>
       </li>
+      <li>
+        <a href="{{ route('demandeur.index') }}">
+          <span class="sub-item">Gestion des demandeurs</span>
+        </a>
+      </li>
     </ul>
   </div>
 </li>
