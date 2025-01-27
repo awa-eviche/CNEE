@@ -79,11 +79,13 @@
 
                         <div class="form-group">
                           <label for="datenaissance">Date de Naissance</label>
+                          <input type="text" class="form-control" value="{{ old('datenaissance', $demandeur->datenaissance) }}" id="email" name="datenaissance" placeholder="Votre adresse email" />
+
                         </div>
 
                         <div class="form-group">
                           <label for="email">Email</label>
-                          <input type="email" class="form-control" value="{{ old('datenaissance', $demandeur->datenaissance) }}" id="email" name="email" placeholder="Votre adresse email" />
+                          <input type="email" class="form-control" value="{{ old('datenaissance', $demandeur->email) }}" id="email" name="email" placeholder="Votre adresse email" />
                         </div>
 
                         <div class="form-group">

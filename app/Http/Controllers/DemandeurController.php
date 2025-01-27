@@ -25,37 +25,30 @@ class DemandeurController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-           
-            'nom' => 'required|string|max:255',
-            'prenom' => 'required|string|max:255',
-            'sexe' => 'required|string|max:255',
-            'datenaissance' => 'required|string|max:255',
-            'lieunaissance' => 'required|string|max:255',
-            'adresse' => 'required|string|max:255',
+{
+    $request->validate([
+        'prenom' => 'required|string|max:255',
+        'sexe' => 'required|string|max:255',
+        'datenaissance' => 'required|string|max:255',
+        'lieunaissance' => 'required|string|max:255',
+        'adresse' => 'required|string|max:255',
+        'profil_id' => 'required|string',
+        'niveaux_id' => 'required|string',
+        'cv' => 'required|mimes:pdf|max:2048',
+    ]);
 
-            'profil_id' => 'required|string',
-            'niveaux_id' => 'required|string',
-            'cv' => 'required|mimes:pdf|max:2048',
-
-        ]);
-        $data = $request->all();
-        if ($request->hasFile('cv')) {
-            $cvFile = $request->file('cv');
-            $fileName = time() . '_' . $cvFile->getClientOriginalName(); // Nom unique
-            $filePath = $cvFile->storeAs('uploads/cv', $fileName, 'public'); // Chemin de stockage
     
-            $data['cv'] = $filePath; // Ajout du chemin dans les données
-        }
-        $demande = Demandeur::create($request->all());
-        
+    $data = $request->all();
 
-
-        return redirect()->route('demandeur.index')
-
-            ->with('success', 'demandeur créé avec succès.');
+   
+    if ($request->hasFile('cv')) {
+        $filename = $request->file('cv')->store('upload', 'public');
+        $data['cv'] = $filename; 
     }
+    $demandeur = Demandeur::create($data);
+    return redirect()->route('demandeur.index')
+        ->with('success', 'Demandeur créé avec succès.');
+}
 
     public function edit(Demandeur $demandeur)
     {
@@ -96,5 +89,14 @@ class DemandeurController extends Controller
         return redirect()->route('demandeur.index')
                          ->with('success', 'Demandeur supprimé avec succès.');
     }
+
+    public function show(Demandeur $demandeur)
+    {
+       
+        return view('demandeur.show',compact('demandeur'));
+    }
+
+
+
 
 }
