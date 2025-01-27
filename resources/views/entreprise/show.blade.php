@@ -47,7 +47,7 @@
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
               <div>
-                <h3 class="fw-bold mb-3">Gestion des entreprises</h3>
+                <h3 class="fw-bold mb-3">Gestion des Entreprises</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
               </div>
               <!-- <div class="ms-md-auto py-2 py-md-0">
@@ -56,76 +56,111 @@
               </div> -->
             </div>
             <div class="row">
+           
               <div class="col-md-12">
                 <div class="card">
-                  <div class="card-header">
-                    <h4 class="card-title" style="text-align:center">Liste des entreprises</h4>
-                  </div>
+                 
                   <div class="card-body">
-                    <div class="table-responsive">
-                      <table
-                        id="basic-datatables"
-                        class="display table table-striped table-hover"
-                      >
-                        <thead>
-                          <tr>
-                          <th>Entreprise</th>
-                            <th>Adresse</th>
-                            <th>Téléphone</th>
-                            <th>Email</th>
-                            <th>Ninea</th>
-                            <th>Registre de commerce</th>
-                            <th>Actions</th>
-                          </tr>
-                        </thead>
-                        <tfoot>
-                          <tr>
-                            <th>Entreprise</th>
-                            <th>Adresse</th>
-                            <th>Téléphone</th>
-                            <th>Email</th>
-                            <th>Ninea</th>
-                            <th>Registre de commerce</th>
-                            <th>Actions</th>
-                           
-                          </tr>
-                        </tfoot>
-                        <tbody>
-                          @foreach($entreprises as $entreprise)
-                          <tr>
-                            <td>{{ $entreprise->nomentreprise ?? ' - ' }}</td>
-                            <td>{{ $entreprise->adresse ?? ' - ' }}</td>
-                            
-                            <td>{{ $entreprise->tel ?? ' - ' }}</td>
-                            <td>{{ $entreprise->email?? ' - ' }}</td>
-                            <td>{{ $entreprise->ninea?? ' - ' }}</td>
-                            <td>{{ $entreprise->regitcom?? ' - ' }}</td>
-                            
-                            <td>
-        <a href=" {{ route('entreprise.show',$entreprise->id) }}" class="btn btn-info btn-sm voir-plus">Voir Plus</a>
-     
-      </td>
-                          </tr> 
-                          @endforeach
-                        </tbody>
-                      </table>
+                    <div class="row">
+                      <div class="col-md-6 col-6">
+                        <div class="form-group">
+                          <label for="nom">Nom entreprise</label>
+                          <input
+                            type="text" class="form-control" id="nom" value="{{ $entreprise->nomentreprise ?? ' - ' }}" readonly />
+                         
+                        </div>
+
+                        
+                       
+
+                        <div class="form-group">
+                          <label for="datenaissance">Adresse</label>
+                          <input type="text" class="form-control" id="datenaissance" value="{{ $entreprise->adresse ?? ' - ' }}"readonly />
+                        </div>
+
+                        <div class="form-group">
+                          <label for="email">Email</label>
+                          <input type="text" class="form-control" id="email" name="email" value="{{ $entreprise->email ?? ' - ' }}"readonly />
+                        </div>
+
+                        <div class="form-group">
+                          <label for="adresse">Téléphone</label>
+                          <input type="text" class="form-control" id="adresse" value="{{ $entreprise->tel ?? ' - ' }}" readonly/>
+                         
+                        </div>
+
+
+  <div class="form-group">
+ <label for="profil_id">Activité:</label>
+ <input type="text" class="form-control" id="adresse" value="{{ $entreprise->activite ?? ' - ' }}" readonly/>
+
+</div>
+
+                       
+                     
+                      </div>
+
+                      
+                      <div class="col-md-6 col-6">
+                        
+                      <div class="form-group">
+                          <label for="prenom">Secteur d'activité</label>
+                          <input type="text" class="form-control"value="{{ $entreprise->secteur ?? ' - ' }}" readonly
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label for="lieunaissance">Ninea</label>
+                          <input  type="text" class="form-control" id="lieunaissance" value="{{ $entreprise->ninea ?? ' - ' }}" readonly />
+                        </div>
+                        <div class="form-group">
+    <label for="sexe">Regitre de commerce</label>
+    <input  type="text" class="form-control" id="lieunaissance" value="{{ $entreprise->regitcom ?? ' - ' }}" readonly />
+
+</div>
+
+                        <div class="form-group">
+ <label for="niveaux_id">nombre d'employé</label>
+ <input  type="text" class="form-control" id="lieunaissance" value="{{ $entreprise->nombreemployer ?? ' - ' }}" readonly />
+
+</div>
+
+<div class="form-group">
+    @if($entreprise->dossier)
+        <a href="{{ asset('storage/' . $entreprise->dossier) }}" target="_blank" class="btn btn-primary">
+            Voir le fichier : {{ basename($entreprise->dossier) }}
+        </a>
+    @else
+        <p>Aucun fichier disponible.</p>
+    @endif
+</div>
+
+
+                        </div>
+                    
+                      </div>
+
+                      
+                     
                     </div>
+                    
+                  </div>
+                  
+                  <div class="card-action">
+                    <a href="" class="btn btn-success">Valider</a>
+                    <a href="" class="btn btn-danger">Rejeter</a>
+                  
                   </div>
                 </div>
               </div>
-
-             
-
-              
             </div>
-           
-            
-            
           </div>
         </div>
- 
+     
+ <!--! footer-->
         @include('layouts.footer')
       </div>
+
+      <!-- Custom template | don't include it in your project! -->
       <div class="custom-template">
         <div class="title">Settings</div>
         <div class="custom-content">
@@ -382,63 +417,6 @@
         lineWidth: "2",
         lineColor: "#ffa534",
         fillColor: "rgba(255, 165, 52, .14)",
-      });
-    </script>
-      <script>
-      $(document).ready(function () {
-        $("#basic-datatables").DataTable({});
-
-        $("#multi-filter-select").DataTable({
-          pageLength: 5,
-          initComplete: function () {
-            this.api()
-              .columns()
-              .every(function () {
-                var column = this;
-                var select = $(
-                  '<select class="form-select"><option value=""></option></select>'
-                )
-                  .appendTo($(column.footer()).empty())
-                  .on("change", function () {
-                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
-
-                    column
-                      .search(val ? "^" + val + "$" : "", true, false)
-                      .draw();
-                  });
-
-                column
-                  .data()
-                  .unique()
-                  .sort()
-                  .each(function (d, j) {
-                    select.append(
-                      '<option value="' + d + '">' + d + "</option>"
-                    );
-                  });
-              });
-          },
-        });
-
-        // Add Row
-        $("#add-row").DataTable({
-          pageLength: 5,
-        });
-
-        var action =
-          '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-
-        $("#addRowButton").click(function () {
-          $("#add-row")
-            .dataTable()
-            .fnAddData([
-              $("#addName").val(),
-              $("#addPosition").val(),
-              $("#addOffice").val(),
-              action,
-            ]);
-          $("#addRowModal").modal("hide");
-        });
       });
     </script>
   </body>

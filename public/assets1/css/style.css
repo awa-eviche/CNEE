@@ -96,8 +96,8 @@ body {
 	display: block;
 }
 .form-register .steps li a .title .step-icon { 
-    width: 60px;
-    height: 60px;
+    width: 110px;
+    height: 70px;
     border-radius: 50%;
     -o-border-radius: 50%;
     -ms-border-radius: 50%;
