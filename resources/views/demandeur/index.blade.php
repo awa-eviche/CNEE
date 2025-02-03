@@ -51,8 +51,8 @@
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
               </div>
               <div class="ms-md-auto py-2 py-md-0 " >
-            
-                <a href="{{route('demandeur.create')}}" class="btn btn-primary btn-round">Ajouter un nouveau demandeur</a>
+         
+
               </div> 
             </div>
             <div class="row">
@@ -60,7 +60,14 @@
                 <div class="card">
                   <div class="card-header">
                     <h4 class="card-title" style="text-align:center">Liste des demandeurs</h4>
-                  </div>
+
+<form action="{{ route('demandeur.import') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    <button type="submit" class="btn btn-info btn-sm voir-plus">Importer</button>
+    <input type="file" name="file" class="form-control" required>
+
+</form>
+               </div>
                   <div class="card-body">
                     <div class="table-responsive">
                     <table
