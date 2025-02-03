@@ -143,15 +143,14 @@
                      
                     </div>
                     
-                  </div>
-                  
+                  </div> 
                   <div class="card-action  d-flex gap-2"">
-                  <form action="{{ route('entreprise.valider', $entreprise->id) }}" method="POST">
-    @csrf
-    <button type="submit" class="btn btn-success">
-        Valider et envoyer un e-mail
-    </button>
-</form>
+              <form action="{{ route('entreprise.valider', $entreprise->id) }}" method="post" id="validerForm">
+                   @csrf
+                  <button type="submit" class="btn btn-success"  id="validerButton">
+                      Valider et envoyer un e-mail
+                  </button>
+              </form>
 <form action="" method="POST">
     @csrf
     <button type="submit" class="btn btn-danger">
@@ -429,5 +428,38 @@
         fillColor: "rgba(255, 165, 52, .14)",
       });
     </script>
+     <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        @if(session('success'))
+            $.notify({
+               
+                message: '{{ session('success') }}'
+            }, {
+                // Type et style de la notification
+                type: 'success',
+                delay: 3000,
+                placement: {
+                    from: "top",
+                    align: "right"
+                }
+            });
+        @endif
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('validerForm');
+        const button = document.getElementById('validerButton');
+
+        form.addEventListener('submit', function(event) {
+            // Désactiver le bouton
+            button.disabled = true;
+            button.innerText = 'Envoi en cours...'; // Changer le texte du bouton
+        });
+    });
+</script>
+
   </body>
+
 </html>
