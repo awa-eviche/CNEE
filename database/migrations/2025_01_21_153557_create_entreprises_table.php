@@ -20,6 +20,9 @@ return new class extends Migration
             $table->string("secteur");
             $table->string("nombreemployer");
             $table->string("tel");
+            $table->string("region");
+            $table->string("departement");
+            $table->string("formj");
             $table->string("adresse");
             $table->string("email")->unique();
             $table->string("ninea")->unique();
