@@ -40,5 +40,5 @@ Route::group([],function () {
     Route::resource('demandeur', DemandeurController::class);
     });
     Route::get('/entreprise/valider/{id}', [EntrepriseController::class, 'validerEntreprise'])->name('entreprise.valider');
-
+    Route::post('/demandeur/import', [DemandeurController::class, 'import'])->name('demandeur.import');
 require __DIR__.'/auth.php';

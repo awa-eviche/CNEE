@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\DemandeurImport;
 use App\Models\Niveaux; 
 use App\Models\Profil; 
 use App\Models\Demandeur; 
@@ -96,6 +99,17 @@ class DemandeurController extends Controller
         return view('demandeur.show',compact('demandeur'));
     }
 
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv',
+        ]);
+    
+        Excel::import(new DemandeurImport, $request->file('file'));
+    
+        return back()->with('success', 'Importation réussie !');
+    }
 
 
 
