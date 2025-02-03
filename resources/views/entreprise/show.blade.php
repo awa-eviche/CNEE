@@ -145,9 +145,19 @@
                     
                   </div>
                   
-                  <div class="card-action">
-                    <a href="" class="btn btn-success">Valider</a>
-                    <a href="" class="btn btn-danger">Rejeter</a>
+                  <div class="card-action  d-flex gap-2"">
+                  <form action="{{ route('entreprise.valider', $entreprise->id) }}" method="POST">
+    @csrf
+    <button type="submit" class="btn btn-success">
+        Valider et envoyer un e-mail
+    </button>
+</form>
+<form action="" method="POST">
+    @csrf
+    <button type="submit" class="btn btn-danger">
+        Rejeter et  envoyer un e-mail
+    </button>
+</form>
                   
                   </div>
                 </div>

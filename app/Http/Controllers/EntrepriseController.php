@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Entreprise; 
 use Illuminate\Http\Request;
+use App\Mail\EntrepriseInscriteMail;
+use Illuminate\Support\Facades\Mail;
 
 class EntrepriseController extends Controller
 {
@@ -46,6 +48,9 @@ class EntrepriseController extends Controller
         $entreprise->dossier = $filename;
     }
     $entreprise->save();
+    $lastEntreprise = Entreprise::latest()->first(); // Récupérer la dernière entreprise enregistrée
+    Mail::to($lastEntreprise->email)->send(new \App\Mail\EntrepriseInscriteMail($lastEntreprise));
+
     return redirect()->route('entreprise.index')->with('success', 'Entreprise enregistrée avec succès.');
 }
 
@@ -55,7 +60,20 @@ public function show(Entreprise $entreprise)
         return view('entreprise.show',compact('entreprise'));
     }
 
+    public function validerEntreprise($id)
+    {
+        
+        $valider = "validé";
+        $entreprise = Entreprise::find($id);
 
+        if ($entreprise) {
+            Mail::to($entreprise->EMAIL)->send(new DemandeMail($entreprise));
+            return redirect()->route('entreprise.index')
+                ->with('success', "L'email a été envoyé à l'entreprise : {$entreprise->nomentreprise}");
+        }
+        return redirect()->route('entreprise.index')->withErrors('Entreprise non trouvée.');
+    }
+    
 
 
 

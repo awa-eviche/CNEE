@@ -38,6 +38,7 @@ Route::group([],function () {
     Route::resource('profil', ProfilController::class);
     Route::resource('niveau', NiveauxController::class);
     Route::resource('demandeur', DemandeurController::class);
-   
     });
+    Route::get('/entreprise/valider/{id}', [EntrepriseController::class, 'validerEntreprise'])->name('entreprise.valider');
+
 require __DIR__.'/auth.php';
