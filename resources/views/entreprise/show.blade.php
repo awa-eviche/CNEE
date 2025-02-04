@@ -88,7 +88,18 @@
                           <input type="text" class="form-control" id="adresse" value="{{ $entreprise->tel ?? ' - ' }}" readonly/>
                          
                         </div>
+                     
+<div class="form-group">
+ <label for="region">Département</label>
+ <input  type="text" class="form-control" id="departement" value="{{ $entreprise->departement ?? ' - ' }}" readonly />
 
+</div>
+
+<div class="form-group">
+ <label for="region">Forme juridique</label>
+ <input  type="text" class="form-control" id="departement" value="{{ $entreprise->formj ?? ' - ' }}" readonly />
+
+</div>
 
   <div class="form-group">
  <label for="profil_id">Activité:</label>
@@ -125,6 +136,12 @@
 </div>
 
 <div class="form-group">
+ <label for="region">Région</label>
+ <input  type="text" class="form-control" id="region" value="{{ $entreprise->region ?? ' - ' }}" readonly />
+
+</div>
+
+<div class="form-group">
     @if($entreprise->dossier)
         <a href="{{ asset('storage/' . $entreprise->dossier) }}" target="_blank" class="btn btn-primary">
             Voir le fichier : {{ basename($entreprise->dossier) }}
@@ -144,6 +161,7 @@
                     </div>
                     
                   </div> 
+                  @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
                   <div class="card-action  d-flex gap-2"">
               <form action="{{ route('entreprise.valider', $entreprise->id) }}" method="post" id="validerForm">
                    @csrf
@@ -151,14 +169,14 @@
                       Valider et envoyer un e-mail
                   </button>
               </form>
-<form action="" method="POST">
-    @csrf
-    <button type="submit" class="btn btn-danger">
-        Rejeter et  envoyer un e-mail
-    </button>
-</form>
-                  
+                   <form action="" method="POST">
+                      @csrf
+                      <button type="submit" class="btn btn-danger">
+                          Rejeter et  envoyer un e-mail
+                      </button>
+                   </form>  
                   </div>
+                  @endif
                 </div>
               </div>
             </div>
@@ -381,23 +399,13 @@
     <!-- Chart Circle -->
     <script src="assets/js/plugin/chart-circle/circles.min.js"></script>
 
-    <!-- Datatables -->
     <script src="assets/js/plugin/datatables/datatables.min.js"></script>
-
-    <!-- Bootstrap Notify -->
     <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
-
-    <!-- jQuery Vector Maps -->
     <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
     <script src="assets/js/plugin/jsvectormap/world.js"></script>
-
-    <!-- Sweet Alert -->
     <script src="assets/js/plugin/sweetalert/sweetalert.min.js"></script>
-
-    <!-- Kaiadmin JS -->
     <script src="assets/js/kaiadmin.min.js"></script>
 
-    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="assets/js/setting-demo.js"></script>
     <script src="assets/js/demo.js"></script>
     <script>

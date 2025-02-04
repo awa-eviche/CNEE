@@ -27,6 +27,9 @@ $(function() {
             var activite = $('#activite-val').val();
             var secteur = $('#secteur-val').val();
             var ninea = $('#ninea-val').val();
+            var region = $('#region').val();
+            var departement = $('#departement').val();
+            var formj = $('#formJ-val').val();
             var registre = $('#regit-val').val();
             var dateCreation = $('#date-val').val();
             var fileInput = $('#file-val').val();
@@ -39,13 +42,7 @@ $(function() {
                 }
             }
 
-            if (currentIndex === 1) {
-                if (!activite || !secteur || !ninea || !registre || !dateCreation || !fileInput) {
-                    alert("Veuillez remplir tous les champs requis dans cette étape.");
-                    return false;
-                }
-            }
-
+       
             // Afficher les données dans la section de confirmation
             $('#fullname-val-confirm').text(fullname);
             $('#adresse-confirm').text(adresse);
@@ -54,6 +51,9 @@ $(function() {
             $('#activite-confirm').text(activite);
             $('#secteur-confirm').text(secteur);
             $('#ninea-confirm').text(ninea);
+            $('#region-confirm').text(region);
+            $('#departement-confirm').text(departement);
+            $('#formJ-confirm').text(formj);
             $('#regit-confirm').text(registre);
             $('#date-confirm').text(dateCreation);
             $('#file-confirm').text(fileInput.split('\\').pop()); // Afficher le nom du fichier

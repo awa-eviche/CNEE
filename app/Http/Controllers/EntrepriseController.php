@@ -29,6 +29,9 @@ class EntrepriseController extends Controller
         'adresse' => 'required|string|max:255',
         'email' => 'required|email|max:255',
         'tel' => 'required|string|max:20',
+        'formj' => 'required|string|max:20',
+        'region' => 'required|string|max:20',
+        'departement' => 'required|string|max:20',
         'activite' => 'required|string|max:255',
         'secteur' => 'required|string|max:255',
         'ninea' => 'required|string|max:20',
@@ -41,6 +44,9 @@ class EntrepriseController extends Controller
     $entreprise->adresse = $request->adresse;
     $entreprise->email = $request->email;
     $entreprise->tel = $request->tel;
+    $entreprise->region= $request->region;
+    $entreprise->departement = $request->departement;
+    $entreprise->formj = $request->formj;
     $entreprise->activite = $request->activite;
     $entreprise->secteur = $request->secteur;
     $entreprise->ninea = $request->ninea;
@@ -51,10 +57,9 @@ class EntrepriseController extends Controller
         $entreprise->dossier = $filename;
     }
     $entreprise->save();
-    $lastEntreprise = Entreprise::latest()->first(); 
-    Mail::to($lastEntreprise->email)->send(new \App\Mail\EntrepriseInscriteMail($lastEntreprise));
+    Mail::to($entreprise->email)->send(new \App\Mail\EntrepriseInscriteMail($entreprise));
 
-    return redirect()->route('/')->with('success', 'Entreprise enregistrée avec succès.');
+    return redirect()->to('/')->with('success', 'Entreprise enregistrée avec succès.');
 }
 
 public function show(Entreprise $entreprise)

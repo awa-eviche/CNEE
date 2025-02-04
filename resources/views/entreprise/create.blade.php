@@ -79,7 +79,36 @@
                         </label>
                     </div>
                 </div>
-                
+                <div class="form-row ">
+                <div class="form-holder form-holder-2">
+    <label for="region" class="special-label">Région:</label>
+    <select name="region" id="region"  onchange="updateDepartments()">
+        <option value="" disabled selected>Sélectionnez une région</option>
+        <option value="Dakar">Dakar</option>
+        <option value="Diourbel">Diourbel</option>
+        <option value="Fatick">Fatick</option>
+        <option value="Kaolack">Kaolack</option>
+        <option value="Kaffrine">Kaffrine</option>
+        <option value="Kolda">Kolda</option>
+        <option value="Louga">Louga</option>
+        <option value="Matam">Matam</option>
+        <option value="Saint-Louis">Saint-Louis</option>
+        <option value="Sédhiou">Sédhiou</option>
+        <option value="Tambacounda">Tambacounda</option>
+        <option value="Thiès">Thiès</option>
+        <option value="Ziguinchor">Ziguinchor</option>
+    </select>
+</div>
+ </div>
+
+ <div class="form-row ">
+                <div class="form-holder form-holder-2">
+    <label for="region" class="special-label">Département:</label>
+    <select name="departement" id="departement">
+        <option value="" disabled selected>Sélectionnez un département</option>
+    </select>
+</div>
+ </div>
             </div>
         </section>
 
@@ -100,11 +129,17 @@
                         </label>
                     </div>
                     <div class="form-holder">
-                        <label class="form-row-inner">
-                            <input type="text" class="form-control" id="secteur-val" name="secteur" required>
-                            <span class="label">Secteur d'activité</span>
+                       
+                        <label for="region" class="form-row-inner">Secteur:
+                            <select name="secteur"id="secteur-val" >
+                                <option value="" disabled selected>Sélectionnez une secteur</option>
+                                <option value="Secondaire" >Secondaire</option>
+                                <option value="Primaire" >Primaire</option>
+                                <option value="Tertiare" >Tertiare</option>
+                            </select>
+                            
                             <span class="border"></span>
-                        </label>
+                            
                     </div>
                 </div>
                 <div class="form-row">
@@ -126,10 +161,22 @@
                 <div class="form-row">
                     <div class="form-holder form-holder-2">
                         <label class="form-row-inner" style="margin-bottom: 15px; display: flex; flex-direction: column;">
-                            <span class="label">Nombre Employeur</span>
+                            <span class="label">Nombre Employés</span>
                             <input type="text" class="form-control" id="date-val" name="nombreemployer" required>
                         </label>
                     </div>
+                </div>
+                
+                <div class="form-row ">
+                        <div class="form-holder form-holder-2">
+                            <label for="formj" class="special-label">Forme juridique:</label>
+                            <select name="formj" id="formJ-val" >
+                                <option value="" disabled selected>Sélectionnez une forme juridique</option>
+                                <option value="SA" >SA</option>
+                                <option value="SARL" >SARL</option>
+                                <option value="GIE" >GIE</option>
+                            </select>
+                        </div>
                 </div>
                 <div class="form-row">
                     <div class="form-holder form-holder-2">
@@ -171,6 +218,14 @@
                                 <td id="phone-confirm"></td>
                             </tr>
                             <tr class="space-row">
+                                <th>Région:</th>
+                                <td id="region-confirm"></td>
+                            </tr>
+                            <tr class="space-row">
+                                <th>Département:</th>
+                                <td id="departement-confirm"></td>
+                            </tr>
+                            <tr class="space-row">
                                 <th>Activité Principal:</th>
                                 <td id="activite-confirm"></td>
                             </tr>
@@ -189,6 +244,10 @@
                             <tr class="space-row">
                                 <th>Nombre Employeur:</th>
                                 <td id="date-confirm"></td>
+                            </tr>
+                            <tr class="space-row">
+                                <th>Forme juridique:</th>
+                                <td id="formJ-confirm"></td>
                             </tr>
                             <tr class="space-row">
                                 <th>Fichier à joindre:</th>
@@ -210,6 +269,42 @@
 	<script src="{{ asset('assets1/js/jquery.steps.js')}}"></script>
 	<script src="{{ asset('assets1/js/jquery-ui.min.js')}}"></script>
 	<script src="{{ asset('assets1/js/main.js')}}"></script>
+    <script>
+    const departements = {
+        "Dakar": ["Dakar", "Guédiawaye", "Pikine", "Rufisque"],
+        "Diourbel": ["Diourbel", "Mbacké", "Touba","Bambey"],
+        "Fatick": ["Fatick", "Gossas", "Foundiougne", "Mbour"],
+        "Kaolack": ["Kaolack", "Nioro du Rip", "Kaffrine"],
+        "Kaffrine": ["Kaffrine", "Birkilane", "Koungheul"],
+        "Kolda": ["Kolda", "Vélingara", "Medina Yoro Foulah"],
+        "Louga": ["Louga", "Linguére", "kébémer"],
+        "Matam": ["Matam", "Kanel", "Ranerou"],
+        "Saint-Louis": ["Saint-Louis", "Podor", "Dagana"],
+        "Sédhiou": ["Sédhiou", "Bounkiling", "Goudomp"],
+        "Tambacounda": ["Tambacounda", "Kédougou", "Bambey"],
+        "Thiès": ["Thiès", "Mbour", "Tivaouane"],
+        "Ziguinchor": ["Ziguinchor", "Oussouye", "Bignona"]
+    };
+
+    function updateDepartments() {
+        const regionSelect = document.getElementById("region");
+        const departementSelect = document.getElementById("departement");
+        const selectedRegion = regionSelect.value;
+
+        // Clear previous options
+        departementSelect.innerHTML = '<option value="" disabled selected>Sélectionnez un département</option>';
+
+        if (selectedRegion) {
+            const options = departements[selectedRegion];
+            options.forEach(departement => {
+                const option = document.createElement("option");
+                option.value = departement;
+                option.textContent = departement;
+                departementSelect.appendChild(option);
+            });
+        }
+    }
+</script>
 	
 </body>
 </html>
