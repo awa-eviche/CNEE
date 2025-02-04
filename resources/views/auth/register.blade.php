@@ -15,6 +15,15 @@
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
+        <div class="mt-4">
+    <x-input-label for="role_id" :value="__('Role')" />
+    <select id="role_id" name="role_id" class="block mt-1 w-full" required>
+        @foreach(App\Models\Role::all() as $role)
+            <option value="{{ $role->id }}">{{ $role->name }}</option>
+        @endforeach
+    </select>
+    <x-input-error :messages="$errors->get('role_id')" class="mt-2" />
+</div>
 
         <!-- Password -->
         <div class="mt-4">
