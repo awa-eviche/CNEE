@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 use App\Models\Entreprise; 
 use Illuminate\Http\Request;
 use App\Mail\EntrepriseInscriteMail;
+use App\Mail\ValiderEntrepriseMail;
 use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Str;
+use App\Models\User; 
+use Illuminate\Support\Facades\Hash;
 class EntrepriseController extends Controller
 {
     public function index()
@@ -48,10 +51,10 @@ class EntrepriseController extends Controller
         $entreprise->dossier = $filename;
     }
     $entreprise->save();
-    $lastEntreprise = Entreprise::latest()->first(); // Récupérer la dernière entreprise enregistrée
+    $lastEntreprise = Entreprise::latest()->first(); 
     Mail::to($lastEntreprise->email)->send(new \App\Mail\EntrepriseInscriteMail($lastEntreprise));
 
-    return redirect()->route('entreprise.index')->with('success', 'Entreprise enregistrée avec succès.');
+    return redirect()->route('/')->with('success', 'Entreprise enregistrée avec succès.');
 }
 
 public function show(Entreprise $entreprise)
@@ -62,19 +65,23 @@ public function show(Entreprise $entreprise)
 
     public function validerEntreprise($id)
     {
-        
-        $valider = "validé";
         $entreprise = Entreprise::find($id);
-
+    
         if ($entreprise) {
-            Mail::to($entreprise->EMAIL)->send(new DemandeMail($entreprise));
+            $password = Str::random(10);  
+            $user = new User();
+            $user->name = $entreprise->nomentreprise; 
+            $user->email = $entreprise->email;
+            $user->password = Hash::make($password); 
+            $user->role_id = 2;
+            $user->save();
+            Mail::to($entreprise->email)->send(new ValiderEntrepriseMail($entreprise, $password));
             return redirect()->route('entreprise.index')
                 ->with('success', "L'email a été envoyé à l'entreprise : {$entreprise->nomentreprise}");
         }
         return redirect()->route('entreprise.index')->withErrors('Entreprise non trouvée.');
     }
-    
-
+   
 
 
 }
