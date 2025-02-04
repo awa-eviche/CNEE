@@ -86,7 +86,7 @@
                   </ul-->
                 </div>
               </li>
-              @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
+           @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
        <li class="nav-item">
   <a data-bs-toggle="collapse" href="#forms" aria-expanded="false">
     <i class="fas fa-pen-square"></i>
