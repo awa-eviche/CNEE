@@ -14,7 +14,7 @@
         <li><strong>Activité :</strong> {{ $entreprise->activite }}</li>
         <li><strong>Secteur :</strong> {{ $entreprise->secteur }}</li>
     </ul>
-    <p>Merci de nous faire confiance. Une equupe de la DE sera déployée pour une visite de prospection à une date ultérieure.</p>
+    <p>Merci de nous faire confiance. Une equipe de la DE sera déployée pour une visite de prospection à une date ultérieure.</p>
     <p>Cordialement,</p>
     <p>L'équipe de la Direction de l'Emploi</p>
 </body>
