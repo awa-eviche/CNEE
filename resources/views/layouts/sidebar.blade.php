@@ -95,16 +95,16 @@
   </a>
   <div class="collapse" id="forms">
     <ul class="nav nav-collapse">
-      <li>
+      <!--li>
         <a href="{{ route('profil.index') }}">
           <span class="sub-item">Gestion des profils</span>
         </a>
-      </li>
-      <li>
+      </li-->
+      <!--li>
         <a href="{{ route('niveau.index') }}">
           <span class="sub-item">Gestion des niveaux</span>
         </a>
-      </li>
+      </li-->
       <li>
         <a href="{{ route('demandeur.index') }}">
           <span class="sub-item">Gestion des demandeurs</span>
@@ -153,21 +153,17 @@
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#maps">
                   <i class="fas fa-table"></i>
-                  <p>Gestion demande</p>
+                  <p>Gestion des stagiaires</p>
                   <span class="caret"></span>
                 </a>
                 <div class="collapse" id="maps">
                   <ul class="nav nav-collapse">
                     <li>
                       <a href="#">
-                        <span class="sub-item">Profils souhaités</span>
+                        <span class="sub-item">Demande de Profils</span>
                       </a>
                     </li>
-                    <li>
-                      <a href="#">
-                        <span class="sub-item">Liste profils souhaités</span>
-                      </a>
-                    </li>
+                  
                   </ul>
                 </div>
               </li>
@@ -182,13 +178,14 @@
                 <div class="collapse" id="charts">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="charts/charts.html">
-                        <span class="sub-item">Liste retenu</span>
+                     
+                      <a href="charts/sparkline.html">
+                        <span class="sub-item">Demandeur reçu</span>
                       </a>
                     </li>
                     <li>
-                      <a href="charts/sparkline.html">
-                        <span class="sub-item">Liste reçu</span>
+                    <a href="charts/charts.html">
+                        <span class="sub-item">Demandeur retenu</span>
                       </a>
                     </li>
                   </ul>
