@@ -40,6 +40,11 @@ Route::group([],function () {
     Route::resource('niveau', NiveauxController::class);    
     Route::resource('demandeur', DemandeurController::class);
     });
+
     Route::post('/entreprise/valider/{id}', [EntrepriseController::class, 'validerEntreprise'])->name('entreprise.valider');
+
+
+    Route::get('/entreprise/valider/{id}', [EntrepriseController::class, 'validerEntreprise'])->name('entreprise.valider');
+    Route::post('/demandeur/import', [DemandeurController::class, 'import'])->name('demandeur.import');
 
 require __DIR__.'/auth.php';
