@@ -5,6 +5,7 @@ use App\Models\Entreprise;
 use Illuminate\Http\Request;
 use App\Mail\EntrepriseInscriteMail;
 use App\Mail\ValiderEntrepriseMail;
+use App\Mail\RejeterEntrepriseMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use App\Models\User; 
@@ -45,6 +46,7 @@ class EntrepriseController extends Controller
     $entreprise->email = $request->email;
     $entreprise->tel = $request->tel;
     $entreprise->region= $request->region;
+    $entreprise->statut = "en attente";
     $entreprise->departement = $request->departement;
     $entreprise->formj = $request->formj;
     $entreprise->activite = $request->activite;
@@ -73,6 +75,8 @@ public function show(Entreprise $entreprise)
         $entreprise = Entreprise::find($id);
     
         if ($entreprise) {
+            $entreprise->statut = 'validé';
+            $entreprise->save();
             $password = Str::random(10);  
             $user = new User();
             $user->name = $entreprise->nomentreprise; 
@@ -87,6 +91,19 @@ public function show(Entreprise $entreprise)
         return redirect()->route('entreprise.index')->withErrors('Entreprise non trouvée.');
     }
    
-
+    public function rejeterEntreprise($id)
+    {
+        $entreprise = Entreprise::find($id);
+        if ($entreprise) {   
+            $entreprise->statut = 'rejeté';
+            $entreprise->save();
+            Mail::to($entreprise->email)->send(new RejeterEntrepriseMail($entreprise));
+    
+            return redirect()->route('entreprise.index')
+                ->with('success', "L'email de rejet a été envoyé à l'entreprise : {$entreprise->nomentreprise}");
+        }
+        return redirect()->route('entreprise.index')->withErrors('Entreprise non trouvée.');
+    }
+    
 
 }

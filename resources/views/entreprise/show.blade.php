@@ -9,7 +9,18 @@
        @include('layouts.sidebar')
     
       <!-- End Sidebar -->
+<style>
+  .bg-success {
+    background-color: #28a745; /* Vert */
+    color: white; /* Texte blanc */
+}
 
+.bg-danger {
+    background-color: #dc3545; /* Rouge */
+    color: white; /* Texte blanc */
+}
+
+</style>
       <div class="main-panel">
         <div class="main-header">
           <div class="main-header-logo">
@@ -140,6 +151,12 @@
  <input  type="text" class="form-control" id="region" value="{{ $entreprise->region ?? ' - ' }}" readonly />
 
 </div>
+<div class="form-group">
+    <label for="region">Statut</label>
+    <input type="text" class="form-control {{ $entreprise->statut == 'validé' ? 'btn btn-success' : ($entreprise->statut == 'rejeté' ? 'btn btn-danger' : '') }}" 
+           id="region" value="{{ $entreprise->statut ?? ' - ' }}" disabled />
+</div>
+
 
 <div class="form-group">
     @if($entreprise->dossier)
@@ -169,7 +186,7 @@
                       Valider et envoyer un e-mail
                   </button>
               </form>
-                   <form action="" method="POST">
+                   <form action="{{ route('entreprise.rejeter', $entreprise->id) }}" method="post">
                       @csrf
                       <button type="submit" class="btn btn-danger">
                           Rejeter et  envoyer un e-mail

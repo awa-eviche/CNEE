@@ -38,7 +38,9 @@
             <!-- End Logo Header -->
           </div>
           <!-- Navbar Header -->
+          <div class="container-fluid">
           @include('layouts.nav')
+          </div>
           <!-- End Navbar -->
         </div>
 

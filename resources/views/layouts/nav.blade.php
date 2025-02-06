@@ -16,6 +16,10 @@
                     class="form-control"
                   />
                 </div>
+                <div class="input-group-prepend">
+             
+                </div>
+             
               </nav>
 
               <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
@@ -123,15 +127,21 @@
                     </li>
                   </ul>
                 </li>
-               
+                    
+                <a class="dropdown-item d-flex align-items-center justify-content-between" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();" >
+                            <i class="fas fa-power-off" style=" font-size:125%"></i>
+                                  
+                                </a>
 
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+              
                 <li class="nav-item topbar-user dropdown hidden-caret">
-                  <a
-                    class="dropdown-toggle profile-pic"
-                    data-bs-toggle="dropdown"
-                    href="#"
-                    aria-expanded="false"
-                  >
+                  
+                <a class="dropdown-toggle profile-pic"data-bs-toggle="dropdown" href="#" aria-expanded="false">
+                    
                     <div class="avatar-sm">
                       <img
                         src="{{ asset('assets/img/profile.jpg')}}"
@@ -150,24 +160,32 @@
                         <div class="user-box">
                           <div class="avatar-lg">
                             <img
-                              src="{{ asset('assets/img/profile.jpg') }}"
+                              src="assets/img/profile.jpg"
                               alt="image profile"
                               class="avatar-img rounded"
                             />
                           </div>
                           <div class="u-text">
-                            <h4>{{ Auth::user()->name }}</h4>
-                            <p class="text-muted">{{ Auth::user()->email }}</p>
-                           
+                            <h4>Hizrian</h4>
+                            <p class="text-muted">hello@example.com</p>
+                            <a
+                              href="profile.html"
+                              class="btn btn-xs btn-secondary btn-sm"
+                              >View Profile</a>
                           </div>
                         </div>
                       </li>
                       <li>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Mon profil</a>
-                       
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Se deconnecter</a>
+                        
+                        <div class="dropdown-divider">
+                        <a class="dropdown-item" href="#">Account Setting</a>
+                        <div class="dropdown-divider">
+                     
+                        </div>
+                    
+                        </div>
+                      
                       </li>
                     </div>
                   </ul>
