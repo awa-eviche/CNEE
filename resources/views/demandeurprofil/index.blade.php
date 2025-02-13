@@ -50,127 +50,100 @@
                 <h3 class="fw-bold mb-3">Gestion des demandeurs</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
               </div>
-              <!-- <div class="ms-md-auto py-2 py-md-0">
-            
-                <a href="#" class="btn btn-primary btn-round">Ajouter</a>
-              </div> -->
+              <div class="ms-md-auto py-2 py-md-0 " >
+         
+
+              </div> 
             </div>
             <div class="row">
-            <form action="{{ route('demandeur.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-           
               <div class="col-md-12">
                 <div class="card">
-                 
+                  <div class="card-header">
+                    <h4 class="card-title" style="text-align:center">Liste des profils des demandeurs</h4>
+
+
+               </div>
                   <div class="card-body">
-                    <div class="row">
-                      <div class="col-md-6 col-6">
-                        <div class="form-group">
-                          <label for="nom">Nom</label>
-                          <input
-                            type="text" class="form-control" id="nom" name="nom" placeholder="Enter votre Nom" />
-                         
-                        </div>
+                    <div class="table-responsive">
+                    <table
+    id="basic-datatables"
+    class="display table table-striped table-hover"
+    style="table-layout: fixed; width: 100%;">
+    <thead>
+        <tr>
+            <th style="width: 50%;">Nom</th>
+            <th style="width: 50%;">Prenom</th>
+            <th style="width: 50%;">Email</th>
+            <th style="width: 50%;">Profil</th>
+            <th style="width: 50%;">Niveau d'etude</th>
+          
+            <th style="width: 50%;">Actions</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+        <th style="width: 50%;">Nom</th>
+            <th style="width: 50%;">Prenom</th>
+            <th style="width: 50%;">Email</th>
+            <th style="width: 50%;">Profil</th>
+            <th style="width: 50%;">Niveau d'etude</th>
+          
+           
+            <th style="width: 50%;">Actions</th>
+        </tr>
+    </tfoot>
+    <tbody>
+        @foreach ($demandeurprofil as $dem)
+        <tr>
+            <td>{{ $dem->demandeur->nom ?? ' - ' }}</td>
+            <td>{{ $dem->demandeur->prenom ?? ' - ' }}</td>
+            <td>{{ $dem->demandeur->email ?? ' - ' }}</td>
+            <td>{{ $dem->profil->libelle ?? ' - ' }}</td>
+            <td>{{ $dem->niveaux->libelle ?? ' - ' }}</td>
+           
+         
+            
+        
+    <div class="d-flex justify-content-center gap-2">
+       
+         
+  
 
-                        
-                       
+        
+        
+    </div>
+    <td>
+    <div class="card-action d-flex gap-2">
+        <!-- Icône Modifier -->
+        <a href="{{ route('demandeurprofil.edit', $dem->id) }}" class="text-success">
+        <i class="fa fa-edit"></i>
+        </a>
 
-                        <div class="form-group">
-                          <label for="datenaissance">Date de Naissance</label>
-                          <input type="date" class="form-control" id="datenaissance" name="datenaissance" placeholder="Votre Date de Naissance" />
-                        </div>
+        <!-- Icône Supprimer avec confirmation -->
+        <form action="{{ route('demandeur.destroy', $dem->id) }}" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer ce demandeur ?')">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn p-0 border-0 text-danger">
+            <i class="fa fa-trash"></i> 
+            </button>
+        </form>
+    </div>
+</td>
 
-                        <div class="form-group">
-                          <label for="email">Email</label>
-                          <input type="email" class="form-control" id="email" name="email" placeholder="Votre adresse email" />
-                        </div>
-
-                        <div class="form-group">
-                          <label for="adresse">Adresse</label>
-                          <input
-                            type="text" class="form-control" id="adresse" name="adresse" placeholder="Votre adresse " />
-                         
-                        </div>
-
-
-  <!--div class="form-group">
- <label for="profil_id">Sélectionner un profil :</label>
-    <select class="form-control"  id="profil_id" name="profil_id">
-        <option value="">Choisir un Profil</option>
-        @foreach($profiles as $profile)
-            <option value="{{ $profile->id }}">{{ $profile->libelle}}</option>
+    </tr>
         @endforeach
-    </select>
-</div-->
+        
+    </tbody>
 
-                       
-                     
-                      </div>
+</table>
 
-                      
-                      <div class="col-md-6 col-6">
-                        
-                      <div class="form-group">
-                          <label for="prenom">Prenom</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="prenom"
-                            name="prenom"
-                            placeholder="Prenom"
-                          />
-                        </div>
-                        <div class="form-group">
-                          <label for="lieunaissance">Lieu de Naissance</label>
-                          <input  type="text" class="form-control" id="lieunaissance" name="lieunaissance"  placeholder="Votre lieu de naissance"  />
-                        </div>
-                        <div class="form-group">
-    <label for="sexe">Sexe</label>
-    <select class="form-control" id="sexe" name="sexe">
-        <option value="" disabled selected>Choisissez votre sexe</option>
-        <option value="Masculin">Masculin</option>
-        <option value="Féminin">Féminin</option>
-    </select>
-</div>
-
-                        <!--div class="form-group">
- <label for="niveaux_id">Sélectionner un niveau :</label>
-    <select class="form-control"  id="niveaux_id" name="niveaux_id">
-        <option value="">Choisir un Niveau d'etude</option>
-        @foreach($niveaus as $niv)
-            <option value="{{ $niv->id }}">{{ $niv->libelle}}</option>
-        @endforeach
-    </select>
-</div-->
-
-<div class="form-group">
-    <label for="cv">Télécharger votre CV (format PDF uniquement)</label>
-    <input 
-        type="file" 
-        class="form-control" 
-        id="cv" 
-        name="cv" 
-        accept=".pdf" 
-    />
-</div>
-
-                        </div>
-                    
-                      </div>
-
-                      
-                     
                     </div>
-                    
-                  </div>
-                  
-                  <div class="card-action">
-                    <button class="btn btn-success">Enregister</button>
-                  
                   </div>
                 </div>
               </div>
+
             </div>
+ 
           </div>
         </div>
      
@@ -435,6 +408,70 @@
         lineWidth: "2",
         lineColor: "#ffa534",
         fillColor: "rgba(255, 165, 52, .14)",
+      });
+    </script>
+      <script>
+      $(document).ready(function () {
+        $("#basic-datatables").DataTable({
+    language: {
+      lengthMenu: "Afficher _MENU_ entrées",
+      paginate: {
+        previous: "Précédent",
+        next: "Suivant"
+      }
+    }
+  });
+        $("#multi-filter-select").DataTable({
+          pageLength: 5,
+          initComplete: function () {
+            this.api()
+              .columns()
+              .every(function () {
+                var column = this;
+                var select = $(
+                  '<select class="form-select"><option value=""></option></select>'
+                )
+                  .appendTo($(column.footer()).empty())
+                  .on("change", function () {
+                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                    column
+                      .search(val ? "^" + val + "$" : "", true, false)
+                      .draw();
+                  });
+
+                column
+                  .data()
+                  .unique()
+                  .sort()
+                  .each(function (d, j) {
+                    select.append(
+                      '<option value="' + d + '">' + d + "</option>"
+                    );
+                  });
+              });
+          },
+        });
+
+        // Add Row
+        $("#add-row").DataTable({
+          pageLength: 5,
+        });
+
+        var action =
+          '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+
+        $("#addRowButton").click(function () {
+          $("#add-row")
+            .dataTable()
+            .fnAddData([
+              $("#addName").val(),
+              $("#addPosition").val(),
+              $("#addOffice").val(),
+              action,
+            ]);
+          $("#addRowModal").modal("hide");
+        });
       });
     </script>
   </body>

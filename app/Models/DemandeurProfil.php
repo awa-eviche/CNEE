@@ -1,30 +1,32 @@
 <?php
 
 namespace App\Models;
+use App\Models\Niveaux;
+use App\Models\Profil;
+use App\Models\Demandeur;
+
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
-class Demandeur extends Model
+class DemandeurProfil extends Model
 {
     use HasFactory;
 
     public $timestamps = false;
     protected $fillable = [
-        "nom",
-        "prenom",
-        "sexe",
-        "datenaissance",
-        "lieunaissance",
-        "adresse",
-        "email",
-        "cv",
+        "demandeur_id",
+        "profil_id",
+        "niveaux_id",
+       
        
     ];
 
   
-
+    public function demandeur()
+    {
+        return $this->belongsTo(Demandeur::class);
+    }
     public function profil()
     {
         return $this->belongsTo(Profil::class);
@@ -36,4 +38,3 @@ class Demandeur extends Model
     }
 
 }
-

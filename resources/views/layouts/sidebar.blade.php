@@ -99,6 +99,12 @@
           <span class="sub-item">Gestion des demandeurs</span>
         </a>
       </li>
+
+      <li>
+        <a href="{{ route('demandeurprofil.index') }}">
+          <span class="sub-item">Gestion des profils demandeurs</span>
+        </a>
+      </li>
     </ul>
   </div>
 </li>

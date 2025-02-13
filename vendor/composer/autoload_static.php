@@ -611,12 +611,12 @@ class ComposerStaticInit65e85f9f959c0b087110331754d451cf
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\Auth\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/LoginRequest.php',
         'App\\Http\\Requests\\ProfileUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProfileUpdateRequest.php',
+        'App\\Imports\\DemandeurImport' => __DIR__ . '/../..' . '/app/Imports/DemandeurImport.php',
         'App\\Mail\\EntrepriseInscriteMail' => __DIR__ . '/../..' . '/app/Mail/EntrepriseInscriteMail.php',
-
+        'App\\Mail\\RejeterEntrepriseMail' => __DIR__ . '/../..' . '/app/Mail/RejeterEntrepriseMail.php',
         'App\\Mail\\ValiderEntrepriseMail' => __DIR__ . '/../..' . '/app/Mail/ValiderEntrepriseMail.php',
-
-
         'App\\Models\\Demandeur' => __DIR__ . '/../..' . '/app/Models/Demandeur.php',
+        'App\\Models\\DemandeurProfil' => __DIR__ . '/../..' . '/app/Models/DemandeurProfil.php',
         'App\\Models\\Entreprise' => __DIR__ . '/../..' . '/app/Models/Entreprise.php',
         'App\\Models\\Niveaux' => __DIR__ . '/../..' . '/app/Models/Niveaux.php',
         'App\\Models\\Profil' => __DIR__ . '/../..' . '/app/Models/Profil.php',

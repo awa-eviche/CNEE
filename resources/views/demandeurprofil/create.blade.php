@@ -43,21 +43,19 @@
         </div>
         <div class="container">
           <div class="page-inner">
-            <div
-              class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
-            >
+    <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4" >
               <div>
                 <h3 class="fw-bold mb-3">Gestion des demandeurs</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
               </div>
-              <!-- <div class="ms-md-auto py-2 py-md-0">
             
-                <a href="#" class="btn btn-primary btn-round">Ajouter</a>
-              </div> -->
             </div>
             <div class="row">
-            <form action="{{ route('demandeur.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
+            <form action="{{ route('demandeurprofil.store') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+
+        <input type="hidden" name="demandeur_id" value="{{ $demandeur->id }}">
+
            
               <div class="col-md-12">
                 <div class="card">
@@ -65,94 +63,32 @@
                   <div class="card-body">
                     <div class="row">
                       <div class="col-md-6 col-6">
-                        <div class="form-group">
-                          <label for="nom">Nom</label>
-                          <input
-                            type="text" class="form-control" id="nom" name="nom" placeholder="Enter votre Nom" />
-                         
-                        </div>
-
-                        
-                       
-
-                        <div class="form-group">
-                          <label for="datenaissance">Date de Naissance</label>
-                          <input type="date" class="form-control" id="datenaissance" name="datenaissance" placeholder="Votre Date de Naissance" />
-                        </div>
-
-                        <div class="form-group">
-                          <label for="email">Email</label>
-                          <input type="email" class="form-control" id="email" name="email" placeholder="Votre adresse email" />
-                        </div>
-
-                        <div class="form-group">
-                          <label for="adresse">Adresse</label>
-                          <input
-                            type="text" class="form-control" id="adresse" name="adresse" placeholder="Votre adresse " />
-                         
-                        </div>
-
-
-  <!--div class="form-group">
+                      <div class="form-group">
  <label for="profil_id">Sélectionner un profil :</label>
-    <select class="form-control"  id="profil_id" name="profil_id">
+    <select class="form-control"  id="profil_id" name="profil_id"  required>
         <option value="">Choisir un Profil</option>
         @foreach($profiles as $profile)
             <option value="{{ $profile->id }}">{{ $profile->libelle}}</option>
         @endforeach
     </select>
-</div-->
-
-                       
-                     
-                      </div>
-
-                      
-                      <div class="col-md-6 col-6">
-                        
-                      <div class="form-group">
-                          <label for="prenom">Prenom</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="prenom"
-                            name="prenom"
-                            placeholder="Prenom"
-                          />
-                        </div>
-                        <div class="form-group">
-                          <label for="lieunaissance">Lieu de Naissance</label>
-                          <input  type="text" class="form-control" id="lieunaissance" name="lieunaissance"  placeholder="Votre lieu de naissance"  />
-                        </div>
-                        <div class="form-group">
-    <label for="sexe">Sexe</label>
-    <select class="form-control" id="sexe" name="sexe">
-        <option value="" disabled selected>Choisissez votre sexe</option>
-        <option value="Masculin">Masculin</option>
-        <option value="Féminin">Féminin</option>
-    </select>
 </div>
 
-                        <!--div class="form-group">
+<div class="form-group">
  <label for="niveaux_id">Sélectionner un niveau :</label>
-    <select class="form-control"  id="niveaux_id" name="niveaux_id">
+    <select class="form-control"  id="niveaux_id" name="niveaux_id"  required>
         <option value="">Choisir un Niveau d'etude</option>
-        @foreach($niveaus as $niv)
+        @foreach($niveaux as $niv)
             <option value="{{ $niv->id }}">{{ $niv->libelle}}</option>
         @endforeach
     </select>
-</div-->
-
-<div class="form-group">
-    <label for="cv">Télécharger votre CV (format PDF uniquement)</label>
-    <input 
-        type="file" 
-        class="form-control" 
-        id="cv" 
-        name="cv" 
-        accept=".pdf" 
-    />
 </div>
+
+                                 
+
+    </div>
+
+                      
+
 
                         </div>
                     

@@ -34,12 +34,12 @@ return array(
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Http\\Requests\\Auth\\LoginRequest' => $baseDir . '/app/Http/Requests/Auth/LoginRequest.php',
     'App\\Http\\Requests\\ProfileUpdateRequest' => $baseDir . '/app/Http/Requests/ProfileUpdateRequest.php',
+    'App\\Imports\\DemandeurImport' => $baseDir . '/app/Imports/DemandeurImport.php',
     'App\\Mail\\EntrepriseInscriteMail' => $baseDir . '/app/Mail/EntrepriseInscriteMail.php',
-
+    'App\\Mail\\RejeterEntrepriseMail' => $baseDir . '/app/Mail/RejeterEntrepriseMail.php',
     'App\\Mail\\ValiderEntrepriseMail' => $baseDir . '/app/Mail/ValiderEntrepriseMail.php',
-
-
     'App\\Models\\Demandeur' => $baseDir . '/app/Models/Demandeur.php',
+    'App\\Models\\DemandeurProfil' => $baseDir . '/app/Models/DemandeurProfil.php',
     'App\\Models\\Entreprise' => $baseDir . '/app/Models/Entreprise.php',
     'App\\Models\\Niveaux' => $baseDir . '/app/Models/Niveaux.php',
     'App\\Models\\Profil' => $baseDir . '/app/Models/Profil.php',
