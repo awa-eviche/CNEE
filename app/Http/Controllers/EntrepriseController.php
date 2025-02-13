@@ -19,6 +19,9 @@ class EntrepriseController extends Controller
     }
     public function create()
     {
+        $entreprises = Entreprise::where('user_id', auth()->id())->get();
+
+
          $entreprises=Entreprise::all();
         return view('entreprise.create',compact('entreprises'));
     }
@@ -105,5 +108,16 @@ public function show(Entreprise $entreprise)
         return redirect()->route('entreprise.index')->withErrors('Entreprise non trouvée.');
     }
     
-
+    public function desactiver($id)
+    {
+        $entreprise = Entreprise::find($id);
+        if ($entreprise) {
+            $entreprise->est_actif = false;  
+            $entreprise->save();
+    
+        }
+    
+        return redirect()->route('entreprise.index');  
+    }
+    
 }

@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\Http\\Controllers\\ArchiveController' => $baseDir . '/app/Http/Controllers/ArchiveController.php',
     'App\\Http\\Controllers\\Auth\\AuthenticatedSessionController' => $baseDir . '/app/Http/Controllers/Auth/AuthenticatedSessionController.php',
     'App\\Http\\Controllers\\Auth\\ConfirmablePasswordController' => $baseDir . '/app/Http/Controllers/Auth/ConfirmablePasswordController.php',
     'App\\Http\\Controllers\\Auth\\EmailVerificationNotificationController' => $baseDir . '/app/Http/Controllers/Auth/EmailVerificationNotificationController.php',
@@ -34,13 +35,14 @@ return array(
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Http\\Requests\\Auth\\LoginRequest' => $baseDir . '/app/Http/Requests/Auth/LoginRequest.php',
     'App\\Http\\Requests\\ProfileUpdateRequest' => $baseDir . '/app/Http/Requests/ProfileUpdateRequest.php',
+    'App\\Imports\\DemandeurImport' => $baseDir . '/app/Imports/DemandeurImport.php',
     'App\\Mail\\EntrepriseInscriteMail' => $baseDir . '/app/Mail/EntrepriseInscriteMail.php',
-
+    'App\\Mail\\RejeterEntrepriseMail' => $baseDir . '/app/Mail/RejeterEntrepriseMail.php',
     'App\\Mail\\ValiderEntrepriseMail' => $baseDir . '/app/Mail/ValiderEntrepriseMail.php',
-
-
+    'App\\Models\\Archive' => $baseDir . '/app/Models/Archive.php',
     'App\\Models\\Demandeur' => $baseDir . '/app/Models/Demandeur.php',
     'App\\Models\\Entreprise' => $baseDir . '/app/Models/Entreprise.php',
+    'App\\Models\\Fichier' => $baseDir . '/app/Models/Fichier.php',
     'App\\Models\\Niveaux' => $baseDir . '/app/Models/Niveaux.php',
     'App\\Models\\Profil' => $baseDir . '/app/Models/Profil.php',
     'App\\Models\\Role' => $baseDir . '/app/Models/Role.php',

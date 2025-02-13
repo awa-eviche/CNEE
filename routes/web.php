@@ -6,7 +6,8 @@ use App\Http\Controllers\EntrepriseController;
 use App\Http\Controllers\NiveauxController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\DemandeurController;
-
+use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\FichierController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,18 +28,25 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
+Route::post('/entreprise/desactiver/{id}', [EntrepriseController::class, 'desactiver'])->name('entreprise.desactiver');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+Route::post('/archives/{archive}/fichiers', [FichierController::class, 'store'])->name('fichiers.store');
+
 Route::group([],function () {
     
     Route::resource('entreprise', EntrepriseController::class);
     Route::resource('profil', ProfilController::class);
     Route::resource('niveau', NiveauxController::class);    
     Route::resource('demandeur', DemandeurController::class);
+
+    Route::resource('archive', ArchiveController::class);
     });
 
     Route::post('/entreprise/valider/{id}', [EntrepriseController::class, 'validerEntreprise'])->name('entreprise.valider');

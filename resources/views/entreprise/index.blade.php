@@ -92,6 +92,8 @@
                         </tfoot>
                         <tbody>
                           @foreach($entreprises as $entreprise)
+                          @if(auth()->user()->role_id == 1 || (auth()->user()->role_id == 2 && auth()->user()->name == $entreprise->nomentreprise))
+
                           <tr>
                             <td>{{ $entreprise->nomentreprise ?? ' - ' }}</td>
                             <td>{{ $entreprise->adresse ?? ' - ' }}</td>
@@ -106,9 +108,13 @@
      
       </td>
                           </tr> 
+                          @endif
                           @endforeach
+                         
                         </tbody>
+                       
                       </table>
+                    
                     </div>
                   </div>
                 </div>

@@ -79,7 +79,7 @@
        <li class="nav-item">
   <a data-bs-toggle="collapse" href="#forms" aria-expanded="false">
     <i class="fas fa-pen-square"></i>
-    <p>Gestion Demandeurs</p>
+    <p>Gestion Demandeur</p>
     <span class="caret"></span>
   </a>
   <div class="collapse" id="forms">
@@ -135,6 +135,17 @@
                 </a>
                 <div class="collapse" id="maps">
                
+                </div>
+              </li>
+              @endif
+              @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
+              <li class="nav-item">
+                <a href="{{ route('archive.index') }}">
+                <i class="fas fa-file"></i>
+                  <p>Gestion archives</p>
+                 
+                </a>
+                <div class="collapse" id="maps">
                 </div>
               </li>
               @endif

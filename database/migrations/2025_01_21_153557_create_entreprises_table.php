@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string("email")->unique();
             $table->string("ninea")->unique();
             $table->string("regitcom")->unique();
+            $table->boolean('est_actif')->default(true); 
             $table->string("dossier");
             $table->timestamps();
         });

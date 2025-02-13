@@ -585,6 +585,7 @@ class ComposerStaticInit65e85f9f959c0b087110331754d451cf
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\ArchiveController' => __DIR__ . '/../..' . '/app/Http/Controllers/ArchiveController.php',
         'App\\Http\\Controllers\\Auth\\AuthenticatedSessionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/AuthenticatedSessionController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmablePasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmablePasswordController.php',
         'App\\Http\\Controllers\\Auth\\EmailVerificationNotificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/EmailVerificationNotificationController.php',
@@ -611,13 +612,14 @@ class ComposerStaticInit65e85f9f959c0b087110331754d451cf
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\Auth\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/LoginRequest.php',
         'App\\Http\\Requests\\ProfileUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProfileUpdateRequest.php',
+        'App\\Imports\\DemandeurImport' => __DIR__ . '/../..' . '/app/Imports/DemandeurImport.php',
         'App\\Mail\\EntrepriseInscriteMail' => __DIR__ . '/../..' . '/app/Mail/EntrepriseInscriteMail.php',
-
+        'App\\Mail\\RejeterEntrepriseMail' => __DIR__ . '/../..' . '/app/Mail/RejeterEntrepriseMail.php',
         'App\\Mail\\ValiderEntrepriseMail' => __DIR__ . '/../..' . '/app/Mail/ValiderEntrepriseMail.php',
-
-
+        'App\\Models\\Archive' => __DIR__ . '/../..' . '/app/Models/Archive.php',
         'App\\Models\\Demandeur' => __DIR__ . '/../..' . '/app/Models/Demandeur.php',
         'App\\Models\\Entreprise' => __DIR__ . '/../..' . '/app/Models/Entreprise.php',
+        'App\\Models\\Fichier' => __DIR__ . '/../..' . '/app/Models/Fichier.php',
         'App\\Models\\Niveaux' => __DIR__ . '/../..' . '/app/Models/Niveaux.php',
         'App\\Models\\Profil' => __DIR__ . '/../..' . '/app/Models/Profil.php',
         'App\\Models\\Role' => __DIR__ . '/../..' . '/app/Models/Role.php',
