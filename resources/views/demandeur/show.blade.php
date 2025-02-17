@@ -92,12 +92,12 @@
                         </div>
 
 
-  <div class="form-group">
+  <!--div class="form-group">
  <label for="profil_id">Sélectionner un profil :</label>
  <input
-                            type="text" class="form-control" id="adresse" name="adresse" value="{{ $demandeur->profil->libelle ?? ' - ' }}" readonly  />
+type="text" class="form-control" id="adresse" name="adresse" value="{{ $demandeur->profil->libelle ?? ' - ' }}" readonly  />
                          
-</div>
+</div-->
 
                        
                      
@@ -126,11 +126,11 @@
 
 </div>
 
-                        <div class="form-group">
+ <!--div class="form-group">
  <label for="niveaux_id">Sélectionner un niveau :</label>
  <input  type="text" class="form-control" id="lieunaissance"   value="{{ $demandeur->niveaux->libelle ?? ' - ' }}" readonly  />
 
-</div>
+</div-->
 
 <td>
               @if($demandeur->cv)
@@ -160,6 +160,7 @@
             Supprimer
         </button>
     </form>
+    <a href="{{ route('demandeurprofil.create', $demandeur->id) }}" class="btn btn-success">Joindre Profil</a>
 </div>
 
                 </div>

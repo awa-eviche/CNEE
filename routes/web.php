@@ -6,9 +6,14 @@ use App\Http\Controllers\EntrepriseController;
 use App\Http\Controllers\NiveauxController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\DemandeurController;
+
+use App\Http\Controllers\DemandeurProfilController;
+
+
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\FichierController;
 use App\Http\Controllers\AdminController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,7 +51,12 @@ Route::group([],function () {
     Route::resource('profil', ProfilController::class);
     Route::resource('niveau', NiveauxController::class);    
     Route::resource('demandeur', DemandeurController::class);
+
+    Route::resource('demandeurprofil', DemandeurProfilController::class);
+    });
+
     Route::resource('admin', AdminController::class);
+
 
     Route::resource('archive', ArchiveController::class);
     });
@@ -57,5 +67,9 @@ Route::group([],function () {
 
     Route::get('/entreprise/valider/{id}', [EntrepriseController::class, 'validerEntreprise'])->name('entreprise.valider');
     Route::post('/demandeur/import', [DemandeurController::class, 'import'])->name('demandeur.import');
+    Route::get('/demandeurprofil/create/{demandeur_id}', [DemandeurProfilController::class, 'create'])->name('demandeurprofil.create');
+    
+
+
 
 require __DIR__.'/auth.php';

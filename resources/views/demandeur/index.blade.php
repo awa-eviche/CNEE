@@ -80,8 +80,7 @@
             <th style="width: 50%;">Prenom</th>
             <th style="width: 50%;">Email</th>
             <th style="width: 50%;">Sexe</th>
-            <th style="width: 50%;">Profil</th>
-            <th style="width: 50%;">Niveaux</th>
+          
             <th style="width: 50%;">Actions</th>
         </tr>
     </thead>
@@ -91,8 +90,7 @@
             <th style="width: 50%;">Prenom</th>
             <th style="width: 50%;">Email</th>
             <th style="width: 50%;">Sexe</th>
-            <th style="width: 50%;">Profil</th>
-            <th style="width: 50%;">Niveaux</th>
+          
            
             <th style="width: 50%;">Actions</th>
         </tr>
@@ -104,8 +102,7 @@
             <td>{{ $dem->prenom ?? ' - ' }}</td>
             <td>{{ $dem->email ?? ' - ' }}</td>
             <td>{{ $dem->sexe ?? ' - ' }}</td>
-            <td>{{ $dem->profil->libelle ?? ' - ' }}</td>
-            <td>{{ $dem->niveaux->libelle ?? ' - ' }}</td>
+           
          
             
         
