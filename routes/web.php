@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\DemandeurController;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\FichierController;
+use App\Http\Controllers\AdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,10 +46,11 @@ Route::group([],function () {
     Route::resource('profil', ProfilController::class);
     Route::resource('niveau', NiveauxController::class);    
     Route::resource('demandeur', DemandeurController::class);
+    Route::resource('admin', AdminController::class);
 
     Route::resource('archive', ArchiveController::class);
     });
-
+    Route::delete('/admin/{user}', [AdminController::class, 'destroy'])->name('admin.destroy');
     Route::post('/entreprise/valider/{id}', [EntrepriseController::class, 'validerEntreprise'])->name('entreprise.valider');
     Route::post('/entreprise/rejeter/{id}', [EntrepriseController::class, 'rejeterEntreprise'])->name('entreprise.rejeter');
 

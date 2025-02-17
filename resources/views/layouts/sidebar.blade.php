@@ -45,7 +45,7 @@
               </li>
               @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
               <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#base">
+                <a  href="{{ route('admin.index') }}">
                   <i class="fas fa-layer-group"></i>
                   <p>Gestion Utilisateur</p>
                  
