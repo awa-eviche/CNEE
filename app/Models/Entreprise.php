@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Archive;
 class Entreprise extends Model
 {
     use HasFactory;
@@ -23,10 +23,10 @@ class Entreprise extends Model
             "email",
             "ninea",
             "regitcom",
-            "dossier",
-
-            
-           
-           
+            "dossier", 
         ];
+        public function archives()
+    {
+        return $this->hasMany(Archive::class);
+    }
 }

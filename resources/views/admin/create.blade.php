@@ -9,18 +9,7 @@
        @include('layouts.sidebar')
     
       <!-- End Sidebar -->
-<style>
-  .bg-success {
-    background-color: #28a745; /* Vert */
-    color: white; /* Texte blanc */
-}
 
-.bg-danger {
-    background-color: #dc3545; /* Rouge */
-    color: white; /* Texte blanc */
-}
-
-</style>
       <div class="main-panel">
         <div class="main-header">
           <div class="main-header-logo">
@@ -58,26 +47,29 @@
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
               <div>
-                <h3 class="fw-bold mb-3">Gestion des Entreprises</h3>
+                <h3 class="fw-bold mb-3">Gestion des utilisateurs</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
               </div>
-              <!-- <div class="ms-md-auto py-2 py-md-0">
-            
-                <a href="#" class="btn btn-primary btn-round">Ajouter</a>
-              </div> -->
             </div>
             <div class="row">
-           
-              <div class="col-md-12">
+            <form action="{{ route('admin.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+        <div class="col-md-12">
                 <div class="card">
                  
                   <div class="card-body">
                     <div class="row">
                       <div class="col-md-6 col-6">
+                      <div class="form-group">
+ <label for="profil_id">Prénom & Nom </label>
+ <input
+ type="text" class="form-control" id="type" name="name" placeholder="Enter votre prénom et nom" />
+</div>
+
                         <div class="form-group">
-                          <label for="nom">Nom entreprise</label>
+                          <label for="nom">Email</label>
                           <input
-                            type="text" class="form-control" id="nom" value="{{ $entreprise->nomentreprise ?? ' - ' }}" readonly />
+                            type="email" class="form-control" id="type" name="email" placeholder="Enter votre email" />
                          
                         </div>
 
@@ -85,131 +77,58 @@
                        
 
                         <div class="form-group">
-                          <label for="datenaissance">Adresse</label>
-                          <input type="text" class="form-control" id="datenaissance" value="{{ $entreprise->adresse ?? ' - ' }}"readonly />
-                        </div>
+                          <label for="statut">Statut</label>
+                          <select class="form-control"  id="statut" name="statut">
+        <option value="">Choisir votre statut</option>
+       
+            <option value="DE">DE</option>
+            <option value="Chef de bureau">Chef de bureau</option>
+            <option value="Chef de division">Chef de division</option>
+            <option value="Agent">Agent</option>
+       
+    </select>                      
 
-                        <div class="form-group">
-                          <label for="email">Email</label>
-                          <input type="text" class="form-control" id="email" name="email" value="{{ $entreprise->email ?? ' - ' }}"readonly />
-                        </div>
-
-                        <div class="form-group">
-                          <label for="adresse">Téléphone</label>
-                          <input type="text" class="form-control" id="adresse" value="{{ $entreprise->tel ?? ' - ' }}" readonly/>
-                         
-                        </div>
-                     
-<div class="form-group">
- <label for="region">Département</label>
- <input  type="text" class="form-control" id="departement" value="{{ $entreprise->departement ?? ' - ' }}" readonly />
 
 </div>
 
-<div class="form-group">
- <label for="region">Forme juridique</label>
- <input  type="text" class="form-control" id="departement" value="{{ $entreprise->formj ?? ' - ' }}" readonly />
 
-</div>
 
-  <div class="form-group">
- <label for="profil_id">Activité:</label>
- <input type="text" class="form-control" id="adresse" value="{{ $entreprise->activite ?? ' - ' }}" readonly/>
-
-</div>
-
-                       
-                     
+    
                       </div>
 
                       
                       <div class="col-md-6 col-6">
                         
                       <div class="form-group">
-                          <label for="prenom">Secteur d'activité</label>
-                          <input type="text" class="form-control"value="{{ $entreprise->secteur ?? ' - ' }}" readonly
-                          />
+                          <label for="anneeAdhesion">Role</label>
+                          <select class="form-control"  id="role_id" name="role_id">
+        <option value="">Choisir un role</option>
+        @foreach($roles as $role)
+            @if($role->name === 'admin' || $role->name === 'superadmin')
+                <option value="{{ $role->id }}">{{ $role->name }}</option>
+            @endif
+        @endforeach
+    </select>
                         </div>
                         <div class="form-group">
-                          <label for="lieunaissance">Ninea</label>
-                          <input  type="text" class="form-control" id="lieunaissance" value="{{ $entreprise->ninea ?? ' - ' }}" readonly />
+                          <label>Créer le mot de passe</label>
+                          <input  type="password" class="form-control" id="file" name="password"  placeholder="Votre mot de passe"  />
                         </div>
                         <div class="form-group">
-    <label for="sexe">Regitre de commerce</label>
-    <input  type="text" class="form-control" id="lieunaissance" value="{{ $entreprise->regitcom ?? ' - ' }}" readonly />
-
-</div>
-
-                        <div class="form-group">
- <label for="niveaux_id">nombre d'employé</label>
- <input  type="text" class="form-control" id="lieunaissance" value="{{ $entreprise->nombreemployer ?? ' - ' }}" readonly />
-
-</div>
-
-<div class="form-group">
- <label for="region">Région</label>
- <input  type="text" class="form-control" id="region" value="{{ $entreprise->region ?? ' - ' }}" readonly />
-
-</div>
-<div class="form-group">
-    <label for="region">Statut</label>
-    <input type="text" class="form-control {{ $entreprise->statut == 'validé' ? 'btn btn-success' : ($entreprise->statut == 'rejeté' ? 'btn btn-danger' : '') }}" 
-           id="region" value="{{ $entreprise->statut ?? ' - ' }}" disabled />
-</div>
-
-
-<div class="form-group">
-    @if($entreprise->dossier)
-        <a href="{{ asset('storage/' . $entreprise->dossier) }}" target="_blank" class="btn btn-primary">
-            Voir le fichier : {{ basename($entreprise->dossier) }}
-        </a>
-    @else
-        <p>Aucun fichier disponible.</p>
-    @endif
-</div>
-
-
+                          <label>Confirmer le mot de passe</label>
+                          <input  type="password" class="form-control" id="file"  name="password_confirmation" required autocomplete="new-password"  placeholder="Confirmer mot de passe" />
                         </div>
-                    
+                        </div>
                       </div>
-
-                      
-                     
                     </div>
-                    
-                  </div> 
-                  @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
-                  <div class="card-action  d-flex gap-2"">
-                 <form action="{{ route('entreprise.valider', $entreprise->id) }}" method="post" id="validerForm">
-                   @csrf
-                  <button type="submit" class="btn btn-success"  id="validerButton">
-                      Valider et envoyer un e-mail
-                  </button>
-                  </form>
-                   <form action="{{ route('entreprise.rejeter', $entreprise->id) }}" method="post">
-                      @csrf
-                      <button type="submit" class="btn btn-danger">
-                          Rejeter et  envoyer un e-mail
-                      </button>
-                     </form> 
-                     <form action="{{ route('entreprise.desactiver', $entreprise->id) }}" method="post">
-        @csrf
-       
-        <button type="submit" class="btn {{ $entreprise->est_actif ? 'btn-success' : 'btn-danger' }}" style="color: white;">
-    <i class="fa {{$entreprise->est_actif ? 'fa-check' : 'fa-times'}}"></i>&nbsp;{{$entreprise->est_actif ? 'Activer' : 'Désactiver'}}
-</button>
-
-
-
-    </form>
+                    <div class="card-action">
+                    <button class="btn btn-success">Enregister</button> 
                   </div>
-                
-                  @endif
+                  </div>
                 </div>
-              
               </div>
             </div>
-          </div>
+          
         </div>
      
  <!--! footer-->
@@ -428,13 +347,23 @@
     <!-- Chart Circle -->
     <script src="assets/js/plugin/chart-circle/circles.min.js"></script>
 
+    <!-- Datatables -->
     <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+
+    <!-- Bootstrap Notify -->
     <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+    <!-- jQuery Vector Maps -->
     <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
     <script src="assets/js/plugin/jsvectormap/world.js"></script>
+
+    <!-- Sweet Alert -->
     <script src="assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+    <!-- Kaiadmin JS -->
     <script src="assets/js/kaiadmin.min.js"></script>
 
+    <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="assets/js/setting-demo.js"></script>
     <script src="assets/js/demo.js"></script>
     <script>
@@ -465,38 +394,5 @@
         fillColor: "rgba(255, 165, 52, .14)",
       });
     </script>
-     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        @if(session('success'))
-            $.notify({
-               
-                message: '{{ session('success') }}'
-            }, {
-                // Type et style de la notification
-                type: 'success',
-                delay: 3000,
-                placement: {
-                    from: "top",
-                    align: "right"
-                }
-            });
-        @endif
-    });
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('validerForm');
-        const button = document.getElementById('validerButton');
-
-        form.addEventListener('submit', function(event) {
-            // Désactiver le bouton
-            button.disabled = true;
-            button.innerText = 'Envoi en cours...'; // Changer le texte du bouton
-        });
-    });
-</script>
-
   </body>
-
 </html>
