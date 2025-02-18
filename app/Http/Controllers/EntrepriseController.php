@@ -19,7 +19,7 @@ class EntrepriseController extends Controller
     }
     public function create()
     {
-        $entreprises = Entreprise::where('user_id', auth()->id())->get();
+        // $entreprises = Entreprise::where('user_id', auth()->id())->get();
 
 
          $entreprises=Entreprise::all();
