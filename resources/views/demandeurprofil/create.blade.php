@@ -72,7 +72,6 @@
         @endforeach
     </select>
 </div>
-
 <div class="form-group">
  <label for="niveaux_id">Sélectionner un niveau :</label>
     <select class="form-control"  id="niveaux_id" name="niveaux_id"  required>
@@ -83,27 +82,14 @@
     </select>
 </div>
 
-                                 
-
     </div>
-
-                      
-
-
-                        </div>
-                    
-                      </div>
-
-                      
-                     
-                    </div>
-                    
-                  </div>
-                  
-                  <div class="card-action">
+    <div class="card-action">
                     <button class="btn btn-success">Enregister</button>
-                  
-                  </div>
+                    </div>
+                        </div>
+                      </div>
+                    <!-- </div>
+                  </div> -->
                 </div>
               </div>
             </div>
