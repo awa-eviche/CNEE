@@ -144,9 +144,6 @@ type="text" class="form-control" id="adresse" name="adresse" value="{{ $demandeu
                         </div>
                     
                       </div>
-
-                      
-                     
                     </div>
                     
                 </div>
@@ -160,7 +157,7 @@ type="text" class="form-control" id="adresse" name="adresse" value="{{ $demandeu
             Supprimer
         </button>
     </form>
-    <a href="{{ route('demandeurprofil.create', $demandeur->id) }}" class="btn btn-success">Joindre Profil</a>
+    <a href="{{ route('demandeurprofil.create', $demandeur->id) }}" class="btn btn-primary">Joindre Profil</a>
 </div>
 
                 </div>
