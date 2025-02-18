@@ -461,5 +461,23 @@
         });
       });
     </script>
+      <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        @if(session('success'))
+            $.notify({
+               
+                message: '{{ session('success') }}'
+            }, {
+               
+                type: 'success',
+                delay: 3000,
+                placement: {
+                    from: "top",
+                    align: "right"
+                }
+            });
+        @endif
+    });
+</script>
   </body>
 </html>
