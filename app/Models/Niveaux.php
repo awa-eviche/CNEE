@@ -9,6 +9,7 @@ class Niveaux extends Model
 {
     
         use HasFactory;
+        protected $table = 'niveauxes';
     
         public $timestamps = false;
         protected $fillable = [

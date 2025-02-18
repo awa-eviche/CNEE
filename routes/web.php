@@ -59,7 +59,9 @@ Route::group([],function () {
 
 
     Route::resource('archive', ArchiveController::class);
+
     
+
     Route::delete('/admin/{user}', [AdminController::class, 'destroy'])->name('admin.destroy');
     Route::post('/entreprise/valider/{id}', [EntrepriseController::class, 'validerEntreprise'])->name('entreprise.valider');
     Route::post('/entreprise/rejeter/{id}', [EntrepriseController::class, 'rejeterEntreprise'])->name('entreprise.rejeter');

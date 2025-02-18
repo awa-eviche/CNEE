@@ -47,27 +47,44 @@ class DemandeurProfilController extends Controller
 
 
 }
+
+public function show(DemandeurProfil $demandeurprofil)
+{
+    $demandeur = DemandeurProfil::where('id',$demandeurprofil->id)->firstOrFail();
+    $profiles = Profil::all();
+    $niveaux = Niveaux::all();
+    return view('demandeurprofil.show',compact('demandeurprofil','demandeur','profiles','niveaux'));
+}
 public function edit(DemandeurProfil $demandeurprofil)
 {
-    $demandeur = Demandeur::findOrFail($demandeur_id); // Vérifie que le demandeur existe
+    $demandeur = DemandeurProfil::where('id',$demandeurprofil->id)->firstOrFail();
     $profiles = Profil::all();
     $niveaux = Niveaux::all();
 
     return view('demandeurprofil.edit', compact('demandeurprofil','profiles','niveaux','demandeur'));
 }
+
 public function update(Request $request, DemandeurProfil $demandeurprofil)
 {
-    $request->validate([
+   
+    $validatedData = $request->validate([
         'profil_id' => 'required|exists:profils,id',
         'niveaux_id' => 'required|exists:niveauxes,id',
         'demandeur_id' => 'required|exists:demandeurs,id',
     ]);
    
-
-    $demandeurprofil->update($request->all());
+    $demandeurprofil->update($validatedData);
 
     return redirect()->route('demandeurprofil.index')
-                     ->with('success', 'profil du demandeur mis à jour avec succès.');
+                     ->with('success', 'Profil du demandeur mis à jour avec succès.');
 }
 
+public function destroy(DemandeurProfil $demandeurprofil)
+{
+      
+    $demandeurprofil->delete();
+
+    return redirect()->route('demandeurprofil.index')
+                     ->with('success', 'Profil du Demandeur supprimé avec succès.');
+}
 }
