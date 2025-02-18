@@ -19,7 +19,7 @@ class EntrepriseController extends Controller
     }
     public function create()
     {
-        // $entreprises = Entreprise::where('user_id', auth()->id())->get();
+        $entreprises = Entreprise::where('user_id', auth()->id())->get();
 
 
          $entreprises=Entreprise::all();
@@ -86,6 +86,7 @@ public function show(Entreprise $entreprise)
             $user->email = $entreprise->email;
             $user->password = Hash::make($password); 
             $user->role_id = 2;
+            $user->statut= "entreprise";
             $user->save();
             Mail::to($entreprise->email)->send(new ValiderEntrepriseMail($entreprise, $password));
             return redirect()->route('entreprise.index')
