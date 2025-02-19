@@ -6,6 +6,7 @@ use App\Http\Controllers\EntrepriseController;
 use App\Http\Controllers\NiveauxController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\DemandeurController;
+use App\Http\Controllers\DemandeController;
 
 use App\Http\Controllers\DemandeurProfilController;
 
@@ -51,6 +52,7 @@ Route::group([],function () {
     Route::resource('profil', ProfilController::class);
     Route::resource('niveau', NiveauxController::class);    
     Route::resource('demandeur', DemandeurController::class);
+    Route::resource('demande', DemandeController::class);
 
     Route::resource('demandeurprofil', DemandeurProfilController::class);
     });

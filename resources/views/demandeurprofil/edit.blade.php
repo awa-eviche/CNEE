@@ -53,7 +53,7 @@
 <div class="row">
 <form action="{{ route('demandeurprofil.update', $demandeurprofil->id) }}" method="POST" enctype="multipart/form-data">
 @csrf
- @method('PUT')
+    @method('PUT')
 
   <input type="hidden" name="demandeur_id" value="{{ $demandeur->id }}">
 

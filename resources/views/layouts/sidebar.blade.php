@@ -165,7 +165,7 @@
                 <div class="collapse" id="maps">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="#">
+                      <a href="{{ route('demande.index') }}">
                         <span class="sub-item">Demande de Profils</span>
                       </a>
                     </li>

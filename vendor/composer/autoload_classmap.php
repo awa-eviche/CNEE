@@ -44,6 +44,9 @@ return array(
     'App\\Mail\\RejeterEntrepriseMail' => $baseDir . '/app/Mail/RejeterEntrepriseMail.php',
     'App\\Mail\\ValiderEntrepriseMail' => $baseDir . '/app/Mail/ValiderEntrepriseMail.php',
     'App\\Models\\Archive' => $baseDir . '/app/Models/Archive.php',
+
+    'App\\Models\\Demande' => $baseDir . '/app/Models/Demande.php',
+
     'App\\Models\\Demandeur' => $baseDir . '/app/Models/Demandeur.php',
     'App\\Models\\DemandeurProfil' => $baseDir . '/app/Models/DemandeurProfil.php',
     'App\\Models\\Entreprise' => $baseDir . '/app/Models/Entreprise.php',
