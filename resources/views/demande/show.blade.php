@@ -52,48 +52,46 @@
               </div>
             
             </div>
-            <div class="form-group">
+            
+
+           
+            <div class="col-md-12">
+                <div class="card">
+                 
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6 col-6">
+                        
+ <div class="form-group">
  <label>Entreprise :</label>
-<input type="text" class="form-control" value="{{ $entreprise->nomentreprise ?? '-' }}" disabled>
+ <input
+type="text" class="form-control" id="entreprise" name="entreprise_id" value="{{ $demande->entreprise->nomentreprise ?? ' - ' }}" readonly  />
 
-</div>
-
-<div class="col-md-12">
-  <div class="card">
-   
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md-6 col-6">
-        <div class="form-group">
-<label for="profil_id">Sélectionner un profil :</label>
-<input
+</div> 
+                      <div class="form-group">
+ <label for="profil_id">Sélectionner un profil :</label>
+ <input
 type="text" class="form-control" id="profil" name="profil_id" value="{{ $demande->profil->libelle ?? ' - ' }}" readonly  />
 </div>
 
+</div>
+<div class="col-md-6 col-6">
 <div class="form-group">
-<label for="niveaux_id">Sélectionner un niveau :</label>
-<input
-type="text" class="form-control" id="niveau" name="niveaux_id" value="{{ $demande->niveaux->libelle ?? ' - ' }}" readonly  />
+ <label for="niveaux_id">Sélectionner un niveau :</label>
+ <input
+type="text" class="form-control" id="niveaux" name="niveaux_id" value="{{ $demande->niveaux->libelle ?? ' - ' }}" readonly  />
 </div>
+<div class="form-group">
+<label for="nbre_profil">Nombre de Profil Souhaite</label>
+<input type="number" class="form-control" id="nbre_profil" name="nbre_profil"  value="{{ $demande->nbre_profil ?? ' - ' }}" readonly />
+ </div>
 
-                   
-
-</div>
-
-
-                        </div>
-                    
-                      </div>
-
-                      
-                     
-                    </div>
-                    
+ 
                 </div>
                 
                 <div class="card-action d-flex gap-2">
-    <a href="{{ route('demandeurprofil.edit', $demandeur->id) }}" class="btn btn-success">Modifier</a>
-    <form action="{{ route('demandeurprofil.destroy', $demandeur->id) }}" method="POST">
+    <a href="{{ route('demande.edit', $demande->id) }}" class="btn btn-success">Modifier</a>
+    <form action="{{ route('demande.destroy', $demande->id) }}" method="POST">
         @csrf
         @method('DELETE')
         <button type="submit" class="btn btn-danger" onclick="return confirm('Voulez-vous vraiment supprimer ce profil du demandeur ?')">

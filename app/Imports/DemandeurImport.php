@@ -16,8 +16,11 @@ class DemandeurImport implements ToModel, WithHeadingRow
             'sexe'           => $row['sexe'],
             'datenaissance' => $row['date_naissance'],
             'lieunaissance' => $row['lieu_naissance'],
+            'region'          => $row['region'],
+            'departement'          => $row['departement'],
+            'cni'          => $row['cni'],
             'adresse'        => $row['adresse'],
-            'cv'             => $row['cv'], // Stocker le chemin du fichier si besoin
+         
          
         ]);
     }

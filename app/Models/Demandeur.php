@@ -15,11 +15,14 @@ class Demandeur extends Model
         "nom",
         "prenom",
         "sexe",
+        "region",
+        "departement",
+        "cni",
         "datenaissance",
         "lieunaissance",
         "adresse",
         "email",
-        "cv",
+       
        
     ];
 
