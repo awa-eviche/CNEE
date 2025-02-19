@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string("ninea")->unique();
             $table->string("regitcom")->unique();
             $table->boolean('est_actif')->default(true); 
+            $table->string('statut')->default('en attente'); 
             $table->string("dossier");
             $table->timestamps();
         });

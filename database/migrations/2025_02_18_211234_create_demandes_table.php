@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('demandes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('entreprise_id')->constrained('demandeurs')->onDelete('cascade');
+            $table->foreignId('niveaux_id')->constrained('niveaux')->onDelete('cascade');
+            $table->foreignId('profil_id')->constrained('profils')->onDelete('cascade');
+            $table->string('nbre_profil');
             $table->timestamps();
         });
     }
