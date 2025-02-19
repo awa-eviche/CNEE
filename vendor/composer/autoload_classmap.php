@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\Http\\Controllers\\AdminController' => $baseDir . '/app/Http/Controllers/AdminController.php',
     'App\\Http\\Controllers\\ArchiveController' => $baseDir . '/app/Http/Controllers/ArchiveController.php',
     'App\\Http\\Controllers\\Auth\\AuthenticatedSessionController' => $baseDir . '/app/Http/Controllers/Auth/AuthenticatedSessionController.php',
     'App\\Http\\Controllers\\Auth\\ConfirmablePasswordController' => $baseDir . '/app/Http/Controllers/Auth/ConfirmablePasswordController.php',
@@ -20,7 +21,9 @@ return array(
     'App\\Http\\Controllers\\Auth\\VerifyEmailController' => $baseDir . '/app/Http/Controllers/Auth/VerifyEmailController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\DemandeurController' => $baseDir . '/app/Http/Controllers/DemandeurController.php',
+    'App\\Http\\Controllers\\DemandeurProfilController' => $baseDir . '/app/Http/Controllers/DemandeurProfilController.php',
     'App\\Http\\Controllers\\EntrepriseController' => $baseDir . '/app/Http/Controllers/EntrepriseController.php',
+    'App\\Http\\Controllers\\FichierController' => $baseDir . '/app/Http/Controllers/FichierController.php',
     'App\\Http\\Controllers\\NiveauxController' => $baseDir . '/app/Http/Controllers/NiveauxController.php',
     'App\\Http\\Controllers\\ProfilController' => $baseDir . '/app/Http/Controllers/ProfilController.php',
     'App\\Http\\Controllers\\ProfileController' => $baseDir . '/app/Http/Controllers/ProfileController.php',
@@ -39,9 +42,8 @@ return array(
     'App\\Mail\\EntrepriseInscriteMail' => $baseDir . '/app/Mail/EntrepriseInscriteMail.php',
     'App\\Mail\\RejeterEntrepriseMail' => $baseDir . '/app/Mail/RejeterEntrepriseMail.php',
     'App\\Mail\\ValiderEntrepriseMail' => $baseDir . '/app/Mail/ValiderEntrepriseMail.php',
-
     'App\\Models\\Archive' => $baseDir . '/app/Models/Archive.php',
-
+    'App\\Models\\Demande' => $baseDir . '/app/Models/Demande.php',
     'App\\Models\\Demandeur' => $baseDir . '/app/Models/Demandeur.php',
     'App\\Models\\DemandeurProfil' => $baseDir . '/app/Models/DemandeurProfil.php',
     'App\\Models\\Entreprise' => $baseDir . '/app/Models/Entreprise.php',

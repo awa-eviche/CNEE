@@ -585,6 +585,7 @@ class ComposerStaticInit65e85f9f959c0b087110331754d451cf
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminController.php',
         'App\\Http\\Controllers\\ArchiveController' => __DIR__ . '/../..' . '/app/Http/Controllers/ArchiveController.php',
         'App\\Http\\Controllers\\Auth\\AuthenticatedSessionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/AuthenticatedSessionController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmablePasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmablePasswordController.php',
@@ -597,7 +598,9 @@ class ComposerStaticInit65e85f9f959c0b087110331754d451cf
         'App\\Http\\Controllers\\Auth\\VerifyEmailController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerifyEmailController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\DemandeurController' => __DIR__ . '/../..' . '/app/Http/Controllers/DemandeurController.php',
+        'App\\Http\\Controllers\\DemandeurProfilController' => __DIR__ . '/../..' . '/app/Http/Controllers/DemandeurProfilController.php',
         'App\\Http\\Controllers\\EntrepriseController' => __DIR__ . '/../..' . '/app/Http/Controllers/EntrepriseController.php',
+        'App\\Http\\Controllers\\FichierController' => __DIR__ . '/../..' . '/app/Http/Controllers/FichierController.php',
         'App\\Http\\Controllers\\NiveauxController' => __DIR__ . '/../..' . '/app/Http/Controllers/NiveauxController.php',
         'App\\Http\\Controllers\\ProfilController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfilController.php',
         'App\\Http\\Controllers\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfileController.php',
@@ -616,9 +619,8 @@ class ComposerStaticInit65e85f9f959c0b087110331754d451cf
         'App\\Mail\\EntrepriseInscriteMail' => __DIR__ . '/../..' . '/app/Mail/EntrepriseInscriteMail.php',
         'App\\Mail\\RejeterEntrepriseMail' => __DIR__ . '/../..' . '/app/Mail/RejeterEntrepriseMail.php',
         'App\\Mail\\ValiderEntrepriseMail' => __DIR__ . '/../..' . '/app/Mail/ValiderEntrepriseMail.php',
-
         'App\\Models\\Archive' => __DIR__ . '/../..' . '/app/Models/Archive.php',
-
+        'App\\Models\\Demande' => __DIR__ . '/../..' . '/app/Models/Demande.php',
         'App\\Models\\Demandeur' => __DIR__ . '/../..' . '/app/Models/Demandeur.php',
         'App\\Models\\DemandeurProfil' => __DIR__ . '/../..' . '/app/Models/DemandeurProfil.php',
         'App\\Models\\Entreprise' => __DIR__ . '/../..' . '/app/Models/Entreprise.php',

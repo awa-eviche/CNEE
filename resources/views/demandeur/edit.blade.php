@@ -74,9 +74,6 @@
                          
                         </div>
 
-                        
-                       
-
                         <div class="form-group">
                           <label for="datenaissance">Date de Naissance</label>
                           <input type="text" class="form-control" value="{{ old('datenaissance', $demandeur->datenaissance) }}" id="email" name="datenaissance" placeholder="Votre adresse email" />

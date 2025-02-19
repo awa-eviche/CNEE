@@ -51,10 +51,11 @@
             
             </div>
             <div class="row">
-            <form action="{{ route('demandeurprofil.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('demande.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
-        <input type="hidden" name="demandeur_id" value="{{ $demandeur->id }}">
+
+
 
            
               <div class="col-md-12">
@@ -63,6 +64,12 @@
                   <div class="card-body">
                     <div class="row">
                       <div class="col-md-6 col-6">
+                        
+                      <div class="form-group">
+    <label>Entreprise :</label>
+    <input type="text" class="form-control" value="{{ $entreprise->nomentreprise ?? '-' }}" disabled>
+
+</div> 
                       <div class="form-group">
  <label for="profil_id">Sélectionner un profil :</label>
     <select class="form-control"  id="profil_id" name="profil_id"  required>
@@ -72,7 +79,12 @@
         @endforeach
     </select>
 </div>
-
+<div class="form-group">
+<label for="nbre_profil">Nombre de Profil Souhaite</label>
+<input type="number" class="form-control" id="nbre_profil" name="nbre_profil" placeholder="nombre de profil" />
+ </div>
+</div>
+<div class="col-md-6 col-6">
 <div class="form-group">
  <label for="niveaux_id">Sélectionner un niveau :</label>
     <select class="form-control"  id="niveaux_id" name="niveaux_id"  required>
@@ -82,28 +94,20 @@
         @endforeach
     </select>
 </div>
+<div class="form-group">
+<label for="nbre_profil">Date de la demande</label>
+<input type="date" class="form-control" id="date_demande" name="date_demande" placeholder="date de la demande " />
+ </div>
 
-                                 
 
     </div>
-
-                      
-
-
-                        </div>
-                    
-                      </div>
-
-                      
-                     
-                    </div>
-                    
-                  </div>
-                  
-                  <div class="card-action">
+    <div class="card-action">
                     <button class="btn btn-success">Enregister</button>
-                  
-                  </div>
+                    </div>
+                        </div>
+                      </div>
+                    <!-- </div>
+                  </div> -->
                 </div>
               </div>
             </div>
