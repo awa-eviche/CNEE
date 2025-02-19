@@ -119,8 +119,8 @@
                 <div class="collapse" id="tables">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="#">
-                        <span class="sub-item">Profils demandes</span>
+                      <a href="{{ route('demande.index') }}">
+                        <span class="sub-item">Profils demandés</span>
                       </a>
                     </li>
                     <li>

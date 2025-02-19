@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreignId('demandeur_profil_id')->constrained('demandeur_profils')->onDelete('cascade');
             $table->foreignId('demande_id')->constrained('demandes')->onDelete('cascade');
             $table->foreignId('entreprise_id')->constrained('entreprises')->onDelete('cascade');
-            $table->foreign('')->references('id')->on('entreprises')->onDelete('cascade');
             $table->boolean('checked')->default(false); 
             $table->timestamps();
         });
