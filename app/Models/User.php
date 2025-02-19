@@ -51,7 +51,7 @@ class User extends Authenticatable
     }
     public function entreprise()
     {
-        return $this->hasOne(Entreprise::class); // ou belongsTo si l'utilisateur appartient à une entreprise
+        return $this->hasOne(Entreprise::class, 'user_id'); // Assurez-vous que le bon champ est utilisé
     }
     
 }

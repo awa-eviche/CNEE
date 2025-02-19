@@ -50,87 +50,61 @@
                 <h3 class="fw-bold mb-3">Gestion des demandeurs</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
               </div>
-              <div class="ms-md-auto py-2 py-md-0">
-    <a href="{{ route('demande.create') }}" class="btn btn-primary btn-round">
-        <i class="fa fa-plus"></i> Nouvelle demande
-    </a>
-</div>
-              <div class="ms-md-auto py-2 py-md-0 " >
-         
-
-              </div> 
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="card">
-                  <div class="card-header">
-                    <h4 class="card-title" style="text-align:center">Liste des demandeurs souhaite</h4>
-
-
-               </div>
-                  <div class="card-body">
-                    <div class="table-responsive">
-                    <table id="basic-datatables"
-    class="display table table-striped table-hover"
-    style="table-layout: fixed; width: 100%;">
-    <thead>
-        <tr>
-       
-            <th style="width: 50%;">Libelle Profil</th>
-            <th style="width: 50%;">Niveau</th>
-            <th style="width: 50%;">Nombre de profil</th>
-          
-          
-            <th style="width: 50%;">Actions</th>
-        </tr>
-    </thead>
-    <tfoot>
-        <tr>
-       
-            <th style="width: 50%;">Libelle Profil</th>
-            <th style="width: 50%;">Niveau</th>
-            <th style="width: 50%;">Nombre de profil</th>
-           
-          
-           
-            <th style="width: 50%;">Actions</th>
-        </tr>
-    </tfoot>
-    <tbody>
-        @foreach ($demande as $dem)
-        <tr>
-          
-            <td>{{ $dem->profil->libelle ?? ' - ' }}</td>
-            <td>{{ $dem->niveaux->libelle ?? ' - ' }}</td>
-            <td>{{ $dem->nbre_profil ?? ' - ' }}</td>
-           
-         
             
-        
-    <div class="d-flex justify-content-center gap-2">
-       
-    <td>
-        <a href=" {{ route('demande.show',$dem->id) }}" class="btn btn-info btn-sm voir-plus">Voir Plus</a>
-     
-      </td>
+            </div>
+            <div class="form-group">
+ <label>Entreprise :</label>
+<input type="text" class="form-control" value="{{ $entreprise->nomentreprise ?? '-' }}" disabled>
 
-        
-        
-    </div>
+</div>
+
+<div class="col-md-12">
+  <div class="card">
+   
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6 col-6">
+        <div class="form-group">
+<label for="profil_id">Sélectionner un profil :</label>
+<input
+type="text" class="form-control" id="profil" name="profil_id" value="{{ $demande->profil->libelle ?? ' - ' }}" readonly  />
+</div>
+
+<div class="form-group">
+<label for="niveaux_id">Sélectionner un niveau :</label>
+<input
+type="text" class="form-control" id="niveau" name="niveaux_id" value="{{ $demande->niveaux->libelle ?? ' - ' }}" readonly  />
+</div>
+
+                   
+
+</div>
 
 
-        </tr>
-        @endforeach
-    </tbody>
-</table>
+                        </div>
+                    
+                      </div>
 
+                      
+                     
                     </div>
-                  </div>
+                    
+                </div>
+                
+                <div class="card-action d-flex gap-2">
+    <a href="{{ route('demandeurprofil.edit', $demandeur->id) }}" class="btn btn-success">Modifier</a>
+    <form action="{{ route('demandeurprofil.destroy', $demandeur->id) }}" method="POST">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Voulez-vous vraiment supprimer ce profil du demandeur ?')">
+            Supprimer
+        </button>
+    </form>
+</div>
+
                 </div>
               </div>
-
             </div>
- 
           </div>
         </div>
      
@@ -397,87 +371,5 @@
         fillColor: "rgba(255, 165, 52, .14)",
       });
     </script>
-      <script>
-      $(document).ready(function () {
-        $("#basic-datatables").DataTable({
-    language: {
-      lengthMenu: "Afficher _MENU_ entrées",
-      paginate: {
-        previous: "Précédent",
-        next: "Suivant"
-      }
-    }
-  });
-        $("#multi-filter-select").DataTable({
-          pageLength: 5,
-          initComplete: function () {
-            this.api()
-              .columns()
-              .every(function () {
-                var column = this;
-                var select = $(
-                  '<select class="form-select"><option value=""></option></select>'
-                )
-                  .appendTo($(column.footer()).empty())
-                  .on("change", function () {
-                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
-
-                    column
-                      .search(val ? "^" + val + "$" : "", true, false)
-                      .draw();
-                  });
-
-                column
-                  .data()
-                  .unique()
-                  .sort()
-                  .each(function (d, j) {
-                    select.append(
-                      '<option value="' + d + '">' + d + "</option>"
-                    );
-                  });
-              });
-          },
-        });
-
-        // Add Row
-        $("#add-row").DataTable({
-          pageLength: 5,
-        });
-
-        var action =
-          '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-
-        $("#addRowButton").click(function () {
-          $("#add-row")
-            .dataTable()
-            .fnAddData([
-              $("#addName").val(),
-              $("#addPosition").val(),
-              $("#addOffice").val(),
-              action,
-            ]);
-          $("#addRowModal").modal("hide");
-        });
-      });
-    </script>
-      <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        @if(session('success'))
-            $.notify({
-               
-                message: '{{ session('success') }}'
-            }, {
-               
-                type: 'success',
-                delay: 3000,
-                placement: {
-                    from: "top",
-                    align: "right"
-                }
-            });
-        @endif
-    });
-</script>
   </body>
 </html>

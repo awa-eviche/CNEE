@@ -27,27 +27,32 @@ class DemandeController extends Controller
 
     public function store(Request $request)
 {   
-    
+    // Récupérer l'entreprise connectée
+    $entreprise = Entreprise::where('nomentreprise', auth()->user()->name)->first();
 
+    // Vérifier que l'entreprise est bien trouvée
+    if (!$entreprise) {
+        return back()->with('error', 'Entreprise non trouvée.');
+    }
 
+    // Validation des données
     $request->validate([
         'profil_id' => 'required|exists:profils,id',
-        'niveaux_id' => 'required|exists:niveauxes,id', // Correction du nom de table
-        'entreprise_id' => 'required|exists:entreprises,id', // Correction de la table
-        'date_demande' => 'required|string|max:255',
-        'nbre_profil' => 'required|string|max:255',
+        'niveaux_id' => 'required|exists:niveauxes,id', // Correction ici
+        'nbre_profil' => 'required|integer|min:1', // Correction du type attendu
     ]);
 
+    // Création de la demande
     Demande::create([
         'profil_id' => $request->profil_id,
         'niveaux_id' => $request->niveaux_id,
-        'entreprise_id' => $request->entreprise_id,
-        'date_demande' => $request->date_demande,
+        'entreprise_id' => $entreprise->id, // Utiliser l'entreprise connectée
         'nbre_profil' => $request->nbre_profil,
     ]);
 
     return redirect()->route('demande.index')
         ->with('success', 'Demande créée avec succès.');
 }
+
 
 }

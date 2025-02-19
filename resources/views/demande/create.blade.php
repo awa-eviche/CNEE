@@ -51,13 +51,9 @@
             
             </div>
             <div class="row">
-            <form action="{{ route('demande.store') }}" method="POST" enctype="multipart/form-data">
+ <form action="{{ route('demande.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
-
-
-
-           
               <div class="col-md-12">
                 <div class="card">
                  
@@ -65,9 +61,9 @@
                     <div class="row">
                       <div class="col-md-6 col-6">
                         
-                      <div class="form-group">
-    <label>Entreprise :</label>
-    <input type="text" class="form-control" value="{{ $entreprise->nomentreprise ?? '-' }}" disabled>
+ <div class="form-group">
+ <label>Entreprise :</label>
+<input type="text" class="form-control" value="{{ $entreprise->nomentreprise ?? '-' }}" disabled>
 
 </div> 
                       <div class="form-group">
@@ -79,10 +75,7 @@
         @endforeach
     </select>
 </div>
-<div class="form-group">
-<label for="nbre_profil">Nombre de Profil Souhaite</label>
-<input type="number" class="form-control" id="nbre_profil" name="nbre_profil" placeholder="nombre de profil" />
- </div>
+
 </div>
 <div class="col-md-6 col-6">
 <div class="form-group">
@@ -95,8 +88,8 @@
     </select>
 </div>
 <div class="form-group">
-<label for="nbre_profil">Date de la demande</label>
-<input type="date" class="form-control" id="date_demande" name="date_demande" placeholder="date de la demande " />
+<label for="nbre_profil">Nombre de Profil Souhaite</label>
+<input type="number" class="form-control" id="nbre_profil" name="nbre_profil" placeholder="nombre de profil" />
  </div>
 
 
