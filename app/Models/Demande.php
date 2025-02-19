@@ -19,7 +19,7 @@ class Demande extends Model
         "profil_id",
         "niveaux_id",
         "nbre_profil",
-        "date_demande",
+       
        
     ];
 
