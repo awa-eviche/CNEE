@@ -29,4 +29,9 @@ class Entreprise extends Model
     {
         return $this->hasMany(Archive::class);
     }
+
+    public function user()
+{
+    return $this->belongsTo(User::class);
+}
 }

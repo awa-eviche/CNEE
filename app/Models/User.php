@@ -49,6 +49,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
-
+    public function entreprise()
+    {
+        return $this->hasOne(Entreprise::class); // ou belongsTo si l'utilisateur appartient à une entreprise
+    }
     
 }
