@@ -35,9 +35,10 @@ class DemandeurController extends Controller
         'datenaissance' => 'required|string|max:255',
         'lieunaissance' => 'required|string|max:255',
         'adresse' => 'required|string|max:255',
-        'profil_id' => 'required|string',
-        'niveaux_id' => 'required|string',
-        'cv' => 'required|mimes:pdf|max:2048',
+        'region' => 'required|string|max:255',
+        'departement' => 'required|string|max:255',
+      
+      
     ]);
 
     
@@ -55,10 +56,9 @@ class DemandeurController extends Controller
 
     public function edit(Demandeur $demandeur)
     {
-        $profiles = Profil::all();
-        $niveaus = Niveaux::all();
+        
   
-        return view('demandeur.edit', compact('demandeur','profiles','niveaus'));
+        return view('demandeur.edit', compact('demandeur'));
     }
 
     public function update(Request $request, Demandeur $demandeur)
@@ -69,11 +69,11 @@ class DemandeurController extends Controller
             'sexe' => 'required|string|max:255',
             'datenaissance' => 'required|string|max:255',
             'lieunaissance' => 'required|string|max:255',
+            'region' => 'required|string|max:255',
+            'departement' => 'required|string|max:255',
+            'cni' => 'required|string|max:255',
             'adresse' => 'required|string|max:255',
-
-            'profil_id' => 'required|string',
-            'niveaux_id' => 'required|string',
-            'cv' => 'required|mimes:pdf|max:2048',
+           
            
         ]);
        

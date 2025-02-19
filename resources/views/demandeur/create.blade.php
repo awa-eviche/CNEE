@@ -93,15 +93,7 @@
                         </div>
 
 
-  <!--div class="form-group">
- <label for="profil_id">Sélectionner un profil :</label>
-    <select class="form-control"  id="profil_id" name="profil_id">
-        <option value="">Choisir un Profil</option>
-        @foreach($profiles as $profile)
-            <option value="{{ $profile->id }}">{{ $profile->libelle}}</option>
-        @endforeach
-    </select>
-</div-->
+ 
 
                        
                      
@@ -133,26 +125,8 @@
     </select>
 </div>
 
-                        <!--div class="form-group">
- <label for="niveaux_id">Sélectionner un niveau :</label>
-    <select class="form-control"  id="niveaux_id" name="niveaux_id">
-        <option value="">Choisir un Niveau d'etude</option>
-        @foreach($niveaus as $niv)
-            <option value="{{ $niv->id }}">{{ $niv->libelle}}</option>
-        @endforeach
-    </select>
-</div-->
 
-<div class="form-group">
-    <label for="cv">Télécharger votre CV (format PDF uniquement)</label>
-    <input 
-        type="file" 
-        class="form-control" 
-        id="cv" 
-        name="cv" 
-        accept=".pdf" 
-    />
-</div>
+
 
                         </div>
                     
