@@ -14,8 +14,9 @@ class DemandeController extends Controller
 {
     public function index()
     {
-        $demande=Demande::all();
-        return view('demande.index',compact('demande'));
+        $demande=Demande::where('entreprise_id',auth()->user()->id)->get();
+        $demandes=Demande::all();
+        return view('demande.index',compact('demande','demandes'));
     }
 
     public function create()
