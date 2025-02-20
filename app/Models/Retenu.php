@@ -4,10 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Entreprise;
-use App\Models\Demande;
-use App\Models\DemandeurProfil;
-class Reponse extends Model
+
+class Retenu extends Model
 {
     use HasFactory;
     protected $fillable = [

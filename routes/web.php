@@ -58,22 +58,18 @@ Route::group([],function () {
     });
 
     Route::resource('admin', AdminController::class);
-
-
     Route::resource('archive', ArchiveController::class);
-
-    
-
     Route::delete('/admin/{user}', [AdminController::class, 'destroy'])->name('admin.destroy');
     Route::post('/entreprise/valider/{id}', [EntrepriseController::class, 'validerEntreprise'])->name('entreprise.valider');
     Route::post('/entreprise/rejeter/{id}', [EntrepriseController::class, 'rejeterEntreprise'])->name('entreprise.rejeter');
-
-
     Route::get('/entreprise/valider/{id}', [EntrepriseController::class, 'validerEntreprise'])->name('entreprise.valider');
     Route::post('/demandeur/import', [DemandeurController::class, 'import'])->name('demandeur.import');
     Route::get('/demandeurprofil/create/{demandeur_id}', [DemandeurProfilController::class, 'create'])->name('demandeurprofil.create');
-    
-
+    Route::get('/listeenvoye/{id}', [DemandeController::class, 'ListeEnvoye'])->name('listeenvoye');    
+    Route::post('/demandes/reponses/enregistrer', [DemandeController::class, 'enregistrerReponses'])->name('demande.enregistrerReponses');
+    Route::get('/demanderecu', [DemandeController::class, 'listeReponses'])->name('demanderecu');
+    Route::post('/demandes/retenu/enregistrer', [DemandeController::class, 'enregistrerRetenu'])->name('demande.enregistrerRetenu');
+    Route::get('/demanderetenu', [DemandeController::class, 'listeRetenus'])->name('demanderetenu');
 
 
 require __DIR__.'/auth.php';

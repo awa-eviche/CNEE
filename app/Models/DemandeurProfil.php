@@ -18,14 +18,12 @@ class DemandeurProfil extends Model
         "demandeur_id",
         "profil_id",
         "niveaux_id",
-       
-       
     ];
 
   
     public function demandeur()
     {
-        return $this->belongsTo(Demandeur::class);
+        return $this->belongsTo(Demandeur::class, 'demandeur_id');
     }
     public function profil()
     {

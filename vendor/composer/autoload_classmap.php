@@ -20,6 +20,7 @@ return array(
     'App\\Http\\Controllers\\Auth\\RegisteredUserController' => $baseDir . '/app/Http/Controllers/Auth/RegisteredUserController.php',
     'App\\Http\\Controllers\\Auth\\VerifyEmailController' => $baseDir . '/app/Http/Controllers/Auth/VerifyEmailController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
+    'App\\Http\\Controllers\\DemandeController' => $baseDir . '/app/Http/Controllers/DemandeController.php',
     'App\\Http\\Controllers\\DemandeurController' => $baseDir . '/app/Http/Controllers/DemandeurController.php',
     'App\\Http\\Controllers\\DemandeurProfilController' => $baseDir . '/app/Http/Controllers/DemandeurProfilController.php',
     'App\\Http\\Controllers\\EntrepriseController' => $baseDir . '/app/Http/Controllers/EntrepriseController.php',
@@ -44,9 +45,7 @@ return array(
     'App\\Mail\\RejeterEntrepriseMail' => $baseDir . '/app/Mail/RejeterEntrepriseMail.php',
     'App\\Mail\\ValiderEntrepriseMail' => $baseDir . '/app/Mail/ValiderEntrepriseMail.php',
     'App\\Models\\Archive' => $baseDir . '/app/Models/Archive.php',
-
     'App\\Models\\Demande' => $baseDir . '/app/Models/Demande.php',
-
     'App\\Models\\Demandeur' => $baseDir . '/app/Models/Demandeur.php',
     'App\\Models\\DemandeurProfil' => $baseDir . '/app/Models/DemandeurProfil.php',
     'App\\Models\\Entreprise' => $baseDir . '/app/Models/Entreprise.php',

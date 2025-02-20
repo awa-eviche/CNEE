@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\DemandeurProfil;
 
 class Demandeur extends Model
 {
@@ -37,6 +37,10 @@ class Demandeur extends Model
     {
         return $this->belongsTo(Niveaux::class);
     }
-
+    public function demandeurprofil()
+    {
+        return $this->hasMany(DemandeurProfil::class);
+    }
+    
 }
 
