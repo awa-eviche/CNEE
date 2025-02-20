@@ -64,9 +64,7 @@
                 <div class="card">
                   <div class="card-header">
                     <h4 class="card-title" style="text-align:center">Liste des profils demandés</h4>
-
-
-               </div>
+ </div>
                   <div class="card-body">
                     <div class="table-responsive">
                     <table id="basic-datatables"
@@ -110,10 +108,6 @@
             <td>{{ $dem->niveaux->libelle ?? ' - ' }}</td>
             <td>{{ $dem->nbre_profil ?? ' - ' }}</td>
             <td>{{ $dem->created_at ?? ' - ' }}</td>
-           
-         
-            
-        
     <div class="d-flex justify-content-center gap-2">
     @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
 <td>

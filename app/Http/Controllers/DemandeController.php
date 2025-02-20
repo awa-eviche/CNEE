@@ -43,7 +43,6 @@ class DemandeController extends Controller
         'entreprise_id' => $entreprise->id,
         'nbre_profil' => $request->nbre_profil,
     ]);
-
     return redirect()->route('demande.index')
         ->with('success', 'Demande créée avec succès.');
 }
