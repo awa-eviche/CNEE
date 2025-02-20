@@ -76,14 +76,22 @@
 
                         <div class="form-group">
                           <label for="datenaissance">Date de Naissance</label>
-                          <input type="text" class="form-control" value="{{ old('datenaissance', $demandeur->datenaissance) }}" id="email" name="datenaissance" placeholder="Votre adresse email" />
+                          <input type="date" class="form-control" value="{{ old('datenaissance', $demandeur->datenaissance) }}" id="email" name="datenaissance" placeholder="Votre adresse email" />
 
                         </div>
 
                         <div class="form-group">
                           <label for="email">Email</label>
-                          <input type="email" class="form-control" value="{{ old('datenaissance', $demandeur->email) }}" id="email" name="email" placeholder="Votre adresse email" />
+                          <input type="email" class="form-control" value="{{ old('email', $demandeur->email) }}" id="email" name="email" placeholder="Votre adresse email" />
                         </div>
+
+                        <div class="form-group">
+                          <label for="region">Région</label>
+                          <input
+                            type="text" class="form-control" id="region" name="region" placeholder=" votre region" diseabled  />
+                         
+                        </div>
+
 
                         <div class="form-group">
                           <label for="adresse">Adresse</label>
@@ -126,17 +134,19 @@
     </select>
 </div>
 
-
 <div class="form-group">
-    <label for="cv">Télécharger votre CV (format PDF uniquement)</label>
-    <input 
-        type="file" 
-        class="form-control" 
-        id="cv" 
-        name="cv" 
-        accept=".pdf" 
-    />
+ <label for="departement">Département :</label>
+ <input  type="text" class="form-control" id="departement"   placeholder=" votre departement" diseabled  />
+
 </div>
+
+ <div class="form-group">
+ <label for="cni">CNI</label>
+<input type="text" class="form-control" id="cni" name="cni" placeholder=" votre CNI" diseabled />
+ </div>
+
+
+
 
                         </div>
                     

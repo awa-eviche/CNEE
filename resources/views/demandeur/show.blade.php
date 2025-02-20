@@ -50,10 +50,7 @@
                 <h3 class="fw-bold mb-3">Gestion des demandeurs</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
               </div>
-              <!-- <div class="ms-md-auto py-2 py-md-0">
             
-                <a href="#" class="btn btn-primary btn-round">Ajouter</a>
-              </div> -->
             </div>
             <div class="row">
           
@@ -84,20 +81,24 @@
                           <input type="email" class="form-control" id="email" name="email" value="{{ $demandeur->email ?? ' - ' }}" readonly  />
                         </div>
 
+                        
                         <div class="form-group">
+                          <label for="region">Région</label>
+                          <input
+                            type="text" class="form-control" id="region" name="region" value="{{ $demandeur->region ?? ' - ' }}" readonly  />
+                         
+                        </div>
+
+
+                       
+
+
+<div class="form-group">
                           <label for="adresse">Adresse</label>
                           <input
                             type="text" class="form-control" id="adresse" name="adresse" value="{{ $demandeur->adresse ?? ' - ' }}" readonly  />
                          
                         </div>
-
-
-  <!--div class="form-group">
- <label for="profil_id">Sélectionner un profil :</label>
- <input
-type="text" class="form-control" id="adresse" name="adresse" value="{{ $demandeur->profil->libelle ?? ' - ' }}" readonly  />
-                         
-</div-->
 
                        
                      
@@ -122,24 +123,22 @@ type="text" class="form-control" id="adresse" name="adresse" value="{{ $demandeu
                         </div>
                         <div class="form-group">
     <label for="sexe">Sexe</label>
-    <input  type="text" class="form-control" id="lieunaissance" name="lieunaissance"  value="{{ $demandeur->sexe ?? ' - ' }}" readonly  />
+    <input  type="text" class="form-control" id="region" name="region"  value="{{ $demandeur->sexe ?? ' - ' }}" readonly  />
 
 </div>
 
- <!--div class="form-group">
- <label for="niveaux_id">Sélectionner un niveau :</label>
- <input  type="text" class="form-control" id="lieunaissance"   value="{{ $demandeur->niveaux->libelle ?? ' - ' }}" readonly  />
 
-</div-->
 
-<td>
-              @if($demandeur->cv)
-        <a href="{{ asset('storage/' . $demandeur->cv) }}" target="_blank" class="btn btn-primary">
-            Voir le fichier : {{ basename($demandeur->cv) }}
-        </a>
-    @else
-        <p>Aucun fichier disponible.</p>
-    @endif</td>
+<div class="form-group">
+ <label for="departement">Département :</label>
+ <input  type="text" class="form-control" id="departement"   value="{{ $demandeur->departement ?? ' - ' }}" readonly  />
+
+</div>
+
+ <div class="form-group">
+ <label for="cni">CNI</label>
+<input type="text" class="form-control" id="cni" name="cni" value="{{ $demandeur->cni ?? ' - ' }}" readonly />
+ </div>
 
                         </div>
                     

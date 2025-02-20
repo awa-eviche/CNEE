@@ -111,4 +111,52 @@ public function enregistrerReponses(Request $request)
         $retenus = Retenu::all();
         return view('demande.retenu', compact('retenus'));
     }
+
+public function show(Demande $demande)
+    {
+       
+        return view('demande.show',compact('demande'));
+    }
+
+    public function edit(Demande $demande)
+    {
+        $entreprise = Entreprise::where('nomentreprise', auth()->user()->name)->first();
+        $profiles = Profil::all();
+        $niveaux = Niveaux::all();
+    
+        return view('demande.edit', compact('demande','profiles','niveaux','entreprise'));
+    }
+    
+    public function update(Request $request, Demande $demande)
+    {
+       
+
+        // Récupérer l'entreprise connectée
+    $entreprise = Entreprise::where('nomentreprise', auth()->user()->name)->first();
+
+    // Vérifier que l'entreprise est bien trouvée
+    if (!$entreprise) {
+        return back()->with('error', 'Entreprise non trouvée.');
+    }
+        $validatedData = $request->validate([
+            'profil_id' => 'required|exists:profils,id',
+            'niveaux_id' => 'required|exists:niveauxes,id',
+            'nbre_profil' => 'required|integer|min:1',
+        ]);
+       
+        $demande->update($validatedData);
+    
+        return redirect()->route('demande.index')
+                         ->with('success', 'Demande  mis à jour avec succès.');
+    }
+
+    public function destroy(Demande $demande)
+{
+      
+    $demande->delete();
+
+    return redirect()->route('demande.index')
+                     ->with('success', ' Demande supprimé avec succès.');
+}
+    
 }

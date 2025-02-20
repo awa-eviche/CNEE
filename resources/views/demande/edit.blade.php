@@ -43,93 +43,68 @@
         </div>
         <div class="container">
           <div class="page-inner">
-            <div
-              class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
-            >
+    <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4" >
               <div>
                 <h3 class="fw-bold mb-3">Gestion des demandeurs</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
               </div>
-              <div class="ms-md-auto py-2 py-md-0 " >
-         
-
-              </div> 
+            
             </div>
             <div class="row">
+<form action="{{ route('demande.update', $demande->id) }}" method="POST" enctype="multipart/form-data">
+@csrf
+    @method('PUT')
+
               <div class="col-md-12">
                 <div class="card">
-                  <div class="card-header">
-                    <h4 class="card-title" style="text-align:center">Liste des demandeurs</h4>
-
-<form action="{{ route('demandeur.import') }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    <button type="submit" class="btn btn-info btn-sm voir-plus">Importer</button>
-    <input type="file" name="file" class="form-control" required>
-
-</form>
-               </div>
+                 
                   <div class="card-body">
-                    <div class="table-responsive">
-                    <table
-    id="basic-datatables"
-    class="display table table-striped table-hover"
-    style="table-layout: fixed; width: 100%;">
-    <thead>
-        <tr>
-            <th style="width: 50%;">Nom</th>
-            <th style="width: 50%;">Prenom</th>
-            <th style="width: 50%;">Email</th>
-            <th style="width: 50%;">Sexe</th>
-          
-            <th style="width: 50%;">Actions</th>
-        </tr>
-    </thead>
-    <tfoot>
-        <tr>
-        <th style="width: 50%;">Nom</th>
-            <th style="width: 50%;">Prenom</th>
-            <th style="width: 50%;">Email</th>
-            <th style="width: 50%;">Sexe</th>
-          
-           
-            <th style="width: 50%;">Actions</th>
-        </tr>
-    </tfoot>
-    <tbody>
-        @foreach ($demandeur as $dem)
-        <tr>
-            <td>{{ $dem->nom ?? ' - ' }}</td>
-            <td>{{ $dem->prenom ?? ' - ' }}</td>
-            <td>{{ $dem->email ?? ' - ' }}</td>
-            <td>{{ $dem->sexe ?? ' - ' }}</td>
-           
-         
-            
-        
-    <div class="d-flex justify-content-center gap-2">
-       
-<td>
-<a href=" {{ route('demandeur.show',$dem->id) }}" class="btn btn-info btn-sm voir-plus">Voir Plus</a>
-     
-</td>
+                    <div class="row">
+                      <div class="col-md-6 col-6">
+                        
+ <div class="form-group">
+ <label>Entreprise :</label>
+<input type="text" class="form-control" value="{{ $entreprise->nomentreprise ?? '-' }}" disabled>
 
-        
-        
-    </div>
-
-
-        </tr>
+</div> 
+                      <div class="form-group">
+ <label for="profil_id">Sélectionner un profil :</label>
+    <select class="form-control"  id="profil_id" name="profil_id"  required>
+        <option value="">Choisir un Profil</option>
+        @foreach($profiles as $profile)
+            <option value="{{ $profile->id }}">{{ $profile->libelle}}</option>
         @endforeach
-    </tbody>
-</table>
+    </select>
+</div>
 
+</div>
+<div class="col-md-6 col-6">
+<div class="form-group">
+ <label for="niveaux_id">Sélectionner un niveau :</label>
+    <select class="form-control"  id="niveaux_id" name="niveaux_id"  required>
+        <option value="">Choisir un Niveau d'etude</option>
+        @foreach($niveaux as $niv)
+            <option value="{{ $niv->id }}">{{ $niv->libelle}}</option>
+        @endforeach
+    </select>
+</div>
+<div class="form-group">
+<label for="nbre_profil">Nombre de Profil Souhaite</label>
+<input type="number" class="form-control" id="nbre_profil" name="nbre_profil" placeholder="nombre de profil" />
+ </div>
+
+
+    </div>
+    <div class="card-action">
+                    <button class="btn btn-success">Enregister</button>
                     </div>
-                  </div>
+                        </div>
+                      </div>
+                    <!-- </div>
+                  </div> -->
                 </div>
               </div>
-
             </div>
- 
           </div>
         </div>
      
@@ -396,87 +371,5 @@
         fillColor: "rgba(255, 165, 52, .14)",
       });
     </script>
-      <script>
-      $(document).ready(function () {
-        $("#basic-datatables").DataTable({
-    language: {
-      lengthMenu: "Afficher _MENU_ entrées",
-      paginate: {
-        previous: "Précédent",
-        next: "Suivant"
-      }
-    }
-  });
-        $("#multi-filter-select").DataTable({
-          pageLength: 5,
-          initComplete: function () {
-            this.api()
-              .columns()
-              .every(function () {
-                var column = this;
-                var select = $(
-                  '<select class="form-select"><option value=""></option></select>'
-                )
-                  .appendTo($(column.footer()).empty())
-                  .on("change", function () {
-                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
-
-                    column
-                      .search(val ? "^" + val + "$" : "", true, false)
-                      .draw();
-                  });
-
-                column
-                  .data()
-                  .unique()
-                  .sort()
-                  .each(function (d, j) {
-                    select.append(
-                      '<option value="' + d + '">' + d + "</option>"
-                    );
-                  });
-              });
-          },
-        });
-
-        // Add Row
-        $("#add-row").DataTable({
-          pageLength: 5,
-        });
-
-        var action =
-          '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-
-        $("#addRowButton").click(function () {
-          $("#add-row")
-            .dataTable()
-            .fnAddData([
-              $("#addName").val(),
-              $("#addPosition").val(),
-              $("#addOffice").val(),
-              action,
-            ]);
-          $("#addRowModal").modal("hide");
-        });
-      });
-    </script>
-      <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        @if(session('success'))
-            $.notify({
-               
-                message: '{{ session('success') }}'
-            }, {
-               
-                type: 'success',
-                delay: 3000,
-                placement: {
-                    from: "top",
-                    align: "right"
-                }
-            });
-        @endif
-    });
-</script>
   </body>
 </html>
