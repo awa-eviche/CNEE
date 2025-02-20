@@ -46,7 +46,6 @@
             <div
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
-
               <div>
                 <h3 class="fw-bold mb-3">Gestion des demandes</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
@@ -59,30 +58,15 @@
     </a>
 </div>
       @endif 
-            <div>
-                <h3 class="fw-bold mb-3">Gestion des utilisateurs</h3>
-                <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
-              </div>
-<div class="ms-md-auto py-2 py-md-0">
-<a href="{{ route('demande.create') }}" class="btn btn-primary btn-round">
-<i class="fa fa-plus"></i> Nouvelle demande
-</a>
-</div>
-<div class="ms-md-auto py-2 py-md-0 " >
-
-              </div> 
-
             </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-header">
-
                     <h4 class="card-title" style="text-align:center">Liste des profils demandés</h4>
-               </div>
-                    <h4 class="card-title" style="text-align:center">Liste des demandeurs souhaite</h4>
-</div>
 
+
+               </div>
                   <div class="card-body">
                     <div class="table-responsive">
                     <table id="basic-datatables"
@@ -110,6 +94,9 @@
             <th style="width: 50%;">Niveau</th>
             <th style="width: 50%;">Nombre de profil</th>
             <th style="width: 50%;">Date de demande</th>
+           
+          
+           
             <th style="width: 50%;">Actions</th>
         </tr>
     </tfoot>
