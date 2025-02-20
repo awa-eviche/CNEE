@@ -116,10 +116,13 @@
         
     <div class="d-flex justify-content-center gap-2">
     @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
-    <td>
-        <a href="{{ route('listeenvoye', $dem->id) }}" class="btn btn-info btn-sm voir-plus">Répondre</a>
-      </td>
-      @endif    
+<td>
+  <a href="{{ route('listeenvoye', $dem->id) }}" class="btn btn-info btn-sm voir-plus">Répondre</a>
+</td>
+      @endif  
+   
+  
+
     </div>
         </tr>
         @endforeach
