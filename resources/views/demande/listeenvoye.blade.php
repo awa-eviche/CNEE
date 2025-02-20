@@ -50,81 +50,66 @@
                 <h3 class="fw-bold mb-3">Gestion des demandes</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
               </div>
-              @if (auth()->user()->role && auth()->user()->role->name == 'entreprise')
+              <div class="ms-md-auto py-2 py-md-0 " >
+         
 
-     <div class="ms-md-auto py-2 py-md-0">
-    <a href="{{ route('demande.create') }}" class="btn btn-primary btn-round">
-        <i class="fa fa-plus"></i> Ajouter une demande
-    </a>
-</div>
-      @endif 
+              </div> 
             </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4 class="card-title" style="text-align:center">Liste des profils demandés</h4>
+                    <h4 class="card-title" style="text-align:center">Liste des profils  des demandeurs {{ $demande->profil->libelle ?? ' - ' }} {{ $demande->niveaux->libelle ?? ' - ' }}</h4>
 
 
                </div>
                   <div class="card-body">
                     <div class="table-responsive">
-                    <table id="basic-datatables"
-    class="display table table-striped table-hover"
-    style="table-layout: fixed; width: 100%;">
+                    <form action="{{route('demande.enregistrerReponses')}}" method="POST"  enctype="multipart/form-data">
+                    <table id="basic-datatables"class="display table table-striped table-hover"style="table-layout: fixed; width: 100%;">
+                    @csrf
+    <input type="hidden" name="demande_id" value="{{ $demande->id }}">
+    <input type="hidden" name="entreprise_id" value="{{ $demande->entreprise_id }}" >
     <thead>
         <tr>
-        @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
-        <th style="width: 50%;">Entreprise</th>
-        @endif
-            <th style="width: 50%;">Libelle Profil</th>
-            <th style="width: 50%;">Niveau</th>
-            <th style="width: 50%;">Nombre de profil</th>
-            <th style="width: 50%;">Date de demande</th>
+            <th style="width: 50%;">Nom</th>
+            <th style="width: 50%;">Prenom</th>
+            <th style="width: 50%;">Email</th>
+            <th style="width: 50%;">Profil</th>
+            <th style="width: 50%;">Niveau d'etude</th>
+            <th style="width: 50%;">Selectionner</th>
           
-            <th style="width: 50%;">Actions</th>
+           
         </tr>
     </thead>
     <tfoot>
         <tr>
-        @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
-        <th style="width: 50%;">Entreprise</th>
-        @endif
-            <th style="width: 50%;">Libelle Profil</th>
-            <th style="width: 50%;">Niveau</th>
-            <th style="width: 50%;">Nombre de profil</th>
-            <th style="width: 50%;">Date de demande</th>
-           
-          
-           
-            <th style="width: 50%;">Actions</th>
+        <th style="width: 50%;">Nom</th>
+            <th style="width: 50%;">Prenom</th>
+            <th style="width: 50%;">Email</th>
+            <th style="width: 50%;">Profil</th>
+            <th style="width: 50%;">Niveau d'etude</th>
+            <th style="width: 50%;">Selectionner</th>
         </tr>
     </tfoot>
     <tbody>
-        @foreach ($demande as $dem)
+        @foreach ($demPro as $dem)
         <tr>
-        @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
-        <td>{{ $dem->entreprise->nomentreprise ?? ' - ' }}</td>
-        @endif
+            <td>{{ $dem->demandeur->nom ?? ' - ' }}</td>
+            <td>{{ $dem->demandeur->prenom ?? ' - ' }}</td>
+            <td>{{ $dem->demandeur->email ?? ' - ' }}</td>
             <td>{{ $dem->profil->libelle ?? ' - ' }}</td>
             <td>{{ $dem->niveaux->libelle ?? ' - ' }}</td>
-            <td>{{ $dem->nbre_profil ?? ' - ' }}</td>
-            <td>{{ $dem->created_at ?? ' - ' }}</td>
-           
-         
-            
-        
-    <div class="d-flex justify-content-center gap-2">
-    @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
-    <td>
-        <a href="{{ route('listeenvoye', $dem->id) }}" class="btn btn-info btn-sm voir-plus">Répondre</a>
-      </td>
-      @endif    
-    </div>
-        </tr>
-        @endforeach
+            <td> <input type="checkbox"name="demandeur_profils[]" value="{{ $dem->id }}" ></td>
+    </tr>
+        @endforeach   
     </tbody>
+   
 </table>
+<div class="text-left mt-3">
+        <button type="submit" class="btn btn-primary">Soumettre</button>
+    </div>
+</form>
 
                     </div>
                   </div>

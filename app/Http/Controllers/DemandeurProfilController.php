@@ -41,11 +41,8 @@ class DemandeurProfilController extends Controller
         'niveaux_id' => $request->niveaux_id,
         'demandeur_id' => $request->demandeur_id, // Récupéré depuis le formulaire
     ]);
-
     return redirect()->route('demandeurprofil.index')
         ->with('success', 'Profil du demandeur créé avec succès.');
-
-
 }
 
 public function show(DemandeurProfil $demandeurprofil)

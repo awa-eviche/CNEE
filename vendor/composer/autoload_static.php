@@ -597,6 +597,7 @@ class ComposerStaticInit65e85f9f959c0b087110331754d451cf
         'App\\Http\\Controllers\\Auth\\RegisteredUserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisteredUserController.php',
         'App\\Http\\Controllers\\Auth\\VerifyEmailController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerifyEmailController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\DemandeController' => __DIR__ . '/../..' . '/app/Http/Controllers/DemandeController.php',
         'App\\Http\\Controllers\\DemandeurController' => __DIR__ . '/../..' . '/app/Http/Controllers/DemandeurController.php',
         'App\\Http\\Controllers\\DemandeurProfilController' => __DIR__ . '/../..' . '/app/Http/Controllers/DemandeurProfilController.php',
         'App\\Http\\Controllers\\EntrepriseController' => __DIR__ . '/../..' . '/app/Http/Controllers/EntrepriseController.php',
@@ -621,9 +622,7 @@ class ComposerStaticInit65e85f9f959c0b087110331754d451cf
         'App\\Mail\\RejeterEntrepriseMail' => __DIR__ . '/../..' . '/app/Mail/RejeterEntrepriseMail.php',
         'App\\Mail\\ValiderEntrepriseMail' => __DIR__ . '/../..' . '/app/Mail/ValiderEntrepriseMail.php',
         'App\\Models\\Archive' => __DIR__ . '/../..' . '/app/Models/Archive.php',
-
         'App\\Models\\Demande' => __DIR__ . '/../..' . '/app/Models/Demande.php',
-
         'App\\Models\\Demandeur' => __DIR__ . '/../..' . '/app/Models/Demandeur.php',
         'App\\Models\\DemandeurProfil' => __DIR__ . '/../..' . '/app/Models/DemandeurProfil.php',
         'App\\Models\\Entreprise' => __DIR__ . '/../..' . '/app/Models/Entreprise.php',

@@ -124,7 +124,7 @@
                       </a>
                     </li>
                     <li>
-                      <a href="#">
+                      <a href="{{ route('demanderetenu') }}">
                         <span class="sub-item">Profils retenus</span>
                       </a>
                     </li>
@@ -178,19 +178,18 @@
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#charts">
                   <i class="far fa-chart-bar"></i>
-                  <p>Gestion</p>
-                  <span class="caret"></span>
+                  <p>Gestion CNEE</p>
+                  <span class="caret"></span> 
                 </a>
                 <div class="collapse" id="charts">
                   <ul class="nav nav-collapse">
                     <li>
-                     
-                      <a href="charts/sparkline.html">
+                      <a href="{{ route('demanderecu') }}">
                         <span class="sub-item">Demandeur reçu</span>
                       </a>
                     </li>
                     <li>
-                    <a href="charts/charts.html">
+                    <a href="">
                         <span class="sub-item">Demandeur retenu</span>
                       </a>
                     </li>
