@@ -78,7 +78,7 @@
             <th style="width: 50%;">Libelle Profil</th>
             <th style="width: 50%;">Niveau</th>
             <th style="width: 50%;">Nombre de profil</th>
-            <th style="width: 50%;">Date de demande</th>
+           
           
             <th style="width: 50%;">Actions</th>
         </tr>
@@ -91,7 +91,7 @@
             <th style="width: 50%;">Libelle Profil</th>
             <th style="width: 50%;">Niveau</th>
             <th style="width: 50%;">Nombre de profil</th>
-            <th style="width: 50%;">Date de demande</th>
+           
            
           
            
@@ -107,11 +107,7 @@
             <td>{{ $dem->profil->libelle ?? ' - ' }}</td>
             <td>{{ $dem->niveaux->libelle ?? ' - ' }}</td>
             <td>{{ $dem->nbre_profil ?? ' - ' }}</td>
-            <td>{{ $dem->created_at ?? ' - ' }}</td>
-<<<<<<< HEAD
-=======
-          
->>>>>>> 8d19983ff7514f22b184ffa5b13294d08ec2330f
+           
     <div class="d-flex justify-content-center gap-2">
     @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
 <td>

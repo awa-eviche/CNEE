@@ -119,12 +119,12 @@
                 <div class="collapse" id="tables">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="#">
+                      <a href="{{ route('demande.index') }}">
                         <span class="sub-item">Profils demandes</span>
                       </a>
                     </li>
                     <li>
-                      <a href="#">
+                      <a href="{{ route('demanderetenu') }}">
                         <span class="sub-item">Profils retenus</span>
                       </a>
                     </li>
