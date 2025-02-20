@@ -121,36 +121,7 @@
         @endforeach
     </tbody>
 
-    @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
-
-      <tbody>
-        @foreach ($demandes as $dem)
-        <tr>
-        @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
-        <td>{{ $dem->entreprise->nomentreprise ?? ' - ' }}</td>
-        @endif
-            <td>{{ $dem->profil->libelle ?? ' - ' }}</td>
-            <td>{{ $dem->niveaux->libelle ?? ' - ' }}</td>
-            <td>{{ $dem->nbre_profil ?? ' - ' }}</td>
-           
-    <div class="d-flex justify-content-center gap-2">
-    @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
-<td>
-  <a href="{{ route('listeenvoye', $dem->id) }}" class="btn btn-info btn-sm voir-plus">Répondre</a>
-</td>
-      @endif  
-      @if (auth()->user()->role && auth()->user()->role->name == 'entreprise')
-      <td>
-<a href=" {{ route('demande.show',$dem->id) }}" class="btn btn-info btn-sm voir-plus">Voir Plus</a>
-
-</td>  
-@endif 
-    </div>
-        </tr>
-        @endforeach
-    </tbody>
-
-@endif
+    
     
 </table>
 

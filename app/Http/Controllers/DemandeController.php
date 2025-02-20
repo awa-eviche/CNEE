@@ -14,11 +14,17 @@ class DemandeController extends Controller
 {
     public function index()
     {
-        $demande=Demande::where('entreprise_id',auth()->user()->id)->get();
-        $demandes=Demande::all();
-        return view('demande.index',compact('demande','demandes'));
+     
+        $user = auth()->user();
+        if ($user->role->code === 'superadmin') {
+            $demande = Demande::all();
+        } else {
+       
+            $demande = Demande::where('entreprise_id', $user->id)->get();
+        }
+        return view('demande.index', compact('demande'));
     }
-
+    
     public function create()
     {
         $entreprise = Entreprise::where('nomentreprise', auth()->user()->name)->first();
