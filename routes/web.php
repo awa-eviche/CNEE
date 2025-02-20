@@ -7,7 +7,7 @@ use App\Http\Controllers\NiveauxController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\DemandeurController;
 use App\Http\Controllers\DemandeController;
-
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DemandeurProfilController;
 
 
@@ -30,9 +30,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 
 Route::post('/entreprise/desactiver/{id}', [EntrepriseController::class, 'desactiver'])->name('entreprise.desactiver');
