@@ -185,7 +185,7 @@
                   <ul class="nav nav-collapse">
                     <li>
                      
-                      <a href="charts/sparkline.html">
+                      <a href="{{ route('demanderecu') }}">
                         <span class="sub-item">Demandeur reçu</span>
                       </a>
                     </li>
