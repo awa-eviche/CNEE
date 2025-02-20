@@ -84,16 +84,16 @@
   </a>
   <div class="collapse" id="forms">
     <ul class="nav nav-collapse">
-      <!--li>
+      <li>
         <a href="{{ route('profil.index') }}">
           <span class="sub-item">Gestion des profils</span>
         </a>
-      </li-->
-      <!--li>
+      </li>
+      <li>
         <a href="{{ route('niveau.index') }}">
           <span class="sub-item">Gestion des niveaux</span>
         </a>
-      </li-->
+      </li>
       <li>
         <a href="{{ route('demandeur.index') }}">
           <span class="sub-item">Gestion des demandeurs</span>
@@ -119,12 +119,12 @@
                 <div class="collapse" id="tables">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="{{ route('demande.index') }}">
-                        <span class="sub-item">Profils demandés</span>
+                      <a href="#">
+                        <span class="sub-item">Profils demandes</span>
                       </a>
                     </li>
                     <li>
-                      <a href="{{ route('demanderetenu') }}">
+                      <a href="#">
                         <span class="sub-item">Profils retenus</span>
                       </a>
                     </li>
@@ -165,7 +165,7 @@
                 <div class="collapse" id="maps">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="{{ route('demande.index') }}">
+                      <a href="#">
                         <span class="sub-item">Demande de Profils</span>
                       </a>
                     </li>
@@ -178,18 +178,19 @@
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#charts">
                   <i class="far fa-chart-bar"></i>
-                  <p>Gestion CNEE</p>
-                  <span class="caret"></span> 
+                  <p>Gestion</p>
+                  <span class="caret"></span>
                 </a>
                 <div class="collapse" id="charts">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="{{ route('demanderecu') }}">
+                     
+                      <a href="charts/sparkline.html">
                         <span class="sub-item">Demandeur reçu</span>
                       </a>
                     </li>
                     <li>
-                    <a href="">
+                    <a href="charts/charts.html">
                         <span class="sub-item">Demandeur retenu</span>
                       </a>
                     </li>

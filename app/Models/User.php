@@ -36,12 +36,6 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
@@ -53,5 +47,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(Entreprise::class, 'user_id'); // Assurez-vous que le bon champ est utilisé
     }
-    
+    public function superadmin()
+    {
+        return $this->role === 'superadmin';
+    } 
 }
