@@ -47,14 +47,14 @@
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
               <div>
-                <h3 class="fw-bold mb-3">Gestion des demandes</h3>
+                <h3 class="fw-bold mb-3">Gestion des demandes de profils</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
               </div>
               @if (auth()->user()->role && auth()->user()->role->name == 'entreprise')
 
      <div class="ms-md-auto py-2 py-md-0">
     <a href="{{ route('demande.create') }}" class="btn btn-primary btn-round">
-        <i class="fa fa-plus"></i> Ajouter une demande
+        <i class="fa fa-plus"></i> Faire une demande
     </a>
 </div>
       @endif 

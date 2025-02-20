@@ -51,6 +51,7 @@
             
             </div>
             <div class="row">
+       
             <form action="{{ route('demandeurprofil.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
