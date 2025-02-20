@@ -120,9 +120,12 @@
   <a href="{{ route('listeenvoye', $dem->id) }}" class="btn btn-info btn-sm voir-plus">Répondre</a>
 </td>
       @endif  
-   
-  
+      @if (auth()->user()->role && auth()->user()->role->name == 'entreprise')
+      <td>
+<a href=" {{ route('demande.show',$dem->id) }}" class="btn btn-info btn-sm voir-plus">Voir Plus</a>
 
+</td>  
+@endif 
     </div>
         </tr>
         @endforeach
