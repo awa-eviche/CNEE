@@ -4,6 +4,7 @@
    @include('layouts.head')
   </head>
   <body>
+ 
     <div class="wrapper">
       <!-- Sidebar -->
        @include('layouts.sidebar')
@@ -109,6 +110,7 @@
     <div class="d-flex justify-content-center gap-2">
        
 <td>
+  
 <a href=" {{ route('demandeur.show',$dem->id) }}" class="btn btn-info btn-sm voir-plus">Voir Plus</a>
      
 </td>

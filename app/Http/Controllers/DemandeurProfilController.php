@@ -16,15 +16,24 @@ class DemandeurProfilController extends Controller
         
         return view('demandeurprofil.index',compact('demandeurprofil'));
     }
+    
     public function create($demandeur_id)
     {
         $demandeur = Demandeur::findOrFail($demandeur_id); // Vérifie que le demandeur existe
+    
+        // Vérifier si le demandeur a déjà un profil joint
+        $existingProfil = DemandeurProfil::where('demandeur_id', $demandeur_id)->exists();
+    
+        if ($existingProfil) {
+            return redirect()->route('demandeur.index')->with('error', 'Ce demandeur a déjà un profil joint.');
+        }
+    
         $profiles = Profil::all();
         $niveaux = Niveaux::all();
-        $demandeurprofils = DemandeurProfil::all();
     
-        return view('demandeurprofil.create', compact('demandeur', 'profiles', 'niveaux', 'demandeurprofils'));
+        return view('demandeurprofil.create', compact('demandeur', 'profiles', 'niveaux'));
     }
+    
     
     
     public function store(Request $request)
