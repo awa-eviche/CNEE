@@ -25,7 +25,7 @@ class DemandeurProfilController extends Controller
         $existingProfil = DemandeurProfil::where('demandeur_id', $demandeur_id)->exists();
     
         if ($existingProfil) {
-            return redirect()->route('demandeur.index')->with('error', 'Ce demandeur a déjà un profil joint.');
+            return redirect()->route('demandeur.index')->with('success', 'Ce demandeur a déjà un profil joint.');
         }
     
         $profiles = Profil::all();
@@ -50,7 +50,7 @@ class DemandeurProfilController extends Controller
         'niveaux_id' => $request->niveaux_id,
         'demandeur_id' => $request->demandeur_id, // Récupéré depuis le formulaire
     ]);
-    return redirect()->route('demandeurprofil.index')
+    return redirect()->route('demandeur.index')
         ->with('success', 'Profil du demandeur créé avec succès.');
 }
 
