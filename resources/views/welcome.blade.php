@@ -147,12 +147,12 @@
 <!--/ Header end -->
 
 <div class="banner-carousel banner-carousel-1 mb-0">
-  <div class="banner-carousel-item" style="background-image:url(images/slider-main/bg1.jpg)">
+  <div class="banner-carousel-item" style="background-image:url(images/slider-main/bg2.jpg)">
     <div class="slider-content">
         <div class="container h-100">
           <div class="row align-items-center h-100">
               <div class="col-md-12 text-center">
-                <h2 class="slide-title"data-class="animated fadeInDown" data-timeout="300">Convention Nationale Etat Employeur(CNEE)</h2>
+                <h2 class="slide-title" style="font-weight:bold;"data-class="animated fadeInDown" data-timeout="300">Convention Nationale Etat Employeur(CNEE)</h2>
                 <h3 class="slide-sub-title">Direction de l'emploi</h3>
                 <p>
                     <a href="files/projet de modele de demande d'adhésion.pdf" class="slider btn btn-primary">Modéle de demande</a>
