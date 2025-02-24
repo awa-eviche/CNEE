@@ -113,7 +113,7 @@
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#tables">
                   <i class="fas fa-table"></i>
-                  <p>Gestion CNEE</p>
+                  <p>Gestion demandes</p>
                   <span class="caret"></span>
                 </a>
                 <div class="collapse" id="tables">
@@ -159,7 +159,7 @@
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#maps">
                   <i class="fas fa-table"></i>
-                  <p>Gestion des stagiaires</p>
+                  <p>Profils recherchés</p>
                   <span class="caret"></span>
                 </a>
                 <div class="collapse" id="maps">
@@ -178,7 +178,7 @@
               <li class="nav-item">
                 <a data-bs-toggle="collapse" href="#charts">
                   <i class="far fa-chart-bar"></i>
-                  <p>Gestion</p>
+                  <p>Gestion demandes</p>
                   <span class="caret"></span>
                 </a>
                 <div class="collapse" id="charts">

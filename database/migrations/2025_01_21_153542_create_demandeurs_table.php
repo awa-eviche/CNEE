@@ -24,7 +24,8 @@ return new class extends Migration
             $table->string("region");
             $table->string("departement");
             $table->string("email")->unique();
-            $table->string("cni")->unique();;
+            $table->string("cni")->unique();
+            $table->string("tel")->unique();
             $table->foreignId('niveaux_id')->constrained()->nullable();
             $table->foreignId('profil_id')->constrained()->nullable();
             $table->string("cv");

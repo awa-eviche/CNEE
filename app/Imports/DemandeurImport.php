@@ -19,6 +19,7 @@ class DemandeurImport implements ToModel, WithHeadingRow
             'region'          => $row['region'],
             'departement'          => $row['departement'],
             'cni'          => $row['cni'],
+            'tel' => $row['tel'],
             'adresse'        => $row['adresse'],
          
          

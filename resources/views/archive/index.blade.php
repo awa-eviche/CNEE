@@ -47,7 +47,7 @@
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
               <div>
-                <h3 class="fw-bold mb-3">Gestion des entreprises</h3>
+                <h3 class="fw-bold mb-3">Gestion des archives</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
               </div>
               <div class="ms-md-auto py-2 py-md-0">
@@ -75,7 +75,7 @@
                         <thead>
                           <tr>
                           <th>Type</th>
-                            <th>Durée convention</th>
+                            <th>Durée convention (mois)</th>
                             <th>Année adhésion</th>
                            
                             <th>Actions</th>
@@ -84,7 +84,7 @@
                         <tfoot>
                           <tr>
                           <th>Type</th>
-                            <th>Durée convention</th>
+                            <th>Durée convention (mois)</th>
                             <th>Année adhésion</th>
                           
                             <th>Actions</th>

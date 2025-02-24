@@ -82,7 +82,7 @@
                          
                         </div>
                         <div class="form-group">
-                          <label for="datenaissance">Durée de la convention</label>
+                          <label for="datenaissance">Durée de la convention (mois)</label>
                           <input type="text" class="form-control" id="dureeConv" name="dureeConv" placeholder="Votre Durée de la convention" value="{{ $archive->dureeConv ?? ' - ' }}"disabled  />
                         </div>
                       </div>
