@@ -20,6 +20,7 @@ class Demandeur extends Model
         "cni",
         "datenaissance",
         "lieunaissance",
+        "tel",
         "adresse",
         "email",
        
