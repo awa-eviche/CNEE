@@ -134,13 +134,29 @@
               @endif
               @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
               <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#">
+                <a data-bs-toggle="collapse" href="#maps">
                 <i class="fas fa-file"></i>
                   <p>Gestion Allocation</p>
-                 
+                  <span class="caret"></span>
                 </a>
                 <div class="collapse" id="maps">
-               
+                  <ul class="nav nav-collapse">
+                    <li>
+                      <a href="{{ route('secteur.index') }}">
+                        <span class="sub-item">Gestion secteur</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{{ route('classification.index') }}">
+                        <span class="sub-item">Gestion classification</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{{ route('allocation.index') }}">
+                        <span class="sub-item">Gestion de la paie</span>
+                      </a>
+                    </li>
+                  </ul>
                 </div>
               </li>
               @endif

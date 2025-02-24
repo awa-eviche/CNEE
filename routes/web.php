@@ -9,6 +9,9 @@ use App\Http\Controllers\DemandeurController;
 use App\Http\Controllers\DemandeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DemandeurProfilController;
+use App\Http\Controllers\SecteurController;
+use App\Http\Controllers\ClassificationController;
+use App\Http\Controllers\AllocationController;
 
 
 use App\Http\Controllers\ArchiveController;
@@ -53,7 +56,13 @@ Route::group([],function () {
     Route::resource('niveau', NiveauxController::class);    
     Route::resource('demandeur', DemandeurController::class);
     Route::resource('demande', DemandeController::class);
+    Route::resource('secteur', SecteurController::class);
+    Route::resource('classification', ClassificationController::class);
+    Route::get('/allocation', [AllocationController::class, 'index'])->name('allocation.index');
+    Route::get('/allocation/create/{id}', [AllocationController::class, 'create'])->name('allocation.create');
+    Route::get('/allocation/afficher/{id}', [AllocationController::class, 'afficher'])->name('allocation.afficher');
 
+    Route::post('/allocation/store', [AllocationController::class, 'store'])->name('allocation.store');
     Route::resource('demandeurprofil', DemandeurProfilController::class);
     });
 
