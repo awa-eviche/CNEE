@@ -38,161 +38,59 @@
             <!-- End Logo Header -->
           </div>
           <!-- Navbar Header -->
-          <div class="container-fluid">
           @include('layouts.nav')
-          </div>
           <!-- End Navbar -->
         </div>
-
         <div class="container">
           <div class="page-inner">
             <div
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
               <div>
-                <h3 class="fw-bold mb-3">Tableau de Bord</h3>
+                <h3 class="fw-bold mb-3">Gestion des classifications</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
               </div>
-              
+              <!-- <div class="ms-md-auto py-2 py-md-0">
+            
+                <a href="#" class="btn btn-primary btn-round">Ajouter</a>
+              </div> -->
             </div>
             <div class="row">
-            @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
-              <div class="col-sm-6 col-md-3">
-                <div class="card card-stats card-round">
+            <form action="{{ route('classification.update', $classification->id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+              <div class="col-md-12">
+                <div class="card">
+                
                   <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div  class="icon-big text-center icon-primary bubble-shadow-small" >
-                          <i class="fas fa-users"></i>
+                    <div class="row">
+                      <div class="col-md-6 col-6">
+                        <div class="form-group" >
+                          <label for="libelle">Intitule de la classification</label>
+                          <input
+                            type="text" class="form-control" id="libelle" placeholder="" name="libelle"   value="{{ old('libelle', $classification->libelle) }}" />
+                         
                         </div>
+                       
+                     
                       </div>
-                    
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Demandeurs</p>
-                          <h4 class="card-title">{{ $demandeur}}</h4>
-                        </div>
-                      </div>
-                    
+                     
+                     
                     </div>
                   </div>
-              
-                </div>
-              </div>
-              @endif
-              @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
-              <div class="col-sm-6 col-md-3">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div
-                          class="icon-big text-center icon-info bubble-shadow-small"
-                        >
-                          <i class="fas fa-user-check"></i>
-                        </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Entreprises</p>
-                          <h4 class="card-title">{{ $entreprise}}</h4>
-                        </div>
-                      </div>
-                    </div>
+                  <div class="card-action" type="submit">
+                    <button class="btn btn-success">Modifier</button>
+                  
                   </div>
                 </div>
               </div>
-              @endif
-              @if (auth()->user()->role && auth()->user()->role->name == 'entreprise')
-              <div class="col-sm-6 col-md-6">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div class="icon-big text-center icon-success bubble-shadow-small"   >
-                          <i class="fas fa-luggage-cart"></i>
-                        </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Demandes envoyés </p>
-                          <h4 class="card-title">{{ $demande}}</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              @endif
-              @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
-              <div class="col-sm-6 col-md-3">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div class="icon-big text-center icon-success bubble-shadow-small"   >
-                          <i class="fas fa-luggage-cart"></i>
-                        </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Demandes reçus </p>
-                          <h4 class="card-title">{{ $demande}}</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              @endif
-              @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
-              <div class="col-sm-6 col-md-3">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div class="icon-big text-center icon-secondary bubble-shadow-small"  >
-                          <i class="far fa-check-circle"></i>
-                        </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Profil retenu </p>
-                          <h4 class="card-title">{{ $retenu}}</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              @endif
-              @if (auth()->user()->role && auth()->user()->role->name == 'entreprise')
-              <div class="col-sm-6 col-md-6">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div class="icon-big text-center icon-secondary bubble-shadow-small"  >
-                          <i class="far fa-check-circle"></i>
-                        </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Profil retenu </p>
-                          <h4 class="card-title">{{ $retenu}}</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              @endif
             </div>
            
             
             
           </div>
         </div>
+     
  <!--! footer-->
         @include('layouts.footer')
       </div>
@@ -413,7 +311,7 @@
     <script src="assets/js/plugin/datatables/datatables.min.js"></script>
 
     <!-- Bootstrap Notify -->
-    <!-- <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script> -->
+    <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 
     <!-- jQuery Vector Maps -->
     <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>

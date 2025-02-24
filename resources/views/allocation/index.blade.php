@@ -10,6 +10,7 @@
     
       <!-- End Sidebar -->
 
+</style>
       <div class="main-panel">
         <div class="main-header">
           <div class="main-header-logo">
@@ -38,166 +39,65 @@
             <!-- End Logo Header -->
           </div>
           <!-- Navbar Header -->
-          <div class="container-fluid">
           @include('layouts.nav')
-          </div>
           <!-- End Navbar -->
         </div>
-
         <div class="container">
           <div class="page-inner">
             <div
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
               <div>
-                <h3 class="fw-bold mb-3">Tableau de Bord</h3>
+                <h3 class="fw-bold mb-3">Gestion des archives</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
               </div>
-              
+            
             </div>
             <div class="row">
-            @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
-              <div class="col-sm-6 col-md-3">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div  class="icon-big text-center icon-primary bubble-shadow-small" >
-                          <i class="fas fa-users"></i>
-                        </div>
-                      </div>
-                    
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Demandeurs</p>
-                          <h4 class="card-title">{{ $demandeur}}</h4>
-                        </div>
-                      </div>
-                    
-                    </div>
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title" style="text-align:center">Liste des entreprises</h4>
                   </div>
-              
-                </div>
-              </div>
-              @endif
-              @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
-              <div class="col-sm-6 col-md-3">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div
-                          class="icon-big text-center icon-info bubble-shadow-small"
-                        >
-                          <i class="fas fa-user-check"></i>
+                <div class="card-body">
+                <div class="row">
+        <div class="col-md-12">
+            <ul class="timeline">
+                @foreach ($entreprises as $entreprise)
+                    <li class="{{ $loop->even ? 'timeline-inverted' : '' }}">
+                        <div class="timeline-badge {{ $entreprise->badge_class ?? 'info' }}">
+                         
                         </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Entreprises</p>
-                          <h4 class="card-title">{{ $entreprise}}</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              @endif
-              @if (auth()->user()->role && auth()->user()->role->name == 'entreprise')
-              <div class="col-sm-6 col-md-6">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div class="icon-big text-center icon-success bubble-shadow-small"   >
-                          <i class="fas fa-luggage-cart"></i>
-                        </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Demandes envoyés </p>
-                          <h4 class="card-title">{{ $demande}}</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              @endif
-              @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
-              <div class="col-sm-6 col-md-3">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div class="icon-big text-center icon-success bubble-shadow-small"   >
-                          <i class="fas fa-luggage-cart"></i>
-                        </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Demandes reçus </p>
-                          <h4 class="card-title">{{ $demande}}</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              @endif
-              @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
-              <div class="col-sm-6 col-md-3">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div class="icon-big text-center icon-secondary bubble-shadow-small"  >
-                          <i class="far fa-check-circle"></i>
-                        </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Profil retenu </p>
-                          <h4 class="card-title">{{ $retenu}}</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              @endif
-              @if (auth()->user()->role && auth()->user()->role->name == 'entreprise')
-              <div class="col-sm-6 col-md-6">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div class="icon-big text-center icon-secondary bubble-shadow-small"  >
-                          <i class="far fa-check-circle"></i>
-                        </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Profil retenu </p>
-                          <h4 class="card-title">{{ $retenu}}</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              @endif
-            </div>
-           
-            
-            
-          </div>
-        </div>
- <!--! footer-->
-        @include('layouts.footer')
-      </div>
+                        <div class="timeline-panel">
+                            <div class="timeline-heading">
+                                <h4 class="timeline-title">{{ $entreprise->nomentreprise }}</h4>
+                                <p>
+                                    <small class="text-muted">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    Stagiaire : <strong>{{ $entreprise->retenus_count }}</strong>
+                                    </small>
+                                </p>
+                            </div>
+                            <div class="timeline-body">
+                                <p> Activité : {{ $entreprise->activite }}</p>
+                            </div>
+                            <div  style="position: relative;">
+    <a href="{{ route('allocation.create', ['id' => $entreprise->id]) }}" class="btn btn-primary" style="left: 80px;">Ajouter une allocation</a>
+    <a href="{{ route('allocation.create', ['id' => $entreprise->id]) }}" class="btn btn-secondary" style="left: 80px;">Montant dus</a>
 
-      <!-- Custom template | don't include it in your project! -->
+</div>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+                
+</div>
+
+      
+      </div>
+      @include('layouts.footer')
       <div class="custom-template">
         <div class="title">Settings</div>
         <div class="custom-content">
@@ -413,7 +313,7 @@
     <script src="assets/js/plugin/datatables/datatables.min.js"></script>
 
     <!-- Bootstrap Notify -->
-    <!-- <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script> -->
+    <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 
     <!-- jQuery Vector Maps -->
     <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
@@ -426,7 +326,6 @@
     <script src="assets/js/kaiadmin.min.js"></script>
 
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
-    <script src="assets/js/setting-demo.js"></script>
     <script src="assets/js/demo.js"></script>
     <script>
       $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
@@ -456,5 +355,80 @@
         fillColor: "rgba(255, 165, 52, .14)",
       });
     </script>
+  <script>
+      $(document).ready(function () {
+        $("#basic-datatables").DataTable({});
+
+        $("#multi-filter-select").DataTable({
+          pageLength: 5,
+          initComplete: function () {
+            this.api()
+              .columns()
+              .every(function () {
+                var column = this;
+                var select = $(
+                  '<select class="form-select"><option value=""></option></select>'
+                )
+                  .appendTo($(column.footer()).empty())
+                  .on("change", function () {
+                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
+
+                    column
+                      .search(val ? "^" + val + "$" : "", true, false)
+                      .draw();
+                  });
+
+                column
+                  .data()
+                  .unique()
+                  .sort()
+                  .each(function (d, j) {
+                    select.append(
+                      '<option value="' + d + '">' + d + "</option>"
+                    );
+                  });
+              });
+          },
+        });
+
+        // Add Row
+        $("#add-row").DataTable({
+          pageLength: 5,
+        });
+
+        var action =
+          '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+
+        $("#addRowButton").click(function () {
+          $("#add-row")
+            .dataTable()
+            .fnAddData([
+              $("#addName").val(),
+              $("#addPosition").val(),
+              $("#addOffice").val(),
+              action,
+            ]);
+          $("#addRowModal").modal("hide");
+        });
+      });
+    </script>
+     <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        @if(session('success'))
+            $.notify({
+               
+                message: '{{ session('success') }}'
+            }, {
+               
+                type: 'success',
+                delay: 3000,
+                placement: {
+                    from: "top",
+                    align: "right"
+                }
+            });
+        @endif
+    });
+</script>
   </body>
 </html>
