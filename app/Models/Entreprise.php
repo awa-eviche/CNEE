@@ -24,6 +24,9 @@ class Entreprise extends Model
             "ninea",
             "regitcom",
             "dossier", 
+            "quitus", 
+            "attestation", 
+             
         ];
         public function archives()
     {

@@ -42,13 +42,16 @@ class EntrepriseController extends Controller
         'regitcom' => 'required|string|max:20',
         'nombreemployer' => 'required|integer',
         'dossier' => 'required|file|max:2048',
+        'quitus' => 'required|file|max:2048',
+        'attestation' => 'required|file|max:2048',
     ]);
+
     $entreprise = new Entreprise();
     $entreprise->nomentreprise = $request->nomentreprise;
     $entreprise->adresse = $request->adresse;
     $entreprise->email = $request->email;
     $entreprise->tel = $request->tel;
-    $entreprise->region= $request->region;
+    $entreprise->region = $request->region;
     $entreprise->statut = "en attente";
     $entreprise->departement = $request->departement;
     $entreprise->formj = $request->formj;
@@ -57,13 +60,30 @@ class EntrepriseController extends Controller
     $entreprise->ninea = $request->ninea;
     $entreprise->regitcom = $request->regitcom;
     $entreprise->nombreemployer = $request->nombreemployer;
+
+    
     if ($request->hasFile('dossier')) {
-        $filename = $request->file('dossier')->store('dossiers', 'public');
-        $entreprise->dossier = $filename;
+        $file = $request->file('dossier');
+        $filename = $file->getClientOriginalName(); 
+        $file->storeAs('dossiers', $filename, 'public'); 
+        $entreprise->dossier = $filename; 
+    }
+
+    if ($request->hasFile('quitus')) {
+        $file = $request->file('quitus');
+        $filename = $file->getClientOriginalName();
+        $file->storeAs('quitus', $filename, 'public');
+        $entreprise->quitus = $filename;
+    }
+
+    if ($request->hasFile('attestation')) {
+        $file = $request->file('attestation');
+        $filename = $file->getClientOriginalName();
+        $file->storeAs('attestations', $filename, 'public');
+        $entreprise->attestation = $filename;
     }
     $entreprise->save();
     Mail::to($entreprise->email)->send(new \App\Mail\EntrepriseInscriteMail($entreprise));
-
     return redirect()->to('/')->with('success', 'Entreprise enregistrée avec succès.');
 }
 
@@ -94,20 +114,27 @@ public function show(Entreprise $entreprise)
         }
         return redirect()->route('entreprise.index')->withErrors('Entreprise non trouvée.');
     }
-   
-    public function rejeterEntreprise($id)
+
+    public function rejeterEntreprise(Request $request, $id)
     {
+        $request->validate([
+            'motif' => 'required|string|max:255',
+        ]);
+    
         $entreprise = Entreprise::find($id);
         if ($entreprise) {   
             $entreprise->statut = 'rejeté';
             $entreprise->save();
-            Mail::to($entreprise->email)->send(new RejeterEntrepriseMail($entreprise));
+    
+            // Envoyer l'email avec le motif de rejet
+            Mail::to($entreprise->email)->send(new RejeterEntrepriseMail($entreprise, $request->motif));
     
             return redirect()->route('entreprise.index')
                 ->with('success', "L'email de rejet a été envoyé à l'entreprise : {$entreprise->nomentreprise}");
         }
         return redirect()->route('entreprise.index')->withErrors('Entreprise non trouvée.');
     }
+    
     
     public function desactiver($id)
     {

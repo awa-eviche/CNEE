@@ -161,7 +161,7 @@
                 <div class="form-row">
                     <div class="form-holder form-holder-2">
                         <label class="form-row-inner" style="margin-bottom: 15px; display: flex; flex-direction: column;">
-                            <span class="label">Nombre Employés</span>
+                            <span class="label">Effectif entreprise</span>
                             <input type="text" class="form-control" id="date-val" name="nombreemployer" required>
                         </label>
                     </div>
@@ -182,7 +182,26 @@
                     <div class="form-holder form-holder-2">
                         <label class="form-row-inner" style="margin-bottom: 15px; display: flex; flex-direction: column;">
                             <span class="label">Joindre le fichier d'adhésion</span>
+                            <br>
                             <input type="file" class="form-control" id="file-val" name="dossier" required>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-holder form-holder-2">
+                        <label class="form-row-inner" style="margin-bottom: 15px; display: flex; flex-direction: column;">
+                            <span class="label">Quitus fiscal</span>
+                            <br>
+                            <input type="file" class="form-control" id="file-val" name="quitus" required>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-holder form-holder-2">
+                        <label class="form-row-inner" style="margin-bottom: 15px; display: flex; flex-direction: column;">
+                            <span class="label">Attestation de régularité</span>
+                            <br>
+                            <input type="file" class="form-control" id="file-val" name="attestation" required>
                         </label>
                     </div>
                 </div>

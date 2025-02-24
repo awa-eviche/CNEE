@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
    @include('layouts.head')
+  
   </head>
   <body>
     <div class="wrapper">
@@ -141,7 +142,7 @@
 </div>
 
                         <div class="form-group">
- <label for="niveaux_id">nombre d'employé</label>
+ <label for="niveaux_id">Effectif entreprise</label>
  <input  type="text" class="form-control" id="lieunaissance" value="{{ $entreprise->nombreemployer ?? ' - ' }}" readonly />
 
 </div>
@@ -162,6 +163,24 @@
     @if($entreprise->dossier)
         <a href="{{ asset('storage/' . $entreprise->dossier) }}" target="_blank" class="btn btn-primary">
             Voir le fichier : {{ basename($entreprise->dossier) }}
+        </a>
+    @else
+        <p>Aucun fichier disponible.</p>
+    @endif
+</div>
+<div class="form-group">
+    @if($entreprise->quitus)
+        <a href="{{ asset('storage/' . $entreprise->quitus) }}" target="_blank" class="btn btn-primary">
+            Voir le fichier : {{ basename($entreprise->quitus) }}
+        </a>
+    @else
+        <p>Aucun fichier disponible.</p>
+    @endif
+</div>
+<div class="form-group">
+    @if($entreprise->attestation)
+        <a href="{{ asset('storage/' . $entreprise->attestation) }}" target="_blank" class="btn btn-primary">
+            Voir le fichier : {{ basename($entreprise->attestation) }}
         </a>
     @else
         <p>Aucun fichier disponible.</p>
@@ -188,10 +207,47 @@
                   </form>
                    <form action="{{ route('entreprise.rejeter', $entreprise->id) }}" method="post">
                       @csrf
-                      <button type="submit" class="btn btn-danger">
-                          Rejeter et  envoyer un e-mail
-                      </button>
-                     </form> 
+<button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+  Rejeter et envoyer un mail
+</button>
+
+<!-- Main modal -->
+<div id="authentication-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                   Envoyer le motif du rejet
+                </h3>
+                <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="p-4 md:p-5">
+                <form class="space-y-4" action="#">
+                    <div>
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Motif</label>
+                        <textarea type="text"  name="motif" id="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"></textarea>
+                    </div>
+                   
+                   <br>
+                    <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Envoyer</button>
+                   
+                </form>
+            </div>
+        </div>
+    </div>
+</div> 
+  
+
+                    </form> 
+
                      <form action="{{ route('entreprise.desactiver', $entreprise->id) }}" method="post">
         @csrf
        
@@ -412,6 +468,8 @@
       <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     <script src="assets/js/core/jquery-3.7.1.min.js"></script>
     <script src="assets/js/core/popper.min.js"></script>
     <script src="assets/js/core/bootstrap.min.js"></script>
@@ -437,6 +495,29 @@
 
     <script src="assets/js/setting-demo.js"></script>
     <script src="assets/js/demo.js"></script>
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+      const modalToggle = document.querySelector('[data-modal-toggle="authentication-modal"]');
+      const modal = document.getElementById("authentication-modal");
+
+      if (modalToggle && modal) {
+          modalToggle.addEventListener("click", function () {
+              modal.classList.toggle("hidden");
+              modal.classList.toggle("flex");
+          });
+
+          // Gestion de la fermeture du modal
+          const closeModalButton = modal.querySelector('[data-modal-hide="authentication-modal"]');
+          if (closeModalButton) {
+              closeModalButton.addEventListener("click", function () {
+                  modal.classList.add("hidden");
+                  modal.classList.remove("flex");
+              });
+          }
+      }
+  });
+</script>
+
     <script>
       $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
         type: "line",
@@ -495,6 +576,28 @@
             button.innerText = 'Envoi en cours...'; // Changer le texte du bouton
         });
     });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      const modalToggle = document.querySelector('[data-modal-toggle="authentication-modal"]');
+      const modal = document.getElementById("authentication-modal");
+
+      if (modalToggle && modal) {
+          modalToggle.addEventListener("click", function () {
+              modal.classList.toggle("hidden");
+              modal.classList.toggle("flex");
+          });
+
+          // Gestion de la fermeture du modal
+          const closeModalButton = modal.querySelector('[data-modal-hide="authentication-modal"]');
+          if (closeModalButton) {
+              closeModalButton.addEventListener("click", function () {
+                  modal.classList.add("hidden");
+                  modal.classList.remove("flex");
+              });
+          }
+      }
+  });
 </script>
 
   </body>

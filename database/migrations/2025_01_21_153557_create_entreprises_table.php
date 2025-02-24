@@ -30,6 +30,9 @@ return new class extends Migration
             $table->boolean('est_actif')->default(true); 
             $table->string('statut')->default('en attente'); 
             $table->string("dossier");
+            $table->string("quitus");
+            $table->string("attestation");
+            
             $table->timestamps();
         });
     }
