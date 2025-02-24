@@ -62,12 +62,61 @@
                   <div class="card-header">
                     <h4 class="card-title" style="text-align:center">Liste des demandeurs</h4>
 
-<form action="{{ route('demandeur.import') }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    <button type="submit" class="btn btn-info btn-sm voir-plus">Importer</button>
-    <input type="file" name="file" class="form-control" required>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#importModal">
+    <i class="fas fa-upload"></i> Ouvrir le formulaire d'importation
+</button>
+<!-- Modal -->
+<div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg"> <!-- Utilisez modal-lg pour une modal plus large -->
+        <div class="modal-content">
+            <!-- En-tête de la modal -->
+            <div class="modal-header">
+    <h5 class="modal-title text-center w-100" id="importModalLabel">Importer des demandeurs</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+</div>
 
-</form>
+            <!-- Corps de la modal -->
+            <div class="modal-body">
+                <form action="{{ route('demandeur.import') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Fichier des demandeurs :</label>
+                        <input type="file" name="file" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Choisir un profil :</label>
+                        <select name="profil_id" class="form-select" required>
+                            <option value="" disabled selected>Sélectionner un profil </option>
+                            @foreach($profiles as $profil)
+                                <option value="{{ $profil->id }}">{{ $profil->libelle }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Choisir un niveau d'étude :</label>
+                        <select name="niveaux_id" class="form-select" required>
+                            <option value="" disabled selected>Sélectionner un niveau </option>
+                            @foreach($niveaux as $niveau)
+                                <option value="{{ $niveau->id }}">{{ $niveau->libelle }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Pied de la modal -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-upload"></i> Importer
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
                </div>
                   <div class="card-body">
                     <div class="table-responsive">

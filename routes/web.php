@@ -63,7 +63,7 @@ Route::group([],function () {
     Route::post('/entreprise/valider/{id}', [EntrepriseController::class, 'validerEntreprise'])->name('entreprise.valider');
     Route::post('/entreprise/rejeter/{id}', [EntrepriseController::class, 'rejeterEntreprise'])->name('entreprise.rejeter');
     Route::get('/entreprise/valider/{id}', [EntrepriseController::class, 'validerEntreprise'])->name('entreprise.valider');
-    Route::post('/demandeur/import', [DemandeurController::class, 'import'])->name('demandeur.import');
+    Route::post('/demandeur/import', [DemandeurController::class, 'importDemandeurs'])->name('demandeur.import');
     Route::get('/demandeurprofil/create/{demandeur_id}', [DemandeurProfilController::class, 'create'])->name('demandeurprofil.create');
     Route::get('/listeenvoye/{id}', [DemandeController::class, 'ListeEnvoye'])->name('listeenvoye');    
     Route::post('/demandes/reponses/enregistrer', [DemandeController::class, 'enregistrerReponses'])->name('demande.enregistrerReponses');
