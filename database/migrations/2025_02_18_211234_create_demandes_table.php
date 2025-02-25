@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('niveaux_id')->constrained('niveaux')->onDelete('cascade');
             $table->foreignId('profil_id')->constrained('profils')->onDelete('cascade');
             $table->string('nbre_profil');
+            $table->string('statut')->default('en attente');
             $table->timestamps();
         });
     }

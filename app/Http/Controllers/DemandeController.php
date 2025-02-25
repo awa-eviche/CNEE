@@ -76,9 +76,14 @@ public function enregistrerReponses(Request $request)
                 'checked' => true,
             ]);
         }
+
+         // Mettre à jour le statut de la demande
+         Demande::where('id', $request->demande_id)->update(['statut' => 'traité']);
+
         return redirect()->route('demande.index')
         ->with('success', 'Vos réponses sont envoyés avec succès.');     
     }
+
     public function listeReponses()
     {
         $userName = auth()->user()->name;

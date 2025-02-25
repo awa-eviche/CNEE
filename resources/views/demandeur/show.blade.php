@@ -156,7 +156,7 @@
             Supprimer
         </button>
     </form>
-    <a href="{{ route('demandeurprofil.create', $demandeur->id) }}" class="btn btn-primary">Joindre Profil</a>
+   
 </div>
 
                 </div>
