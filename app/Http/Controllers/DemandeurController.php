@@ -15,7 +15,10 @@ class DemandeurController extends Controller
     public function index()
     {
         $demandeur=Demandeur::all();
-        return view('demandeur.index',compact('demandeur'));
+        $profiles = \App\Models\Profil::all();
+        $niveaux = \App\Models\Niveaux::all();
+
+        return view('demandeur.index',compact('demandeur','profiles','niveaux'));
     }
 
     public function create()
@@ -100,17 +103,53 @@ class DemandeurController extends Controller
     }
 
 
-    public function import(Request $request)
-    {
-        $request->validate([
-            'file' => 'required|mimes:xlsx,csv',
+    public function importDemandeurs(Request $request)
+{
+    $request->validate([
+        'file' => 'required|mimes:csv,txt,xlsx,xls',
+        'profil_id' => 'required|exists:profils,id',
+        'niveaux_id' => 'required|exists:niveauxes,id', // Correction du nom de la table
+    ]);
+
+    // Récupérer le fichier
+    $file = $request->file('file');
+
+    $data = \Maatwebsite\Excel\Facades\Excel::toArray([], $file)[0];
+
+    // Récupérer les en-têtes
+    $headers = array_map('strtolower', $data[0]); // Convertir en minuscules pour éviter les erreurs
+    unset($data[0]); // Supprimer la ligne des en-têtes
+
+    foreach ($data as $row) {
+        $demandeurData = array_combine($headers, $row); // Associer les en-têtes aux valeurs
+    
+        // Créer un demandeur et le stocker dans une variable
+        $demandeur = \App\Models\Demandeur::create([
+            'nom'            => $demandeurData['nom'] ?? null,
+            'prenom'         => $demandeurData['prenom'] ?? null,
+            'email'          => $demandeurData['email'] ?? null,
+            'sexe'           => $demandeurData['sexe'] ?? null,
+            'datenaissance'  => $demandeurData['datenaissance'] ?? null,
+            'lieunaissance'  => $demandeurData['lieunaissance'] ?? null,
+            'region'         => $demandeurData['region'] ?? null,
+            'departement'    => $demandeurData['departement'] ?? null,
+            'cni'            => $demandeurData['cni'] ?? null,
+            'adresse'        => $demandeurData['adresse'] ?? null,
+            'tel'            => $demandeurData['tel'] ?? null,
         ]);
-    
-        Excel::import(new DemandeurImport, $request->file('file'));
-    
-        return back()->with('success', 'Importation réussie !');
+
+        // Vérifier si la création a réussi avant d'associer un profil
+        if ($demandeur) {
+            \App\Models\DemandeurProfil::create([
+                'demandeur_id' => $demandeur->id,
+                'profil_id' => $request->profil_id,
+                'niveaux_id' => $request->niveaux_id,
+            ]);
+        }
     }
 
+    return redirect()->route('demandeur.index')->with('success', 'Demandeurs importés et associés avec succès.');
+}
 
 
 }
