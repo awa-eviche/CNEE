@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignId('demande_id')->constrained('demandes')->onDelete('cascade');
             $table->foreignId('entreprise_id')->constrained('entreprises')->onDelete('cascade');
             $table->boolean('checked')->default(false); 
+            $table->string('dateeffet');
+            $table->string('dateecheance');
             $table->timestamps();
         });
     }
