@@ -81,10 +81,11 @@ Route::group([],function () {
     Route::get('/demandeurprofil/create/{demandeur_id}', [DemandeurProfilController::class, 'create'])->name('demandeurprofil.create');
     Route::get('/listeenvoye/{id}', [DemandeController::class, 'ListeEnvoye'])->name('listeenvoye');    
     Route::post('/demandes/reponses/enregistrer', [DemandeController::class, 'enregistrerReponses'])->name('demande.enregistrerReponses');
-    //Route::get('/demanderecu', [DemandeController::class, 'listeReponses'])->name('demanderecu');
+    Route::get('/demanderecu', [DemandeController::class, 'listeReponses'])->name('demanderecu');
     Route::post('/demandes/retenu/enregistrer', [DemandeController::class, 'enregistrerRetenu'])->name('demande.enregistrerRetenu');
     Route::get('/demanderetenu', [DemandeController::class, 'listeRetenus'])->name('demanderetenu');
     Route::get('/demanderecu/{id?}', [DemandeController::class, 'listeReponses'])->name('demanderecu');
+    Route::get('/demanderetenu/{id}', [DemandeController::class, 'listeRetenusDemandeur'])->name('demandeurretenu');
 
 
 

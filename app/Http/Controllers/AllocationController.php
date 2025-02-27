@@ -30,16 +30,19 @@ public function create($id)
 }
 public function afficher($id)
 {
+    $dateAujourdhui = date('Y-m-d'); 
+
     $entreprise = Entreprise::findOrFail($id);
-    $secteur=Secteur::all();
-    $classification=Classification::all();
-    $retenu = $entreprise->retenus;
-    return view('allocation.afficher', compact('entreprise','secteur','classification','retenu'));
+    $secteur = Secteur::all();
+    $classification = Classification::all();
+    $retenu = $entreprise->retenus()->whereDate('dateecheance', '>=', $dateAujourdhui)->get();
+
+    return view('allocation.afficher', compact('entreprise', 'secteur', 'classification', 'retenu'));
 }
+
 
 public function store(Request $request)
 {
-    
     $validatedData = $request->validate([
         'entreprise_id' => 'required|exists:entreprises,id',
         'secteur_id' => 'required|exists:secteurs,id',
@@ -50,19 +53,15 @@ public function store(Request $request)
         'montantTotal' => 'required',
         'mois' => 'required',
     ]);
-
-   
     $archive = Archive::where('entreprise_id', $request->entreprise_id)->first();
     if (!$archive) {
         return redirect()->back()->with('error', 'Aucune archive trouvée pour cette entreprise.');
     }
-
     $dateActuelle = date('Y-m-d');
     if ($dateActuelle > $archive->finconvention) {
         return redirect()->route('allocation.index')->with('success', 'L\'enregistrement d\'allocations est impossible car la convention est expirée.');
     }
     Allocation::create($validatedData);
-
     return redirect()->route('allocation.index')->with('success', 'Allocation ajoutée avec succès.');
 }
 

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Niveaux;
 use App\Models\Profil;
 use App\Models\Entreprise;
+use App\Models\Reponse;
 
 
 class Demande extends Model
@@ -41,6 +42,11 @@ class Demande extends Model
     {
         return $this->belongsTo(Entreprise::class);
     }
+    public function reponses()
+{
+    return $this->hasMany(Reponse::class, 'demande_id');
+}
+
 
 }
 

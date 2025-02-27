@@ -73,24 +73,26 @@
     style="table-layout: fixed; width: 100%;">
     <thead>
         <tr>
-            <th style="width: 50%;">Nom</th>
+           <th style="width: 50%;">Nom</th>
             <th style="width: 50%;">Prenom</th>
-            <th style="width: 50%;">Email</th>
+            <th style="width: 50%;">Date prise d'effet</th>
+            <th style="width: 50%;">Date Echéance</th>
             <th style="width: 50%;">Profil</th>
-            <th style="width: 50%;">Niveau d'etude</th>
             <th style="width: 50%;">Entreprise</th>
-          
-           
+            <th style="width: 50%;">Action</th>
+        
         </tr>
     </thead>
     <tfoot>
         <tr>
         <th style="width: 50%;">Nom</th>
             <th style="width: 50%;">Prenom</th>
-            <th style="width: 50%;">Email</th>
+            <th style="width: 50%;">Date prise d'effet</th>
+            <th style="width: 50%;">Date Echéance</th>
             <th style="width: 50%;">Profil</th>
-            <th style="width: 50%;">Niveau d'etude</th>
+            
             <th style="width: 50%;">Entreprise</th>
+            <th style="width: 50%;">Action</th>
         </tr>
     </tfoot>
     <tbody>
@@ -98,11 +100,13 @@
         <tr>
         <td>{{ $dem->demandeurprofil->demandeur->prenom ?? ' - ' }}</td>
         <td>{{ $dem->demandeurprofil->demandeur->nom ?? ' - ' }}</td>
-            <td>{{ $dem->demandeurprofil->demandeur->email ?? ' - ' }}</td>
+            <td>{{ $dem->dateeffet ?? ' - ' }}</td>
+            <td>{{ $dem->dateecheance?? ' - ' }}</td>
             <td>{{ $dem->demande->profil->libelle ?? ' - ' }}</td>
-            <td>{{ $dem->demande->niveaux->libelle ?? ' - ' }}</td>
             <td>{{ $dem->entreprise->nomentreprise ?? ' - ' }}</td>
-          
+            <td>       
+            <a href="{{ route('demandeurretenu',$dem->id) }}" class="btn btn-info btn-sm voir-plus">Voir plus</a>
+            </td>
         </tr>
         @endforeach   
     </tbody>

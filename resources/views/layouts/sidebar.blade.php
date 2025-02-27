@@ -201,7 +201,7 @@
                   <ul class="nav nav-collapse">
                     
                     <li>
-                    <a href="charts/charts.html">
+                    <a href="{{ route('demanderetenu') }}">
                         <span class="sub-item">Demandeur retenu</span>
                       </a>
                     </li>

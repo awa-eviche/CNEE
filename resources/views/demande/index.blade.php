@@ -110,13 +110,14 @@
         <td>{{ $dem->nbre_profil ?? ' - ' }}</td>
 
         @if ($userRole === 'superadmin')
-            <td>
-                @if ($dem->statut === 'en attente')
-                    <a href="{{ route('listeenvoye', $dem->id) }}" class="btn btn-info btn-sm voir-plus">Répondre</a>
-                @elseif ($dem->statut === 'traité')
-                    <span class="btn btn-danger btn-sm">Traitée</span> <!-- Bouton rouge -->
-                @endif
-            </td>
+        <td>
+    @if ($dem->reponses()->exists())
+        <span class="btn btn-danger btn-sm">Déjà traité</span> <!-- Bouton rouge -->
+    @else
+        <a href="{{ route('listeenvoye', $dem->id) }}" class="btn btn-info btn-sm voir-plus">Répondre</a>
+    @endif
+</td>
+
         @endif  
 
         @if ($userRole === 'entreprise')
@@ -124,7 +125,7 @@
         <a href="{{ route('demande.show', $dem->id) }}" class="btn btn-info btn-sm voir-plus">Voir Plus</a>
         
         @if ($dem->statut === 'retenu')
-            <button class="btn btn-secondary btn-sm" disabled>Déjà traité</button>
+            <button class="btn btn-danger btn-sm" disabled>Déjà traité</button>
         @else
             <a href="{{ route('demanderecu', $dem->id) }}" class="btn btn-info btn-sm voir-plus">Retenir</a>
         @endif
