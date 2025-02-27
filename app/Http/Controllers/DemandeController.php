@@ -53,6 +53,9 @@ class DemandeController extends Controller
     return redirect()->route('demande.index')
         ->with('success', 'Demande créée avec succès.');
 }
+
+
+
 public function ListeEnvoye($id)
 {
     $demande = Demande::with(['profil', 'niveaux'])->findOrFail($id);
@@ -61,6 +64,8 @@ public function ListeEnvoye($id)
     ->get();
     return view('demande.listeenvoye', compact('demande','demPro'));
 }
+
+
 public function enregistrerReponses(Request $request)
     {
         $request->validate([
@@ -74,23 +79,37 @@ public function enregistrerReponses(Request $request)
                 'demande_id' => $request->demande_id,
                 'entreprise_id' => $request->entreprise_id,
                 'checked' => true,
+              
             ]);
         }
+
+         // Mettre à jour le statut de la demande
+         Demande::where('id', $request->demande_id)->update(['statut' => 'traité']);
+
         return redirect()->route('demande.index')
         ->with('success', 'Vos réponses sont envoyés avec succès.');     
     }
-    public function listeReponses()
+
+    public function listeReponses($demandeId = null)
     {
         $userName = auth()->user()->name;
+        
+        // Récupérer les réponses de l'entreprise
         $reponses = \App\Models\Reponse::whereHas('entreprise', function ($query) use ($userName) {
             $query->where('nomentreprise', $userName);
         })
         ->with(['demandeurprofil.demandeur', 'demande.profil', 'demande.niveaux'])
         ->get(); 
+    
         $entreprise = \App\Models\Entreprise::where('nomentreprise', $userName)->first();
         $entrepriseId = $entreprise->id;
-        $demandeId = $reponses->first()->demande_id ?? null;
-        return view('demande.recu', compact('reponses','entrepriseId','demandeId'));
+    
+        // Filtrer les réponses par ID de demande si fourni
+        if ($demandeId) {
+            $reponses = $reponses->where('demande_id', $demandeId);
+        }
+    
+        return view('demande.recu', compact('reponses', 'entrepriseId', 'demandeId'));
     }
     
     public function enregistrerRetenu(Request $request)
@@ -99,18 +118,26 @@ public function enregistrerReponses(Request $request)
             'demandeur_profils' => 'required|array',
             'demande_id' => 'required|exists:demandes,id',
             'entreprise_id' => 'required|exists:entreprises,id',
+            'date_prises_effet' => 'required|array',
+            'date_echeances' => 'required|array',
         ]);
+    
         foreach ($request->demandeur_profils as $id) {
             \App\Models\Retenu::create([
                 'demandeur_profil_id' => $id,
                 'demande_id' => $request->demande_id,
                 'entreprise_id' => $request->entreprise_id,
                 'checked' => true,
+                'dateeffet' => $request->date_prises_effet[$id] ?? null, // Assigner la date de prise d'effet
+                'dateecheance' => $request->date_echeances[$id] ?? null, // Assigner la date d'échéance
             ]);
         }
-        return redirect()->route('demanderecu')
-        ->with('success', 'Les demandeurs retenus sont envoyés avec succès.');     
+    
+        return redirect()->route('demande.index')
+            ->with('success', 'Les demandeurs retenus sont envoyés avec succès.');
     }
+    
+
     public function listeRetenus()
     {
         $userName = auth()->user()->name;

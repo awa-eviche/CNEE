@@ -95,34 +95,44 @@
         </tr>
     </tfoot>
     <tbody>
-        @foreach ($demande as $dem)
-        <tr>
-        @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
-        <td>{{ $dem->entreprise->nomentreprise ?? ' - ' }}</td>
+    @foreach ($demande as $dem)
+    <tr>
+        @php
+            $userRole = auth()->user()->role->name ?? null;
+        @endphp
+        
+        @if ($userRole === 'superadmin')
+            <td>{{ $dem->entreprise->nomentreprise ?? ' - ' }}</td>
         @endif
-            <td>{{ $dem->profil->libelle ?? ' - ' }}</td>
-            <td>{{ $dem->niveaux->libelle ?? ' - ' }}</td>
-            <td>{{ $dem->nbre_profil ?? ' - ' }}</td>
-           
-    <div class="d-flex justify-content-center gap-2">
-    @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
-<td>
-  <a href="{{ route('listeenvoye', $dem->id) }}" class="btn btn-info btn-sm voir-plus">Répondre</a>
-</td>
-      @endif  
-      @if (auth()->user()->role && auth()->user()->role->name == 'entreprise')
-      <td>
-<a href=" {{ route('demande.show',$dem->id) }}" class="btn btn-info btn-sm voir-plus">Voir Plus</a>
+        
+        <td>{{ $dem->profil->libelle ?? ' - ' }}</td>
+        <td>{{ $dem->niveaux->libelle ?? ' - ' }}</td>
+        <td>{{ $dem->nbre_profil ?? ' - ' }}</td>
 
-</td>  
-@endif 
-    </div>
-        </tr>
-        @endforeach
-    </tbody>
+        @if ($userRole === 'superadmin')
+            <td>
+                @if ($dem->statut === 'en attente')
+                    <a href="{{ route('listeenvoye', $dem->id) }}" class="btn btn-info btn-sm voir-plus">Répondre</a>
+                @elseif ($dem->statut === 'traité')
+                    <span class="btn btn-danger btn-sm">Traitée</span> <!-- Bouton rouge -->
+                @endif
+            </td>
+        @endif  
 
-    
-    
+        @if ($userRole === 'entreprise')
+            <td>
+                <a href="{{ route('demande.show', $dem->id) }}" class="btn btn-info btn-sm voir-plus">Voir Plus</a>
+                <a href="{{ route('demanderecu', $dem->id) }}" class="btn btn-info btn-sm voir-plus">Retenir</a>
+            </td>  
+        @endif 
+    </tr>
+    @endforeach
+</tbody>
+
+
+
+
+
 </table>
 
                     </div>
