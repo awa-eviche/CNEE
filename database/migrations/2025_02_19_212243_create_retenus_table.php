@@ -21,6 +21,7 @@ return new class extends Migration
             $table->boolean('checked')->default(false); 
             $table->string('dateeffet');
             $table->string('dateecheance');
+            $table->string('statut')->default('disponible');
             $table->timestamps();
         });
     }

@@ -113,30 +113,37 @@ public function enregistrerReponses(Request $request)
     }
     
     public function enregistrerRetenu(Request $request)
-    {
-        $request->validate([
-            'demandeur_profils' => 'required|array',
-            'demande_id' => 'required|exists:demandes,id',
-            'entreprise_id' => 'required|exists:entreprises,id',
-            'date_prises_effet' => 'required|array',
-            'date_echeances' => 'required|array',
+{
+    // Validation des données
+    $request->validate([
+        'demandeur_profils' => 'required|array',
+        'demande_id' => 'required|exists:demandes,id',
+        'entreprise_id' => 'required|exists:entreprises,id',
+        'date_prises_effet' => 'required|array',
+        'date_echeances' => 'required|array',
+    ]);
+
+    // Enregistrement des demandeurs retenus
+    foreach ($request->demandeur_profils as $id) {
+        \App\Models\Retenu::create([
+            'demandeur_profil_id' => $id,
+            'demande_id' => $request->demande_id,
+            'entreprise_id' => $request->entreprise_id,
+            'checked' => true,
+            'dateeffet' => $request->date_prises_effet[$id] ?? null,
+            'dateecheance' => $request->date_echeances[$id] ?? null,
         ]);
-    
-        foreach ($request->demandeur_profils as $id) {
-            \App\Models\Retenu::create([
-                'demandeur_profil_id' => $id,
-                'demande_id' => $request->demande_id,
-                'entreprise_id' => $request->entreprise_id,
-                'checked' => true,
-                'dateeffet' => $request->date_prises_effet[$id] ?? null, // Assigner la date de prise d'effet
-                'dateecheance' => $request->date_echeances[$id] ?? null, // Assigner la date d'échéance
-            ]);
-        }
-    
-        return redirect()->route('demande.index')
-            ->with('success', 'Les demandeurs retenus sont envoyés avec succès.');
     }
-    
+
+    // Mettre à jour le statut de la demande
+    $demande = \App\Models\Demande::find($request->demande_id);
+    $demande->statut = 'retenu'; // Met à jour le statut
+    $demande->save();
+
+    return redirect()->route('demande.index')
+        ->with('success', 'Les demandeurs retenus sont envoyés avec succès.');
+}
+
 
     public function listeRetenus()
     {
@@ -164,22 +171,22 @@ public function show(Demande $demande)
     {
        
 
-        // Récupérer l'entreprise connectée
+ // Récupérer l'entreprise connectée
     $entreprise = Entreprise::where('nomentreprise', auth()->user()->name)->first();
 
-    // Vérifier que l'entreprise est bien trouvée
+// Vérifier que l'entreprise est bien trouvée
     if (!$entreprise) {
         return back()->with('error', 'Entreprise non trouvée.');
     }
         $validatedData = $request->validate([
-            'profil_id' => 'required|exists:profils,id',
-            'niveaux_id' => 'required|exists:niveauxes,id',
-            'nbre_profil' => 'required|integer|min:1',
+  'profil_id' => 'required|exists:profils,id',
+ 'niveaux_id' => 'required|exists:niveauxes,id',
+ 'nbre_profil' => 'required|integer|min:1',
         ]);
        
-        $demande->update($validatedData);
+  $demande->update($validatedData);
     
-        return redirect()->route('demande.index')
+ return redirect()->route('demande.index')
                          ->with('success', 'Demande  mis à jour avec succès.');
     }
 
@@ -188,8 +195,8 @@ public function show(Demande $demande)
       
     $demande->delete();
 
-    return redirect()->route('demande.index')
-                     ->with('success', ' Demande supprimé avec succès.');
+return redirect()->route('demande.index')
+ ->with('success', ' Demande supprimé avec succès.');
 }
     
 }

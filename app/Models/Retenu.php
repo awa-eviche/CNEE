@@ -15,6 +15,7 @@ class Retenu extends Model
         'dateeffet',
         'dateecheance',
         'checked',
+        'statut',
     ];
     public function entreprise()
 {
