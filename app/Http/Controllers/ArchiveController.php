@@ -31,12 +31,17 @@ class ArchiveController extends Controller
         'file' => 'required|file|max:2048', 
         'dureeConv' => 'required|string|max:255',
         'anneeAdhesion' => 'required|integer', 
+        'debutconvention' => 'required', 
+        'finconvention' => 'required', 
+       
     ]); 
     $archive = new Archive();
     $archive->type = $request->type;
     $archive->entreprise_id = $request->entreprise_id;
     $archive->dureeConv = $request->dureeConv;
     $archive->anneeAdhesion = $request->anneeAdhesion;
+    $archive->debutconvention = $request->debutconvention;
+    $archive->finconvention = $request->finconvention;
     if ($request->hasFile('file')) {
         $filename = $request->file('file')->store('files', 'public');
         $archive->file = $filename; 
@@ -64,11 +69,15 @@ class ArchiveController extends Controller
         'file' => 'required|file|max:2048', 
         'dureeConv' => 'required|string|max:255',
         'anneeAdhesion' => 'required|integer', 
+        'debutconvention' => 'required', 
+        'finconvention' => 'required', 
     ]);
     $archive->type = $request->type;
     $archive->entreprise_id = $request->entreprise_id;
     $archive->dureeConv = $request->dureeConv;
     $archive->anneeAdhesion = $request->anneeAdhesion;
+    $archive->debutconvention = $request->debutconvention;
+    $archive->finconvention = $request->finconvention;
     if ($request->hasFile('file')) {
         if ($archive->file) {
             Storage::disk('public')->delete($archive->file);

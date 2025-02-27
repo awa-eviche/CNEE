@@ -50,67 +50,114 @@
                 <h3 class="fw-bold mb-3">Gestion des allocations</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
               </div>
-              <div class="ms-md-auto py-2 py-md-0">
-    <a href="{{ route('allocation.afficher', ['id' => $entreprise->id]) }}" class="btn btn-primary btn-round">
-        <i class="fa fa-plus"></i> Ajouter une allocation
-    </a>
-</div>              
+              <!-- <div class="ms-md-auto py-2 py-md-0">
+            
+                <a href="#" class="btn btn-primary btn-round">Ajouter</a>
+              </div> -->
             </div>
-           
             <div class="row">
+            <form action="{{ route('allocation.update', $allocation->id) }}"  method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
               <div class="col-md-12">
                 <div class="card">
-                  <div class="card-header">
-                    <h4 class="card-title" style="text-align:center">Liste des allocations {{$entreprise ->nomentreprise}}</h4>
-                  </div>
+                 
                   <div class="card-body">
-                    <div class="table-responsive">
-                      <table
-                        id="basic-datatables"
-                        class="display table table-striped table-hover">
-                        <thead>
-                          <tr>
-                          <th>Demandeur</th>
-                          <th>Secteur d'activité</th>
-                            <th>classification</th>
-                            <th>Part Etat</th>
-                            <th>Part Entreprise</th>
-                            <th>Mois</th>
-                            <th>Montant total</th>
-                            <th>Actions</th>
-                          </tr>
-                        </thead>
-                
-                        <tbody>
-                        @foreach($allocations as $alloc)
-          
-          <tr>
-              <td>{{ $alloc->retenu->demandeurprofil->demandeur->prenom?? ' - ' }} {{ $alloc->retenu->demandeurprofil->demandeur->nom?? ' - ' }}</td>
-              <td>{{ $alloc->secteur->libelle?? ' - ' }}</td>
-              <td>{{ $alloc->classification->libelle?? ' - ' }}</td>
-              <td>{{ $alloc->partieEtat?? ' - ' }}</td>
-              <td>{{ $alloc->ContrePartie?? ' - ' }}</td>
-              <td>{{ $alloc->mois?? ' - ' }}</td>
-              <td>{{ $alloc->montantTotal ?? ' - ' }}</td>
-              <td>
-                  <a href="{{ route('allocation.show', ['allocation' => $alloc->id]) }}" class="btn btn-info btn-sm voir-plus">Voir Plus</a>
-              </td>
-          </tr>
-      @endforeach
-                        </tbody>
-
-                    </table>
-                    
-                    </div>
-                  </div>
-                </div>
-              </div> 
-            </div>  
-          </div>
-        </div>
+                    <div class="row">
+                      <div class="col-md-6 col-6">
+                      <div class="form-group">
+ <label for="profil_id">Entreprises </label>
  
+    <input type="text" class="form-control"  id="entreprise_id" name="entreprise_id"  value="{{ $allocation->entreprise->nomentreprise}}" disabled>
+    <input type="hidden" class="form-control"  id="entreprise_id" name="entreprise_id" value="{{ $entreprise->id}}" >
+</div>
+
+                        <div class="form-group">
+                          <label for="nom">Demandeur</label>
+                       <input type="text" class="form-control" name="retenu_id" value=" {{ $retenu->demandeurprofil->demandeur->prenom }} {{ $retenu->demandeurprofil->demandeur->nom }}" disabled>
+                  <input type="hidden" class="form-control" name="retenu_id" value=" {{ $retenu->id}}  ">
+                          
+                        </div>
+                        <div class="form-group">
+                          <label for="datenaissance">Secteur d'activité</label>
+                          <select   class="form-control" name="secteur_id" id="">
+                     
+                            <option value=""> Selectionner un secteur</option>
+                            @foreach($secteur as $sect)
+                            <option value="{{ $sect->id }}"> {{ $sect->libelle}}</option>
+                            @endforeach
+                          </select>
+                        </div>
+                      
+                        <div class="form-group">
+                          <label for="datenaissance">Partie entreprise</label>
+                          <input type="text" class="form-control" id="ContrePartie" name="ContrePartie" value="{{ $sect->ContrePartie}}" placeholder="Votre part entreprise" />
+                        </div>
+
+
+                      </div>
+                      
+                      
+                      <div class="col-md-6 col-6">
+                        
+                      <div class="form-group">
+                          <label for="anneeAdhesion">Classification</label>
+                          <select   class="form-control" name="classification_id" id="">
+                     
+                     <option value=""> Selectionner une classification</option>
+                     @foreach($classification as $classe)
+                     <option value="{{ $classe->id }}"> {{ $classe->libelle}}</option>
+                     @endforeach
+                   </select>
+                        </div>
+                        <div class="form-group">
+                          <label for="datenaissance">Mois</label>
+                          <select  class="form-control" name="mois" id="">
+                              <option value="">Selectionner un mois</option>
+                              <option value="Janvier">Janvier</option>
+                              <option value="Février">Février</option>
+                              <option value="Mars">Mars</option>
+                              <option value="Avril">Avril</option>
+                              <option value="Mai">Mai</option>
+                              <option value="Juin">Juin</option>
+                              <option value="Juillet">Juillet</option>
+                              <option value="Aout">Aout</option>
+                              <option value="Septembre">Septembre</option>
+                              <option value="Octobre">Octobre</option>
+                              <option value="Novembre">Novembre</option>
+                              <option value="Décembre">Décembre</option>
+                            </select>                                  
+                          </div>
+                      
+                        <div class="form-group">
+                          <label for="datenaissance">Contre partie Etat</label>
+                          <input type="text" class="form-control" id="partieEtat" name="partieEtat" value="{{ $sect->partieEtat}}"placeholder="Votre Durée de la convention" />
+                        </div>
+                        <div class="form-group">
+                          <label for="datenaissance">Montant Total</label>
+                          <input type="text" class="form-control" id="montantTotal" name="montantTotal" value="{{ $sect->montantTotal}}" placeholder="Votre Durée de la convention" />
+                        </div>
+                       
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-action">
+                    <button class="btn btn-success">Enregister</button> 
+                  </div>
+                  </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          
+        </div>
+     
+ <!--! footer-->
         @include('layouts.footer')
       </div>
+
+      <!-- Custom template | don't include it in your project! -->
       <div class="custom-template">
         <div class="title">Settings</div>
         <div class="custom-content">
@@ -369,82 +416,7 @@
         fillColor: "rgba(255, 165, 52, .14)",
       });
     </script>
-  <script>
-      $(document).ready(function () {
-        $("#basic-datatables").DataTable({});
-
-        $("#multi-filter-select").DataTable({
-          pageLength: 5,
-          initComplete: function () {
-            this.api()
-              .columns()
-              .every(function () {
-                var column = this;
-                var select = $(
-                  '<select class="form-select"><option value=""></option></select>'
-                )
-                  .appendTo($(column.footer()).empty())
-                  .on("change", function () {
-                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
-
-                    column
-                      .search(val ? "^" + val + "$" : "", true, false)
-                      .draw();
-                  });
-
-                column
-                  .data()
-                  .unique()
-                  .sort()
-                  .each(function (d, j) {
-                    select.append(
-                      '<option value="' + d + '">' + d + "</option>"
-                    );
-                  });
-              });
-          },
-        });
-
-        // Add Row
-        $("#add-row").DataTable({
-          pageLength: 5,
-        });
-
-        var action =
-          '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-
-        $("#addRowButton").click(function () {
-          $("#add-row")
-            .dataTable()
-            .fnAddData([
-              $("#addName").val(),
-              $("#addPosition").val(),
-              $("#addOffice").val(),
-              action,
-            ]);
-          $("#addRowModal").modal("hide");
-        });
-      });
-    </script>
      <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        @if(session('success'))
-            $.notify({
-               
-                message: '{{ session('success') }}'
-            }, {
-               
-                type: 'success',
-                delay: 3000,
-                placement: {
-                    from: "top",
-                    align: "right"
-                }
-            });
-        @endif
-    });
-</script>
-<script>
     document.addEventListener("DOMContentLoaded", function () {
         @if(session('success'))
             $.notify({

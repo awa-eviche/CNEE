@@ -61,7 +61,12 @@ Route::group([],function () {
     Route::get('/allocation', [AllocationController::class, 'index'])->name('allocation.index');
     Route::get('/allocation/create/{id}', [AllocationController::class, 'create'])->name('allocation.create');
     Route::get('/allocation/afficher/{id}', [AllocationController::class, 'afficher'])->name('allocation.afficher');
-
+    Route::get('/allocation/afficher/{id}', [AllocationController::class, 'afficher'])->name('allocation.afficher');
+    Route::get('/allocation/montant/{id}', [AllocationController::class, 'montant'])->name('allocation.montant');
+    Route::get('/allocation/{allocation}', [AllocationController::class, 'show'])->name('allocation.show');
+    Route::get('/allocation/{allocation}/edit', [AllocationController::class, 'edit'])->name('allocation.edit');
+    Route::put('/allocation/{allocation}', [AllocationController::class, 'update'])->name('allocation.update');
+    
     Route::post('/allocation/store', [AllocationController::class, 'store'])->name('allocation.store');
     Route::resource('demandeurprofil', DemandeurProfilController::class);
     });

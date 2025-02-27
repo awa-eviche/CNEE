@@ -19,9 +19,7 @@ return new class extends Migration
             $table->foreignId('retenu_id')->constrained('retenus')->onDelete('cascade');
             $table->foreignId('secteur_id')->constrained('secteurs')->onDelete('cascade');
             $table->foreignId('classification_id')->constrained('classifications')->onDelete('cascade');
-            $table->string('datePriseEffet');
-            $table->string('dateEcheance');
-            $table->string('duree');
+          
             $table->string('partieEtat');
             $table->string('ContrePartie');
             $table->string('MontantTotal');

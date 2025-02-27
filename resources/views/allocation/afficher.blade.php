@@ -47,7 +47,7 @@
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
               <div>
-                <h3 class="fw-bold mb-3">Gestion des archives</h3>
+                <h3 class="fw-bold mb-3">Gestion des allocations</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
               </div>
               <!-- <div class="ms-md-auto py-2 py-md-0">
@@ -93,16 +93,16 @@
                             @endforeach
                           </select>
                         </div>
+                      
                         <div class="form-group">
-                          <label for="datenaissance">Date de prise d'effet</label>
-                          <input type="date" class="form-control" id="datePriseEffet" name="datePriseEffet" placeholder="Votre date de prise effet" />
-                        </div>
-                        <div class="form-group">
-                          <label for="datenaissance">Part Entreprise</label>
+                          <label for="datenaissance">Partie entreprise</label>
                           <input type="text" class="form-control" id="ContrePartie" name="ContrePartie" placeholder="Votre part entreprise" />
                         </div>
-                      </div>
 
+                        
+
+                      </div>
+                      
                       
                       <div class="col-md-6 col-6">
                         
@@ -117,13 +117,24 @@
                    </select>
                         </div>
                         <div class="form-group">
-                          <label>Durée</label>
-                          <input  type="text" class="form-control" id="file" name="duree"  placeholder="Votre durée de contrat"  />
-                        </div>
-                        <div class="form-group">
-                          <label for="datenaissance">Date Echéance</label>
-                          <input type="date" class="form-control" id="dateEcheance" name="dateEcheance" placeholder="Votre Durée de la convention" />
-                        </div>
+                          <label for="datenaissance">Mois</label>
+                          <select  class="form-control" name="mois" id="">
+                              <option value="">Selectionner un mois</option>
+                              <option value="Janvier">Janvier</option>
+                              <option value="Février">Février</option>
+                              <option value="Mars">Mars</option>
+                              <option value="Avril">Avril</option>
+                              <option value="Mai">Mai</option>
+                              <option value="Juin">Juin</option>
+                              <option value="Juillet">Juillet</option>
+                              <option value="Aout">Aout</option>
+                              <option value="Septembre">Septembre</option>
+                              <option value="Octobre">Octobre</option>
+                              <option value="Novembre">Novembre</option>
+                              <option value="Décembre">Décembre</option>
+                            </select>                                  
+                          </div>
+                      
                         <div class="form-group">
                           <label for="datenaissance">Contre partie Etat</label>
                           <input type="text" class="form-control" id="partieEtat" name="partieEtat" placeholder="Votre Durée de la convention" />
@@ -132,6 +143,8 @@
                           <label for="datenaissance">Montant Total</label>
                           <input type="text" class="form-control" id="montantTotal" name="montantTotal" placeholder="Votre Durée de la convention" />
                         </div>
+                       
+
                         </div>
                       </div>
                     </div>
@@ -409,5 +422,23 @@
         fillColor: "rgba(255, 165, 52, .14)",
       });
     </script>
+     <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        @if(session('success'))
+            $.notify({
+               
+                message: '{{ session('success') }}'
+            }, {
+               
+                type: 'success',
+                delay: 3000,
+                placement: {
+                    from: "top",
+                    align: "right"
+                }
+            });
+        @endif
+    });
+</script>
   </body>
 </html>

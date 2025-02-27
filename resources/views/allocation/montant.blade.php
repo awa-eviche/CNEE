@@ -47,70 +47,150 @@
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
               <div>
-                <h3 class="fw-bold mb-3">Gestion des allocations</h3>
+                <h3 class="fw-bold mb-3">Gestion des paiements</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
               </div>
-              <div class="ms-md-auto py-2 py-md-0">
-    <a href="{{ route('allocation.afficher', ['id' => $entreprise->id]) }}" class="btn btn-primary btn-round">
-        <i class="fa fa-plus"></i> Ajouter une allocation
-    </a>
-</div>              
+              <!-- <div class="ms-md-auto py-2 py-md-0">
+            
+                <a href="#" class="btn btn-primary btn-round">Ajouter</a>
+              </div> -->
             </div>
-           
-            <div class="row">
-              <div class="col-md-12">
-                <div class="card">
-                  <div class="card-header">
-                    <h4 class="card-title" style="text-align:center">Liste des allocations {{$entreprise ->nomentreprise}}</h4>
-                  </div>
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table
-                        id="basic-datatables"
-                        class="display table table-striped table-hover">
-                        <thead>
-                          <tr>
-                          <th>Demandeur</th>
-                          <th>Secteur d'activité</th>
-                            <th>classification</th>
-                            <th>Part Etat</th>
-                            <th>Part Entreprise</th>
-                            <th>Mois</th>
-                            <th>Montant total</th>
-                            <th>Actions</th>
-                          </tr>
-                        </thead>
-                
-                        <tbody>
-                        @foreach($allocations as $alloc)
-          
-          <tr>
-              <td>{{ $alloc->retenu->demandeurprofil->demandeur->prenom?? ' - ' }} {{ $alloc->retenu->demandeurprofil->demandeur->nom?? ' - ' }}</td>
-              <td>{{ $alloc->secteur->libelle?? ' - ' }}</td>
-              <td>{{ $alloc->classification->libelle?? ' - ' }}</td>
-              <td>{{ $alloc->partieEtat?? ' - ' }}</td>
-              <td>{{ $alloc->ContrePartie?? ' - ' }}</td>
-              <td>{{ $alloc->mois?? ' - ' }}</td>
-              <td>{{ $alloc->montantTotal ?? ' - ' }}</td>
-              <td>
-                  <a href="{{ route('allocation.show', ['allocation' => $alloc->id]) }}" class="btn btn-info btn-sm voir-plus">Voir Plus</a>
-              </td>
-          </tr>
-      @endforeach
-                        </tbody>
+            <style>
+        .custom-banner {
+            background-color: #575962; 
+            border-radius: 15px; 
+            color: white;
+            padding: 5px 5px;
+            text-align: center; 
+            font-weight: bold; 
+        }
+    </style>
 
-                    </table>
-                    
+<div class="custom-banner">
+    <p>Montant Trimestriel de l'entreprise {{$entreprise->nomentreprise}}</p>
+</div>
+<br>
+            <div class="row">
+              <div class="col-12 col-sm-6 col-md-7 col-xl-3">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <h5><b>Janvier-Mars</b></h5>
+                        <p class="text-muted">A payer</p>
+                      </div>
+                     
+                    </div>
+                    <div class="progress progress-sm">
+                      <div
+                        class="progress-bar bg-info w-150"
+                        role="progressbar"
+                        
+                      ></div>
+                    </div>
+                    <div class="d-flex justify-content-between mt-2">
+                     
+                      <p class="text-muted mb-0"> {{ $montantsTrimestriels['Q1']}}</p>
+                      <p class="text-muted mb-0">F CFA</p>
                     </div>
                   </div>
                 </div>
-              </div> 
-            </div>  
-          </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-7 col-xl-3">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <h5><b>Avril-Juin</b></h5>
+                        <p class="text-muted">A payer</p>
+                      </div>
+                    </div>
+                    <div class="progress progress-sm">
+                     
+                    </div>
+                    <div class="d-flex justify-content-between mt-2">
+                    <p class="text-muted mb-0">{{$montantsTrimestriels['Q2']}}</p>
+                    <p class="text-muted mb-0">F CFA</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-7 col-xl-3">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <h5><b>Juillet-Septembre</b></h5>
+                        <p class="text-muted">A payer</p>
+                      </div>
+                    </div>
+                    <div class="progress progress-sm">
+                    </div>
+                    <div class="d-flex justify-content-between mt-2">
+                    <p class="text-muted mb-0">{{$montantsTrimestriels['Q3']}}</p>
+                    <p class="text-muted mb-0">F CFA</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-md-7 col-xl-3">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <h5><b>Octobre-Décembre</b></h5>
+                        <p class="text-muted">A payer</p>
+                      </div>
+                    </div>
+                    <div class="progress progress-sm">
+                    </div>
+                    <div class="d-flex justify-content-between mt-2">
+                    <p class="text-muted mb-0">{{$montantsTrimestriels['Q4']}}</p>
+                    <p class="text-muted mb-0">F CFA</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="custom-banner">
+    <p>Montant Annuel de l'entreprise {{$entreprise->nomentreprise}}</p>
+  </div>
+  <br>
+  <div class="row">
+              <div class="col-12 col-sm-6 col-md-7 col-xl-3">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <h5><b>Annuel</b></h5>
+                        <p class="text-muted">A payer</p>
+                      </div>
+                     
+                    </div>
+                    <div class="progress progress-sm">
+                      <div
+                        class="progress-bar bg-info w-150"
+                        role="progressbar"
+                        
+                      ></div>
+                    </div>
+                    <div class="d-flex justify-content-between mt-2">
+                     
+                      <p class="text-muted mb-0"> {{ $montantAnnuel['montant_annuel']}}</p>
+                      <p class="text-muted mb-0">F CFA</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+</div> 
         </div>
- 
+     
+ <!--! footer-->
         @include('layouts.footer')
       </div>
+
+      <!-- Custom template | don't include it in your project! -->
       <div class="custom-template">
         <div class="title">Settings</div>
         <div class="custom-content">
@@ -369,82 +449,7 @@
         fillColor: "rgba(255, 165, 52, .14)",
       });
     </script>
-  <script>
-      $(document).ready(function () {
-        $("#basic-datatables").DataTable({});
-
-        $("#multi-filter-select").DataTable({
-          pageLength: 5,
-          initComplete: function () {
-            this.api()
-              .columns()
-              .every(function () {
-                var column = this;
-                var select = $(
-                  '<select class="form-select"><option value=""></option></select>'
-                )
-                  .appendTo($(column.footer()).empty())
-                  .on("change", function () {
-                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
-
-                    column
-                      .search(val ? "^" + val + "$" : "", true, false)
-                      .draw();
-                  });
-
-                column
-                  .data()
-                  .unique()
-                  .sort()
-                  .each(function (d, j) {
-                    select.append(
-                      '<option value="' + d + '">' + d + "</option>"
-                    );
-                  });
-              });
-          },
-        });
-
-        // Add Row
-        $("#add-row").DataTable({
-          pageLength: 5,
-        });
-
-        var action =
-          '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
-
-        $("#addRowButton").click(function () {
-          $("#add-row")
-            .dataTable()
-            .fnAddData([
-              $("#addName").val(),
-              $("#addPosition").val(),
-              $("#addOffice").val(),
-              action,
-            ]);
-          $("#addRowModal").modal("hide");
-        });
-      });
-    </script>
      <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        @if(session('success'))
-            $.notify({
-               
-                message: '{{ session('success') }}'
-            }, {
-               
-                type: 'success',
-                delay: 3000,
-                placement: {
-                    from: "top",
-                    align: "right"
-                }
-            });
-        @endif
-    });
-</script>
-<script>
     document.addEventListener("DOMContentLoaded", function () {
         @if(session('success'))
             $.notify({

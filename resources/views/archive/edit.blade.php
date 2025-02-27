@@ -83,11 +83,14 @@
                         </div>
 
                         
-                       
-
+      
                         <div class="form-group">
                           <label for="datenaissance">Durée de la convention (mois)</label>
                           <input type="text" class="form-control" id="dureeConv" name="dureeConv" value="{{ $archive->dureeConv ?? ' - ' }}" />
+                        </div>
+                        <div class="form-group">
+                          <label for="datenaissance">Début de convention (mois)</label>
+                          <input type="date" class="form-control" id="dureeConv" name="debutconvention" value="{{ $archive->debutconvention ?? ' - ' }}" />
                         </div>
                       </div>
 
@@ -108,8 +111,13 @@
                           <label>Fichier à joindre</label>
                           <input  type="file" class="form-control" id="file" name="file"  value="{{ $archive->file ??' - ' }}" required />
                         </div>
+                        <div class="form-group">
+                          <label for="datenaissance">Fin de convention </label>
+                          <input type="date" class="form-control" id="dureeConv" name="finconvention" value="{{ $archive->finconvention ?? ' - ' }}" />
+                        </div>
                         </div>
                       </div>
+                      
                     </div>
                     <div class="card-action">
                     <button type="submit" class="btn btn-success">Modifier</button> 
