@@ -120,11 +120,17 @@
         @endif  
 
         @if ($userRole === 'entreprise')
-            <td>
-                <a href="{{ route('demande.show', $dem->id) }}" class="btn btn-info btn-sm voir-plus">Voir Plus</a>
-                <a href="{{ route('demanderecu', $dem->id) }}" class="btn btn-info btn-sm voir-plus">Retenir</a>
-            </td>  
-        @endif 
+    <td>
+        <a href="{{ route('demande.show', $dem->id) }}" class="btn btn-info btn-sm voir-plus">Voir Plus</a>
+        
+        @if ($dem->statut === 'retenu')
+            <button class="btn btn-secondary btn-sm" disabled>Déjà traité</button>
+        @else
+            <a href="{{ route('demanderecu', $dem->id) }}" class="btn btn-info btn-sm voir-plus">Retenir</a>
+        @endif
+    </td>  
+@endif
+
     </tr>
     @endforeach
 </tbody>
