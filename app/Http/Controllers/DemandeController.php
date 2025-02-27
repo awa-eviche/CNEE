@@ -14,16 +14,20 @@ class DemandeController extends Controller
 {
     public function index()
     {
-     
         $user = auth()->user();
+    
         if ($user->role->code === 'superadmin') {
             $demande = Demande::all();
         } else {
-       
-            $demande = Demande::where('entreprise_id', $user->id)->get();
+            
+            $demande = Demande::whereHas('entreprise', function ($query) use ($user) {
+                $query->where('nomentreprise', $user->name);
+            })->get();
         }
+    
         return view('demande.index', compact('demande'));
     }
+    
     
     public function create()
     {
@@ -82,19 +86,14 @@ public function enregistrerReponses(Request $request)
               
             ]);
         }
-
-         // Mettre à jour le statut de la demande
          Demande::where('id', $request->demande_id)->update(['statut' => 'traité']);
 
         return redirect()->route('demande.index')
         ->with('success', 'Vos réponses sont envoyés avec succès.');     
     }
-
     public function listeReponses($demandeId = null)
     {
         $userName = auth()->user()->name;
-        
-        // Récupérer les réponses de l'entreprise
         $reponses = \App\Models\Reponse::whereHas('entreprise', function ($query) use ($userName) {
             $query->where('nomentreprise', $userName);
         })
@@ -103,8 +102,6 @@ public function enregistrerReponses(Request $request)
     
         $entreprise = \App\Models\Entreprise::where('nomentreprise', $userName)->first();
         $entrepriseId = $entreprise->id;
-    
-        // Filtrer les réponses par ID de demande si fourni
         if ($demandeId) {
             $reponses = $reponses->where('demande_id', $demandeId);
         }
@@ -134,10 +131,8 @@ public function enregistrerReponses(Request $request)
             'dateecheance' => $request->date_echeances[$id] ?? null,
         ]);
     }
-
-    // Mettre à jour le statut de la demande
     $demande = \App\Models\Demande::find($request->demande_id);
-    $demande->statut = 'retenu'; // Met à jour le statut
+    $demande->statut = 'retenu';
     $demande->save();
 
     return redirect()->route('demande.index')
@@ -145,12 +140,33 @@ public function enregistrerReponses(Request $request)
 }
 
 
-    public function listeRetenus()
-    {
-        $userName = auth()->user()->name;
+public function listeRetenus()
+{
+    $user = auth()->user(); 
+
+    if ($user->role->code === 'superadmin') {
+   
         $retenus = Retenu::all();
-        return view('demande.retenu', compact('retenus'));
+    } else {
+        $entreprise = Entreprise::where('nomentreprise', $user->name)->first();
+
+        if (!$entreprise) {
+            return redirect()->back()->with('error', 'Votre entreprise n\'a pas été trouvée.');
+        }
+
+        $retenus = Retenu::where('entreprise_id', $entreprise->id)->get();
     }
+
+    return view('demande.retenu', compact('retenus'));
+}
+
+    public function listeRetenusDemandeur($id)
+    {
+        $retenus = Retenu::findOrFail($id);
+        return view('demande.demandeurretenu', compact('retenus'));
+    }
+
+
 
 public function show(Demande $demande)
     {

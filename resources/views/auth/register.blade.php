@@ -25,6 +25,7 @@
     <x-input-error :messages="$errors->get('role_id')" class="mt-2" />
 </div>
 
+
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Password')" />
