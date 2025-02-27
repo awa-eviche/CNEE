@@ -4373,11 +4373,14 @@ label.error {
 /*     	Progress     */
 .progress {
   border-radius: 100px;
-  height: 14px; }
+  height: 14px; 
+  width: 50%;
+}
   .progress .progress-bar {
     border-radius: 100px; }
   .progress.progress-sm {
-    height: 8px; }
+    height: 80px;
+    width: 50%; }
   .progress.progress-lg {
     height: 20px; }
 

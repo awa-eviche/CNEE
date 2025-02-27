@@ -15,12 +15,11 @@ class Allocation extends Model
         "retenu_id",
         "secteur_id",
         "classification_id",
-        "datePriseEffet",
-        "dateEcheance",
-        "duree",
+       
         "partieEtat",
         "ContrePartie",
         "montantTotal",
+        "mois",
     ];
     public function classification()
     {

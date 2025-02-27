@@ -15,7 +15,9 @@ class Archive extends Model
         "file",
         "dureeConv",
         "anneeAdhesion",
-        "entreprise_id",
+        "entreprise_id",  
+        'debutconvention' ,
+        'finconvention', 
 
     ];
     public function entreprise()

@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('file');
             $table->string('dureeConv');
             $table->string('anneeAdhesion');
+            $table->string('debutconvention');
+            $table->string('finconvention');
+            $table->string('duree');
             $table->timestamps();
         });
     }

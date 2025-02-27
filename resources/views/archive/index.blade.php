@@ -74,6 +74,7 @@
                         class="display table table-striped table-hover">
                         <thead>
                           <tr>
+                          <th>Entreprise</th>
                           <th>Type</th>
                             <th>Durée convention (mois)</th>
                             <th>Année adhésion</th>
@@ -83,6 +84,7 @@
                         </thead>
                         <tfoot>
                           <tr>
+                          <th>Entreprise</th>
                           <th>Type</th>
                             <th>Durée convention (mois)</th>
                             <th>Année adhésion</th>
@@ -96,6 +98,7 @@
             @foreach($archives as $archive)
           
                 <tr>
+                <td>{{ $archive->entreprise->nomentreprise ?? ' - ' }}</td>
                     <td>{{ $archive->type ?? ' - ' }}</td>
                     <td>{{ $archive->dureeConv ?? ' - ' }}</td>
                     <td>{{ $archive->anneeAdhesion ?? ' - ' }}</td>
@@ -441,7 +444,7 @@
         });
       });
     </script>
-     <script>
+  <script>
     document.addEventListener("DOMContentLoaded", function () {
         @if(session('success'))
             $.notify({

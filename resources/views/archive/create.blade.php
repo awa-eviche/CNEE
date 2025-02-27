@@ -89,6 +89,16 @@
                           <label for="datenaissance">Durée de la convention (mois)</label>
                           <input type="text" class="form-control" id="dureeConv" name="dureeConv" placeholder="Votre Durée de la convention" />
                         </div>
+                        <div class="form-group">
+                          <label for="anneeAdhesion">Fin convention</label>
+                          <input
+                            type="date"
+                            class="form-control"
+                            id="anneeAdhesion"
+                            name="finconvention"
+                            placeholder="Votre fin convention"
+                          />
+                        </div>
                       </div>
 
                       
@@ -107,6 +117,16 @@
                         <div class="form-group">
                           <label>Fichier à joindre</label>
                           <input  type="file" class="form-control" id="file" name="file"  placeholder="Votre fichier à joindre"  />
+                        </div>
+                        <div class="form-group">
+                          <label for="anneeAdhesion">Début convention</label>
+                          <input
+                            type="date"
+                            class="form-control"
+                            id="anneeAdhesion"
+                            name="debutconvention"
+                            placeholder="Votre debut convention"
+                          />
                         </div>
                         </div>
                       </div>

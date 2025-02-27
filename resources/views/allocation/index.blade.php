@@ -48,7 +48,7 @@
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
               <div>
-                <h3 class="fw-bold mb-3">Gestion des archives</h3>
+                <h3 class="fw-bold mb-3">Gestion des allocations</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
               </div>
             
@@ -82,8 +82,8 @@
                                 <p> Activité : {{ $entreprise->activite }}</p>
                             </div>
                             <div  style="position: relative;">
-    <a href="{{ route('allocation.create', ['id' => $entreprise->id]) }}" class="btn btn-primary" style="left: 80px;">Ajouter une allocation</a>
-    <a href="{{ route('allocation.create', ['id' => $entreprise->id]) }}" class="btn btn-secondary" style="left: 80px;">Montant dus</a>
+    <a href="{{ route('allocation.create', ['id' => $entreprise->id]) }}" class="btn btn-primary" style="left: 80px;">voir une allocation</a>
+    <a href="{{ route('allocation.montant', ['id' => $entreprise->id]) }}" class="btn btn-secondary" style="left: 80px;">Montant dus</a>
 
 </div>
                         </div>

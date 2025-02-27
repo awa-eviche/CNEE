@@ -12,6 +12,9 @@ class Retenu extends Model
         'demandeur_profil_id', 
         'demande_id',
         'entreprise_id',
+        "datePriseEffet",
+        "dateEcheance",
+        "duree",
         'checked',
     ];
     public function entreprise()
