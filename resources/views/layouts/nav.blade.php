@@ -54,9 +54,9 @@
                 <li class="nav-item topbar-icon dropdown hidden-caret">
     <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-bs-toggle="dropdown">
         <i class="fa fa-bell"></i>
-        @if($totalNotifications > 0)
+      
             <span class="notification" id="notification-count">{{ $totalNotifications }}</span>
-        @endif
+    
     </a>
     <ul class="dropdown-menu notif-box animated fadeIn">
         <li>

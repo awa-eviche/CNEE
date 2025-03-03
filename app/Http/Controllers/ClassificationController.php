@@ -3,14 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Demande; 
+use App\Models\Entreprise; 
 use App\Models\Classification;
 
 class ClassificationController extends Controller
 {
     public function index()
     {
+        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
+        Entreprise::where('is_new', true)->update(['is_new' => false]);
+     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
+    $nouveauxEntreprises = $entreprisesEnAttente; 
+    $demandeEnAttente = Demande::where('is_new', true)->count();
+    Demande::where('is_new', true)->update(['is_new' => false]);
+    $totalNotifications = $demandeEnAttente;
+    $nouvellesDemandes = $demandeEnAttente; 
         $classifications = Classification::all();
-        return view('classification.index', compact('classifications'));
+        return view('classification.index', compact('classifications','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
     }
 
     public function create()

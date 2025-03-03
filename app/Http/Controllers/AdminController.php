@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Entreprise;
+use App\Models\Demande;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -17,7 +19,15 @@ class AdminController extends Controller
      public function index()
     { 
        $users=User::all();
-    	 return view('admin.index',compact('users'));
+       $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
+       Entreprise::where('is_new', true)->update(['is_new' => false]);
+    $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
+   $nouveauxEntreprises = $entreprisesEnAttente; 
+   $demandeEnAttente = Demande::where('is_new', true)->count();
+   Demande::where('is_new', true)->update(['is_new' => false]);
+   $totalNotifications = $demandeEnAttente;
+   $nouvellesDemandes = $demandeEnAttente;
+    	 return view('admin.index',compact('users','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
     }
 
    public function create()

@@ -14,6 +14,15 @@ class DashboardController extends Controller
    
      public function index()
 {
+
+    $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
+    Entreprise::where('is_new', true)->update(['is_new' => false]);
+ $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
+$nouveauxEntreprises = $entreprisesEnAttente; 
+$demandeEnAttente = Demande::where('is_new', true)->count();
+Demande::where('is_new', true)->update(['is_new' => false]);
+$totalNotifications = $demandeEnAttente;
+$nouvellesDemandes = $demandeEnAttente; 
     $user = Auth::user();
   
 
@@ -29,7 +38,7 @@ class DashboardController extends Controller
         $demande = Demande::where('entreprise_id', $user->id)->count();
         $retenu = Retenu::where('entreprise_id', $user->id)->count();
     }
-return view('dashboard', compact('entreprise', 'demande', 'retenu', 'demandeur'));
+return view('dashboard', compact('entreprise', 'demande', 'retenu', 'demandeur','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
 }
 
      } 

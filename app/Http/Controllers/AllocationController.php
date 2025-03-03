@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Allocation;
 use App\Models\Entreprise;
+use App\Models\Demande;
 use App\Models\Retenu;
 use App\Models\Secteur;
 use App\Models\Classification;
@@ -16,8 +17,15 @@ class AllocationController extends Controller
         $entreprises = Entreprise::where('statut', 'validé')
             ->withCount('retenus') 
             ->get();
-        
-        return view('allocation.index', compact('entreprises'));
+            $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
+            Entreprise::where('is_new', true)->update(['is_new' => false]);
+         $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
+        $nouveauxEntreprises = $entreprisesEnAttente; 
+        $demandeEnAttente = Demande::where('is_new', true)->count();
+        Demande::where('is_new', true)->update(['is_new' => false]);
+        $totalNotifications = $demandeEnAttente;
+        $nouvellesDemandes = $demandeEnAttente; 
+        return view('allocation.index', compact('entreprises','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
     }   
 public function create($id)
 {
