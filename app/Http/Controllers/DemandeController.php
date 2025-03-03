@@ -24,11 +24,7 @@ class DemandeController extends Controller
                 $query->where('nomentreprise', $user->name);
             })->get();
         }
-        $demandeEnAttente = Demande::where('is_new', true)->count();
-        
-        Demande::where('is_new', true)->update(['is_new' => false]);
-        $totalNotifications = $demandeEnAttente;
-        $nouvellesDemandes = $demandeEnAttente; 
+       
         return view('demande.index', compact('demande' ,'demandeEnAttente', 'totalNotifications', 'nouvellesDemandes'));
     }
     
@@ -42,25 +38,32 @@ class DemandeController extends Controller
     }
 
     public function store(Request $request)
-{   
-    $entreprise = Entreprise::where('nomentreprise', auth()->user()->name)->first();
-    if (!$entreprise) {
-        return back()->with('error', 'Entreprise non trouvée.');
+    {   
+        $entreprise = Entreprise::where('nomentreprise', auth()->user()->name)->first();
+        
+        if (!$entreprise) {
+            return back()->with('error', 'Entreprise non trouvée.');
+        }
+
+        $request->validate([
+            'profil_id' => 'required|exists:profils,id',
+            'niveaux_id' => 'required|exists:niveauxes,id', 
+            'nbre_profil' => 'required|integer|min:1',
+        ]);
+    
+        
+        $demande = Demande::create([
+            'profil_id' => $request->profil_id,
+            'niveaux_id' => $request->niveaux_id,
+            'entreprise_id' => $entreprise->id,
+            'nbre_profil' => $request->nbre_profil,
+            'is_new' => true, 
+        ]);
+    
+        return redirect()->route('demande.index')
+            ->with('success', 'Demande créée avec succès.');
     }
-     $request->validate([
-        'profil_id' => 'required|exists:profils,id',
-        'niveaux_id' => 'required|exists:niveauxes,id', 
-        'nbre_profil' => 'required|integer|min:1',
-    ]);
-    Demande::create([
-        'profil_id' => $request->profil_id,
-        'niveaux_id' => $request->niveaux_id,
-        'entreprise_id' => $entreprise->id,
-        'nbre_profil' => $request->nbre_profil,
-    ]);
-    return redirect()->route('demande.index')
-        ->with('success', 'Demande créée avec succès.');
-}
+    
 
 
 
