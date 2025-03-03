@@ -10,8 +10,7 @@ use App\Models\Allocation;
 class Entreprise extends Model
 {
     use HasFactory;
-    
-        public $timestamps = false;
+     public $timestamps = false;
         protected $fillable = [
             "nomentreprise",
             "activite",
@@ -27,7 +26,8 @@ class Entreprise extends Model
             "regitcom",
             "dossier", 
             "quitus", 
-            "attestation", 
+            "attestation",
+            "is_new", 
              
         ];
         public function archives()

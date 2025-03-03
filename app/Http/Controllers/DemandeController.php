@@ -24,8 +24,12 @@ class DemandeController extends Controller
                 $query->where('nomentreprise', $user->name);
             })->get();
         }
-    
-        return view('demande.index', compact('demande'));
+        $demandeEnAttente = Demande::where('is_new', true)->count();
+        
+        Demande::where('is_new', true)->update(['is_new' => false]);
+        $totalNotifications = $demandeEnAttente;
+        $nouvellesDemandes = $demandeEnAttente; 
+        return view('demande.index', compact('demande' ,'demandeEnAttente', 'totalNotifications', 'nouvellesDemandes'));
     }
     
     

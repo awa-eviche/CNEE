@@ -86,7 +86,9 @@ Route::group([],function () {
     Route::get('/demanderetenu', [DemandeController::class, 'listeRetenus'])->name('demanderetenu');
     Route::get('/demanderecu/{id?}', [DemandeController::class, 'listeReponses'])->name('demanderecu');
     Route::get('/demanderetenu/{id}', [DemandeController::class, 'listeRetenusDemandeur'])->name('demandeurretenu');
+    Route::post('/allocation/payer/{id}/{trimestre}', [AllocationController::class, 'payerTrimestre'])->name('allocation.payer');
 
+    Route::get('/notifications', [EntrepriseController::class, 'index'])->name('notifications');
 
 
 require __DIR__.'/auth.php';

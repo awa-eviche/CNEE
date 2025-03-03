@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Allocation;
@@ -12,16 +11,14 @@ use App\Models\Classification;
 use App\Models\Archive;
 class AllocationController extends Controller
 {
-    public function index()
+ public function index()
     {
         $entreprises = Entreprise::where('statut', 'validé')
             ->withCount('retenus') 
             ->get();
         
         return view('allocation.index', compact('entreprises'));
-    }
-    
-    
+    }   
 public function create($id)
 {
     $entreprise = Entreprise::findOrFail($id);
@@ -40,9 +37,9 @@ public function afficher($id)
     return view('allocation.afficher', compact('entreprise', 'secteur', 'classification', 'retenu'));
 }
 
-
 public function store(Request $request)
 {
+
     $validatedData = $request->validate([
         'entreprise_id' => 'required|exists:entreprises,id',
         'secteur_id' => 'required|exists:secteurs,id',
@@ -51,23 +48,38 @@ public function store(Request $request)
         'partieEtat' => 'required',
         'ContrePartie' => 'required',
         'montantTotal' => 'required',
-        'mois' => 'required',
+        'mois' => 'required|in:Janvier,Février,Mars,Avril,Mai,Juin,Juillet,Aout,Septembre,Octobre,Novembre,Décembre',
     ]);
-    $archive = Archive::where('entreprise_id', $request->entreprise_id)->first();
+    $trimestres = [
+        'Janvier' => 'Q1', 'Février' => 'Q1', 'Mars' => 'Q1',
+        'Avril' => 'Q2', 'Mai' => 'Q2', 'Juin' => 'Q2',
+        'Juillet' => 'Q3', 'Aout' => 'Q3', 'Septembre' => 'Q3',
+        'Octobre' => 'Q4', 'Novembre' => 'Q4', 'Décembre' => 'Q4',
+    ];
+
+    $validatedData['trimestre'] = $trimestres[$validatedData['mois']];
+
+    $archive = Archive::where('entreprise_id', $validatedData['entreprise_id'])->first();
     if (!$archive) {
         return redirect()->back()->with('error', 'Aucune archive trouvée pour cette entreprise.');
     }
-    $dateActuelle = date('Y-m-d');
-    if ($dateActuelle > $archive->finconvention) {
-        return redirect()->route('allocation.index')->with('success', 'L\'enregistrement d\'allocations est impossible car la convention est expirée.');
+
+    if (now()->toDateString() > $archive->finconvention) {
+        return redirect()->route('allocation.index')->with('error', 'L\'enregistrement d\'allocations est impossible car la convention est expirée.');
     }
-    Allocation::create($validatedData);
-    return redirect()->route('allocation.index')->with('success', 'Allocation ajoutée avec succès.');
+
+    $allocationCreated = Allocation::create($validatedData);
+
+    if ($allocationCreated) {
+        return redirect()->route('allocation.index')->with('success', 'Allocation ajoutée avec succès.');
+    } else {
+        return redirect()->back()->with('error', 'Une erreur est survenue lors de l\'enregistrement.');
+    }
 }
 
-public function calculerMontantsParTrimestre($id)
+
+  public function calculerMontantsParTrimestre($id)
 {
-    
     $montantParTrimestre = [
         'Q1' => 0, 
         'Q2' => 0, 
@@ -75,34 +87,26 @@ public function calculerMontantsParTrimestre($id)
         'Q4' => 0,
         'message' => null
     ];
-
-   
     $archive = Archive::where('entreprise_id', $id)->first();
     if (!$archive) {
         $montantParTrimestre['message'] = 'Aucune convention trouvée pour cette entreprise.';
         return $montantParTrimestre;
     }
-
     $dateFinConvention = $archive->finconvention; 
     $dateActuelle = date('Y-m-d');
-
     $estExpire = $dateActuelle > $dateFinConvention;
-
     $allocations = Allocation::where('entreprise_id', $id)->get();
     if ($allocations->isEmpty()) {
         $montantParTrimestre['message'] = 'Aucune allocation valide trouvée.';
         return $montantParTrimestre;
-    }
-
-    
+    } 
     $moisMap = [
         'Janvier' => 1, 'Février' => 2, 'Mars' => 3,
         'Avril' => 4, 'Mai' => 5, 'Juin' => 6,
         'Juillet' => 7, 'Aout' => 8, 'Septembre' => 9,
         'Octobre' => 10, 'Novembre' => 11, 'Décembre' => 12,
     ];
-
-    foreach ($allocations as $allocation) {
+ foreach ($allocations as $allocation) {
         $moisNom = $allocation->mois ?? null;
         $montant = floatval($allocation->partieEtat); 
 
@@ -130,31 +134,87 @@ public function calculerMontantsParTrimestre($id)
     return $montantParTrimestre;
 }
 
-public function calculerMontantAnnuel($id)
+public function calculerTotalPartieEtat($id)
 {
- 
     $entreprise = Entreprise::find($id);
     if (!$entreprise) {
-        return ['error' => 'Entreprise non trouvée.'];
-    }
-    $allocations = Allocation::where('entreprise_id', $id)->get();
-    $montantAnnuel = 0;
-
-    foreach ($allocations as $allocation) {
-        $montantAnnuel += floatval($allocation->partieEtat);
+        return 0; 
     }
 
-    return ['montant_annuel' => $montantAnnuel];
+    // Total avant paiement
+    $totalAvantPaiement = Allocation::where('entreprise_id', $id)->sum('partieEtat');
+
+    // Total déjà payé
+    $totalPaye = Allocation::where('entreprise_id', $id)
+        ->where('paye', true)
+        ->sum('partieEtat');
+
+    // Montant restant
+    return $totalAvantPaiement - $totalPaye;
 }
+
+
  
 public function montant($id)
 {
     $montantsTrimestriels = $this->calculerMontantsParTrimestre($id);
-    $montantAnnuel = $this->calculerMontantAnnuel($id);
+    $montantAnnuel = $montantAnnuelData['montant_annuel'] ?? 0;
+    $totalPartieEtat = $this->calculerTotalPartieEtat($id); 
     $entreprise = Entreprise::findOrFail($id);
     $allocations = $entreprise->allocations;
-    return view('allocation.montant', compact('entreprise','allocations','montantsTrimestriels','montantAnnuel'));
+    $trimestre = ['Q1', 'Q2', 'Q3', 'Q4'];
+    return view('allocation.montant', compact('entreprise', 'allocations', 'montantsTrimestriels', 'montantAnnuel', 'totalPartieEtat', 'trimestre'));
 }
+
+
+public function payerTrimestre(Request $request, $id, $trimestre)
+{
+    $allocations = Allocation::where('entreprise_id', $id)
+        ->where('trimestre', $trimestre)
+        ->where('paye', false)
+        ->get();
+
+    if ($allocations->isEmpty()) {
+        return redirect()->back()->with('error', 'Aucune allocation trouvée pour ce trimestre.');
+    }
+
+    $montantTotalTrimestre = $allocations->sum('partieEtat');
+
+    $totalPartieEtat = $this->calculerTotalPartieEtat($id);
+
+    if ($montantTotalTrimestre > $totalPartieEtat) {
+        return redirect()->back()->with('error', 'Le montant total à payer dépasse le total disponible.');
+    }
+
+    foreach ($allocations as $allocation) {
+        $allocation->paye = true;
+        $allocation->montant_paye = $allocation->partieEtat; 
+        $allocation->partieEtat = 0; 
+        $allocation->save();
+    }
+
+    return redirect()->back()
+        ->with('success', "Paiement effectué pour le trimestre $trimestre.")
+        ->with('montantTotalTrimestre', $montantTotalTrimestre)
+        ->with('trimestre_paye', $trimestre);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 public function show(Allocation  $allocation)
 {
@@ -192,10 +252,7 @@ public function update(Request $request, Allocation $allocation)
     if ($dateActuelle > $archive->finconvention) {
         return redirect()->route('allocation.index')->with('error', 'La convention est expirée. Impossible de modifier l\'allocation.');
     }
-
-    
     $allocation->update($validatedData);
-
     return redirect()->route('allocation.index')->with('success', 'Allocation mise à jour avec succès.');
 }
 

@@ -61,11 +61,35 @@
               <div>
                 <h3 class="fw-bold mb-3">Gestion des Entreprises</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
+                <div class="page-header">
+                <div class="page-header">
+              <h3 class="fw-bold mb-3"></h3>
+              <ul class="breadcrumbs mb-3">
+                <li class="nav-home">
+                  <a href="{{ route('dashboard') }}">
+                    <i class="icon-home"></i>
+                  </a>
+                </li>
+                <li class="separator">
+                  <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('entreprise.index') }}">Gestion entreprise</a>
+                </li>
+                <li class="separator">
+                  <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                  <a href="#">Détail entreprise</a>
+                </li>
+              </ul>
+            </div>
+            </div>
               </div>
-              <!-- <div class="ms-md-auto py-2 py-md-0">
-            
-                <a href="#" class="btn btn-primary btn-round">Ajouter</a>
-              </div> -->
+                
+              
+              
+           
             </div>
             <div class="row">
            
@@ -161,17 +185,17 @@
 
 <div class="form-group">
     @if($entreprise->dossier)
-        <a href="{{ asset('storage/' . $entreprise->dossier) }}" target="_blank" class="btn btn-primary">
-            Voir le fichier : {{ basename($entreprise->dossier) }}
+        <a href="{{ Storage::url('dossiers/' . $entreprise->dossier) }}" target="_blank" class="btn btn-primary">
+            Voir le fichier d'adhésion: {{ basename($entreprise->dossier) }}
         </a>
     @else
         <p>Aucun fichier disponible.</p>
     @endif
 </div>
-<div class="form-group">
+<div class="form-group"> 
     @if($entreprise->quitus)
-        <a href="{{ asset('storage/' . $entreprise->quitus) }}" target="_blank" class="btn btn-primary">
-            Voir le fichier : {{ basename($entreprise->quitus) }}
+        <a href="{{ Storage::url('quitus/' . $entreprise->quitus) }}" target="_blank" class="btn btn-primary">
+            Voir le fichier quitus: {{ basename($entreprise->quitus) }}
         </a>
     @else
         <p>Aucun fichier disponible.</p>
@@ -179,8 +203,8 @@
 </div>
 <div class="form-group">
     @if($entreprise->attestation)
-        <a href="{{ asset('storage/' . $entreprise->attestation) }}" target="_blank" class="btn btn-primary">
-            Voir le fichier : {{ basename($entreprise->attestation) }}
+        <a href="{{ Storage::url('attestations/' . $entreprise->attestation) }}" target="_blank" class="btn btn-primary">
+            Voir le fichier attestation: {{ basename($entreprise->attestation) }}
         </a>
     @else
         <p>Aucun fichier disponible.</p>
@@ -218,7 +242,7 @@
         <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
             <!-- Modal header -->
             <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-black">
                    Envoyer le motif du rejet
                 </h3>
                 <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
