@@ -30,8 +30,15 @@ class EntrepriseController extends Controller
     {
         //$entreprises = Entreprise::where('nomentreprise', auth()->user()->name)->get();
          $entreprises=Entreprise::all();
-        
-        return view('entreprise.create',compact('entreprises'));
+         $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
+        Entreprise::where('is_new', true)->update(['is_new' => false]);
+     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
+    $nouveauxEntreprises = $entreprisesEnAttente; 
+    $demandeEnAttente = Demande::where('is_new', true)->count();
+    Demande::where('is_new', true)->update(['is_new' => false]);
+    $totalNotifications = $demandeEnAttente;
+    $nouvellesDemandes = $demandeEnAttente; 
+        return view('entreprise.create',compact('entreprises','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
     }
 
     public function store(Request $request)
@@ -97,8 +104,15 @@ class EntrepriseController extends Controller
 
 public function show(Entreprise $entreprise)
     {
-       
-        return view('entreprise.show',compact('entreprise'));
+        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
+        Entreprise::where('is_new', true)->update(['is_new' => false]);
+     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
+    $nouveauxEntreprises = $entreprisesEnAttente; 
+    $demandeEnAttente = Demande::where('is_new', true)->count();
+    Demande::where('is_new', true)->update(['is_new' => false]);
+    $totalNotifications = $demandeEnAttente;
+    $nouvellesDemandes = $demandeEnAttente; 
+        return view('entreprise.show',compact('entreprise','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
     }
 
     public function validerEntreprise($id)

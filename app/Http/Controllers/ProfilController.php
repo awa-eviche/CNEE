@@ -24,8 +24,16 @@ class ProfilController extends Controller
 
     public function create()
     {
+        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
+        Entreprise::where('is_new', true)->update(['is_new' => false]);
+     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
+    $nouveauxEntreprises = $entreprisesEnAttente; 
+    $demandeEnAttente = Demande::where('is_new', true)->count();
+    Demande::where('is_new', true)->update(['is_new' => false]);
+    $totalNotifications = $demandeEnAttente;
+    $nouvellesDemandes = $demandeEnAttente; 
         $profils = Profil::all();
-        return view('profil.create', compact('profils'));
+        return view('profil.create', compact('profils','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
     }
 
     public function store(Request $request)
@@ -44,9 +52,16 @@ class ProfilController extends Controller
 
     public function edit(Profil $profil)
     {
-        
+        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
+        Entreprise::where('is_new', true)->update(['is_new' => false]);
+     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
+    $nouveauxEntreprises = $entreprisesEnAttente; 
+    $demandeEnAttente = Demande::where('is_new', true)->count();
+    Demande::where('is_new', true)->update(['is_new' => false]);
+    $totalNotifications = $demandeEnAttente;
+    $nouvellesDemandes = $demandeEnAttente; 
   
-        return view('profil.edit', compact('profil'));
+        return view('profil.edit', compact('profil','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
     }
 
     public function update(Request $request, Profil $profil)
