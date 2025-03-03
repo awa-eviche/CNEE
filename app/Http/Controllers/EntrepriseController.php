@@ -21,8 +21,12 @@ class EntrepriseController extends Controller
         
     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
     $nouveauxEntreprises = $entreprisesEnAttente; 
-    
-        return view('entreprise.index',compact('entreprises','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises'));
+    $demandeEnAttente = Demande::where('is_new', true)->count();
+        
+    Demande::where('is_new', true)->update(['is_new' => false]);
+    $totalNotifications = $demandeEnAttente;
+    $nouvellesDemandes = $demandeEnAttente; 
+        return view('entreprise.index',compact('entreprises','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
     }
     public function create()
     {

@@ -65,19 +65,19 @@
         <li>
             <div class="notif-scroll scrollbar-outer">
                 <div class="notif-center">
-                    @if($nouveauxEntreprises > 0)
+                   
                         <a href="{{ route('entreprise.index') }}">
                             <div class="notif-icon notif-primary"><i class="fa fa-user-plus"></i></div>
                             <div class="notif-content">
                                 <span class="block" id="entreprises-count">{{ $nouveauxEntreprises }} nouvelles entreprises</span>
                             </div>
                         </a>
-                    @endif
+                   
                    
                         <a href="{{ route('demande.index') }}">
                             <div class="notif-icon notif-success"><i class="fa fa-comment"></i></div>
                             <div class="notif-content">
-                                <span class="block" id="demandes-count">nouvelles demandes</span>
+                                <span class="block" id="demandes-count">{{ $nouvellesDemandes }}  nouvelles demandes</span>
                             </div>
                         </a>
                 
