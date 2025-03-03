@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('partieEtat');
             $table->string('ContrePartie');
             $table->string('MontantTotal');
+            $table->boolean('paye')->default(false);
+            $table->string('trimestre');
             $table->timestamps();
         });
     }

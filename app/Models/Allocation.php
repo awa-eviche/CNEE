@@ -20,6 +20,12 @@ class Allocation extends Model
         "ContrePartie",
         "montantTotal",
         "mois",
+        "paye",
+        "trimestre",
+        "montant_paye",
+    ];
+    protected $casts = [
+        'paye' => 'boolean',
     ];
     public function classification()
     {

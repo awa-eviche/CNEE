@@ -49,6 +49,30 @@
               <div>
                 <h3 class="fw-bold mb-3">Gestion des entreprises</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
+                <div class="page-header">
+                <div class="page-header">
+              <h3 class="fw-bold mb-3"></h3>
+              <ul class="breadcrumbs mb-3">
+                <li class="nav-home">
+                  <a href="{{ route('dashboard') }}">
+                    <i class="icon-home"></i>
+                  </a>
+                </li>
+                <li class="separator">
+                  <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                  <a href="{{ route('entreprise.index') }}">Gestion entreprise</a>
+                </li>
+                <li class="separator">
+                  <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                  <a href="#">Liste entreprise</a>
+                </li>
+              </ul>
+            </div>
+            </div>
               </div>
               <!-- <div class="ms-md-auto py-2 py-md-0">
             

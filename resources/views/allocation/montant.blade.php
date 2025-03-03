@@ -39,6 +39,8 @@
           </div>
           <!-- Navbar Header -->
           @include('layouts.nav')
+          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
           <!-- End Navbar -->
         </div>
         <div class="container">
@@ -70,99 +72,70 @@
     <p>Montant Trimestriel de l'entreprise {{$entreprise->nomentreprise}}</p>
 </div>
 <br>
-            <div class="row">
-              <div class="col-12 col-sm-6 col-md-7 col-xl-3">
-                <div class="card">
-                  <div class="card-body">
+<div class="row">
+        @php
+            $trimestres = [
+                'Q1' => 'Janvier-Mars',
+                'Q2' => 'Avril-Juin',
+                'Q3' => 'Juillet-Septembre',
+                'Q4' => 'Octobre-Décembre'
+            ];
+        @endphp
+
+        @foreach($trimestres as $key => $periode)
+        <div class="col-12 col-sm-6 col-md-7 col-xl-3">
+            <div class="card">
+                <div class="card-body">
                     <div class="d-flex justify-content-between">
-                      <div>
-                        <h5><b>Janvier-Mars</b></h5>
-                        <p class="text-muted">A payer</p>
-                      </div>
-                     
+                        <div>
+                            <h5><b>{{ $periode }}</b></h5>
+                            <p class="text-muted">À payer</p>
+                        </div>
                     </div>
-                    <div class="progress progress-sm">
-                      <div
-                        class="progress-bar bg-info w-150"
-                        role="progressbar"
-                        
-                      ></div>
-                    </div>
+                    <div class="progress progress-sm"></div>
                     <div class="d-flex justify-content-between mt-2">
-                     
-                      <p class="text-muted mb-0"> {{ $montantsTrimestriels['Q1']}}</p>
-                      <p class="text-muted mb-0">F CFA</p>
+                    <p class="text-muted mb-0">{{ $montantsTrimestriels[$key] ?? 0 }} F CFA</p>
+
+@php
+    // Récupérer l'allocation pour le trimestre actuel
+    $allocation = $allocations->where('trimestre', $key)->first();
+@endphp
+@if(isset($allocation) && $allocation->trimestre == $key)
+    @if($allocation->paye)
+    <button class="btn btn-secondary" disabled>Déjà payé</button>
+    <p class="text-success mb-0 ">Montant payé : {{ $allocation->montant_paye }} F CFA</p>
+    @else
+        <form method="POST" action="{{ route('allocation.payer', ['id' => $entreprise->id, 'trimestre' => $key]) }}">
+            @csrf
+            <button class="btn btn-primary">Payer</button>
+        </form>
+    @endif
+@endif
+
+
+
+
+
+
+
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div class="col-12 col-sm-6 col-md-7 col-xl-3">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                      <div>
-                        <h5><b>Avril-Juin</b></h5>
-                        <p class="text-muted">A payer</p>
-                      </div>
-                    </div>
-                    <div class="progress progress-sm">
-                     
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                    <p class="text-muted mb-0">{{$montantsTrimestriels['Q2']}}</p>
-                    <p class="text-muted mb-0">F CFA</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-sm-6 col-md-7 col-xl-3">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                      <div>
-                        <h5><b>Juillet-Septembre</b></h5>
-                        <p class="text-muted">A payer</p>
-                      </div>
-                    </div>
-                    <div class="progress progress-sm">
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                    <p class="text-muted mb-0">{{$montantsTrimestriels['Q3']}}</p>
-                    <p class="text-muted mb-0">F CFA</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-sm-6 col-md-7 col-xl-3">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                      <div>
-                        <h5><b>Octobre-Décembre</b></h5>
-                        <p class="text-muted">A payer</p>
-                      </div>
-                    </div>
-                    <div class="progress progress-sm">
-                    </div>
-                    <div class="d-flex justify-content-between mt-2">
-                    <p class="text-muted mb-0">{{$montantsTrimestriels['Q4']}}</p>
-                    <p class="text-muted mb-0">F CFA</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
             </div>
             <div class="custom-banner">
     <p>Montant Annuel de l'entreprise {{$entreprise->nomentreprise}}</p>
   </div>
   <br>
-  <div class="row">
+     <div class="row">
               <div class="col-12 col-sm-6 col-md-7 col-xl-3">
                 <div class="card">
                   <div class="card-body">
                     <div class="d-flex justify-content-between">
                       <div>
-                        <h5><b>Annuel</b></h5>
+                        <h5><b> Montant Annuel</b></h5>
                         <p class="text-muted">A payer</p>
                       </div>
                      
@@ -170,20 +143,17 @@
                     <div class="progress progress-sm">
                       <div
                         class="progress-bar bg-info w-150"
-                        role="progressbar"
-                        
-                      ></div>
+                        role="progressbar"  ></div>
                     </div>
                     <div class="d-flex justify-content-between mt-2">
                      
-                      <p class="text-muted mb-0"> {{ $montantAnnuel['montant_annuel']}}</p>
-                      <p class="text-muted mb-0">F CFA</p>
+                   
+                    <p>Montant restant : {{ number_format($totalPartieEtat) }} F CFA</p>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-</div> 
+             
+    </div> 
         </div>
      
  <!--! footer-->

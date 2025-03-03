@@ -44,6 +44,8 @@
           </div>
           <!-- Navbar Header -->
           @include('layouts.nav')
+          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
           <!-- End Navbar -->
         </div>
         <div class="container">
@@ -159,7 +161,7 @@
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                 
                 <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-black">
                       Ajout d'un fichier à l'entreprise {{ $archive->entreprise->nomentreprise ?? ' - ' }}
                     </h3>
                     <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">

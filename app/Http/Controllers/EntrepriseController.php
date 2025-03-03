@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Entreprise; 
+use App\Models\Demande; 
 use Illuminate\Http\Request;
 use App\Mail\EntrepriseInscriteMail;
 use App\Mail\ValiderEntrepriseMail;
@@ -15,14 +16,19 @@ class EntrepriseController extends Controller
     public function index()
     {
         $entreprises=Entreprise::all();
-        return view('entreprise.index',compact('entreprises'));
+        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
+        Entreprise::where('is_new', true)->update(['is_new' => false]);
+        
+    $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
+    $nouveauxEntreprises = $entreprisesEnAttente; 
+    
+        return view('entreprise.index',compact('entreprises','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises'));
     }
     public function create()
     {
         //$entreprises = Entreprise::where('nomentreprise', auth()->user()->name)->get();
-
-
          $entreprises=Entreprise::all();
+        
         return view('entreprise.create',compact('entreprises'));
     }
 
@@ -60,7 +66,7 @@ class EntrepriseController extends Controller
     $entreprise->ninea = $request->ninea;
     $entreprise->regitcom = $request->regitcom;
     $entreprise->nombreemployer = $request->nombreemployer;
-
+    $entreprise->is_new = true;
     
     if ($request->hasFile('dossier')) {
         $file = $request->file('dossier');

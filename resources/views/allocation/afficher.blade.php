@@ -96,7 +96,7 @@
                       
                         <div class="form-group">
                           <label for="datenaissance">Partie entreprise</label>
-                          <input type="text" class="form-control" id="ContrePartie" name="ContrePartie" placeholder="Votre part entreprise" />
+                          <input type="text" class="form-control" id="ContrePartie" name="ContrePartie" placeholder="Votre part entreprise"  oninput="calculerMontantTotal()" />
                         </div>
 
                         
@@ -137,11 +137,11 @@
                       
                         <div class="form-group">
                           <label for="datenaissance">Contre partie Etat</label>
-                          <input type="text" class="form-control" id="partieEtat" name="partieEtat" placeholder="Votre Durée de la convention" />
+                          <input type="text" class="form-control" id="partieEtat" name="partieEtat" placeholder="Votre Durée de la convention" oninput="calculerMontantTotal()" />
                         </div>
                         <div class="form-group">
                           <label for="datenaissance">Montant Total</label>
-                          <input type="text" class="form-control" id="montantTotal" name="montantTotal" placeholder="Votre Durée de la convention" />
+                          <input type="text" class="form-control" id="montantTotal" name="montantTotal" placeholder="Votre Durée de la convention" readonly/>
                         </div>
                        
 
@@ -440,5 +440,18 @@
         @endif
     });
 </script>
+<script>
+        function calculerMontantTotal() {
+            // Récupérer les valeurs des champs
+            const partieEtat = parseFloat(document.getElementById('partieEtat').value) || 0;
+            const contrePartie = parseFloat(document.getElementById('ContrePartie').value) || 0;
+
+            // Calculer le montant total
+            const montantTotal = partieEtat + contrePartie;
+
+            // Afficher le montant total dans le champ correspondant
+            document.getElementById('montantTotal').value = montantTotal;
+        }
+    </script>
   </body>
 </html>
