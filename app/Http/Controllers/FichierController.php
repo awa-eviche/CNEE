@@ -6,8 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Archive; 
 use App\Models\Fichier; 
+use App\Models\Entreprise;
+use App\Models\Demande;
 class FichierController extends Controller
 {
+    public function index()
+    {
+       
+
+    }
     public function store(Request $request, Archive $archive)
     {
         $request->validate([

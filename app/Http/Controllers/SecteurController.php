@@ -4,13 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Secteur;
+use App\Models\Demande;
+use App\Models\Entreprise;
 
 class SecteurController extends Controller
 {
     public function index()
-    {
+    {   $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
+        Entreprise::where('is_new', true)->update(['is_new' => false]);
+     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
+    $nouveauxEntreprises = $entreprisesEnAttente; 
+    $demandeEnAttente = Demande::where('is_new', true)->count();
+    Demande::where('is_new', true)->update(['is_new' => false]);
+    $totalNotifications = $demandeEnAttente;
+    $nouvellesDemandes = $demandeEnAttente; 
         $secteurs = Secteur::all();
-        return view('secteur.index', compact('secteurs'));
+        return view('secteur.index', compact('secteurs','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
     }
 
     public function create()

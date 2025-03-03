@@ -14,6 +14,14 @@ class DemandeController extends Controller
 {
     public function index()
     {
+        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
+        Entreprise::where('is_new', true)->update(['is_new' => false]);
+     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
+    $nouveauxEntreprises = $entreprisesEnAttente; 
+    $demandeEnAttente = Demande::where('is_new', true)->count();
+    Demande::where('is_new', true)->update(['is_new' => false]);
+    $totalNotifications = $demandeEnAttente;
+    $nouvellesDemandes = $demandeEnAttente;
         $user = auth()->user();
     
         if ($user->role->code === 'superadmin') {
@@ -25,7 +33,7 @@ class DemandeController extends Controller
             })->get();
         }
        
-        return view('demande.index', compact('demande' ,'demandeEnAttente', 'totalNotifications', 'nouvellesDemandes'));
+        return view('demande.index', compact('demande' ,'entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
     }
     
     
