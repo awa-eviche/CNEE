@@ -14,8 +14,8 @@ class DemandeController extends Controller
 {
     public function index()
     {
-        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
-        Entreprise::where('is_new', true)->update(['is_new' => false]);
+    $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
+    Entreprise::where('is_new', true)->update(['is_new' => false]);
      $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
     $nouveauxEntreprises = $entreprisesEnAttente; 
     $demandeEnAttente = Demande::where('is_new', true)->count();
@@ -39,10 +39,18 @@ class DemandeController extends Controller
     
     public function create()
     {
+        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
+        Entreprise::where('is_new', true)->update(['is_new' => false]);
+         $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
+        $nouveauxEntreprises = $entreprisesEnAttente; 
+        $demandeEnAttente = Demande::where('is_new', true)->count();
+        Demande::where('is_new', true)->update(['is_new' => false]);
+        $totalNotifications = $demandeEnAttente;
+        $nouvellesDemandes = $demandeEnAttente;
         $entreprise = Entreprise::where('nomentreprise', auth()->user()->name)->first();
         $profiles = Profil::all();
         $niveaux = Niveaux::all();
-        return view('demande.create', compact( 'profiles','niveaux','entreprise'));
+        return view('demande.create', compact( 'profiles','niveaux','entreprise' ,'entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
     }
 
     public function store(Request $request)
@@ -77,11 +85,19 @@ class DemandeController extends Controller
 
 public function ListeEnvoye($id)
 {
+    $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
+    Entreprise::where('is_new', true)->update(['is_new' => false]);
+     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
+    $nouveauxEntreprises = $entreprisesEnAttente; 
+    $demandeEnAttente = Demande::where('is_new', true)->count();
+    Demande::where('is_new', true)->update(['is_new' => false]);
+    $totalNotifications = $demandeEnAttente;
+    $nouvellesDemandes = $demandeEnAttente;
     $demande = Demande::with(['profil', 'niveaux'])->findOrFail($id);
     $demPro = DemandeurProfil::where('profil_id', $demande->profil_id)
     ->where('niveaux_id', $demande->niveaux_id)
     ->get();
-    return view('demande.listeenvoye', compact('demande','demPro'));
+    return view('demande.listeenvoye', compact('demande','demPro','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
 }
 
 
@@ -108,6 +124,14 @@ public function enregistrerReponses(Request $request)
     }
     public function listeReponses($demandeId = null)
     {
+        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
+        Entreprise::where('is_new', true)->update(['is_new' => false]);
+         $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
+        $nouveauxEntreprises = $entreprisesEnAttente; 
+        $demandeEnAttente = Demande::where('is_new', true)->count();
+        Demande::where('is_new', true)->update(['is_new' => false]);
+        $totalNotifications = $demandeEnAttente;
+        $nouvellesDemandes = $demandeEnAttente;
         $userName = auth()->user()->name;
         $reponses = \App\Models\Reponse::whereHas('entreprise', function ($query) use ($userName) {
             $query->where('nomentreprise', $userName);
@@ -121,7 +145,7 @@ public function enregistrerReponses(Request $request)
             $reponses = $reponses->where('demande_id', $demandeId);
         }
     
-        return view('demande.recu', compact('reponses', 'entrepriseId', 'demandeId'));
+        return view('demande.recu', compact('reponses', 'entrepriseId', 'demandeId','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
     }
     
     public function enregistrerRetenu(Request $request)
@@ -157,6 +181,14 @@ public function enregistrerReponses(Request $request)
 
 public function listeRetenus()
 {
+    $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
+    Entreprise::where('is_new', true)->update(['is_new' => false]);
+     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
+    $nouveauxEntreprises = $entreprisesEnAttente; 
+    $demandeEnAttente = Demande::where('is_new', true)->count();
+    Demande::where('is_new', true)->update(['is_new' => false]);
+    $totalNotifications = $demandeEnAttente;
+    $nouvellesDemandes = $demandeEnAttente;
     $user = auth()->user(); 
 
     if ($user->role->code === 'superadmin') {
@@ -172,30 +204,53 @@ public function listeRetenus()
         $retenus = Retenu::where('entreprise_id', $entreprise->id)->get();
     }
 
-    return view('demande.retenu', compact('retenus'));
+    return view('demande.retenu', compact('retenus','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
 }
 
     public function listeRetenusDemandeur($id)
     {
+        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
+        Entreprise::where('is_new', true)->update(['is_new' => false]);
+         $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
+        $nouveauxEntreprises = $entreprisesEnAttente; 
+        $demandeEnAttente = Demande::where('is_new', true)->count();
+        Demande::where('is_new', true)->update(['is_new' => false]);
+        $totalNotifications = $demandeEnAttente;
+        $nouvellesDemandes = $demandeEnAttente;
         $retenus = Retenu::findOrFail($id);
-        return view('demande.demandeurretenu', compact('retenus'));
+        return view('demande.demandeurretenu', compact('retenus','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
     }
 
 
 
 public function show(Demande $demande)
     {
-       
-        return view('demande.show',compact('demande'));
+        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
+        Entreprise::where('is_new', true)->update(['is_new' => false]);
+         $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
+        $nouveauxEntreprises = $entreprisesEnAttente; 
+        $demandeEnAttente = Demande::where('is_new', true)->count();
+        Demande::where('is_new', true)->update(['is_new' => false]);
+        $totalNotifications = $demandeEnAttente;
+        $nouvellesDemandes = $demandeEnAttente;
+        return view('demande.show',compact('demande','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
     }
 
     public function edit(Demande $demande)
     {
+        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
+        Entreprise::where('is_new', true)->update(['is_new' => false]);
+         $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
+        $nouveauxEntreprises = $entreprisesEnAttente; 
+        $demandeEnAttente = Demande::where('is_new', true)->count();
+        Demande::where('is_new', true)->update(['is_new' => false]);
+        $totalNotifications = $demandeEnAttente;
+        $nouvellesDemandes = $demandeEnAttente;
         $entreprise = Entreprise::where('nomentreprise', auth()->user()->name)->first();
         $profiles = Profil::all();
         $niveaux = Niveaux::all();
     
-        return view('demande.edit', compact('demande','profiles','niveaux','entreprise'));
+        return view('demande.edit', compact('demande','profiles','niveaux','entreprise','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
     }
     
     public function update(Request $request, Demande $demande)
