@@ -3,8 +3,7 @@
   <head>
    @include('layouts.head')
 
-   <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+  
 
 
   </head>
@@ -154,43 +153,45 @@
     <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette archive ?');">Supprimer</button>
 </form>
 
-         <a href="#" data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Ajouter une nouvelle archive</a>
-    <div id="authentication-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative p-4 w-full max-w-md max-h-full">
-            
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                
-                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                    <h3 class="text-xl font-semibold text-gray-900 dark:text-black">
-                      Ajout d'un fichier à l'entreprise {{ $archive->entreprise->nomentreprise ?? ' - ' }}
-                    </h3>
-                    <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                        </svg>
-                        <span class="sr-only">Close modal</span>
-                    </button>
-                </div>
-        
-                <div class="p-4 md:p-5">
-                    <form class="space-y-4" action="{{ route('fichiers.store', $archive->id) }}" method="POST" enctype="multipart/form-data">
+      <!-- Bouton d'ouverture du modal -->
+<button data-bs-toggle="modal" data-bs-target="#authentication-modal" 
+    class="btn btn-primary">
+    Ajouter une nouvelle archive
+</button>
+
+<!-- Modal -->
+<div id="authentication-modal" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- En-tête du modal -->
+            <div class="modal-header">
+                <h3 class="modal-title text-xl font-semibold">
+                    Ajout d'un fichier à l'entreprise {{ $archive->entreprise->nomentreprise ?? ' - ' }}
+                </h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+
+            <!-- Corps du modal -->
+            <div class="modal-body">
+                <form action="{{ route('fichiers.store', $archive->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                        <div>
-                            <label for="type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type de dossier</label>
-                            <input type="text" name="type" id="type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="type" required />
-                        </div>
-                        <br>
-                        <div>
-                            <label for="file" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fichier à joindre</label>
-                            <input type="file" name="file" id="password" placeholder="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required />
-                        </div>
-                        <br>
-                        <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Enregister</button>
-                    </form>
-                </div>
+                    <div class="mb-3">
+                        <label for="type" class="form-label">Type de dossier</label>
+                        <input type="text" name="type" id="type" class="form-control" placeholder="Type" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="file" class="form-label">Fichier à joindre</label>
+                        <input type="file" name="file" id="file" class="form-control" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Enregistrer</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
+
 
                   </div>
                   </div>
@@ -204,28 +205,7 @@
         @include('layouts.footer')
       </div>
     </div>
-    <script>
-  document.addEventListener("DOMContentLoaded", function () {
-      const modalToggle = document.querySelector('[data-modal-toggle="authentication-modal"]');
-      const modal = document.getElementById("authentication-modal");
-
-      if (modalToggle && modal) {
-          modalToggle.addEventListener("click", function () {
-              modal.classList.toggle("hidden");
-              modal.classList.toggle("flex");
-          });
-
-          // Gestion de la fermeture du modal
-          const closeModalButton = modal.querySelector('[data-modal-hide="authentication-modal"]');
-          if (closeModalButton) {
-              closeModalButton.addEventListener("click", function () {
-                  modal.classList.add("hidden");
-                  modal.classList.remove("flex");
-              });
-          }
-      }
-  });
-</script>
+   
 
     <script src="assets/js/core/jquery-3.7.1.min.js"></script>
     <script src="assets/js/core/popper.min.js"></script>

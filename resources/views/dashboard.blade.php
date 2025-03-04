@@ -2,6 +2,8 @@
 <html lang="en">
   <head>
    @include('layouts.head')
+
+   
   </head>
   <body>
     <div class="wrapper">
@@ -131,15 +133,58 @@
                     <div class="row align-items-center">
                       <div class="col-icon">
                         <div class="icon-big text-center icon-success bubble-shadow-small"   >
-                          <i class="fas fa-luggage-cart"></i>
+                        <i class="fas fa-money-bill-wave"></i> 
                         </div>
                       </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Demandes reçus </p>
-                          <h4 class="card-title">{{ $demande}}</h4>
-                        </div>
-                      </div>
+                      <div data-bs-toggle="modal" data-bs-target="#static-modal" class="col col-stats ms-3 ms-sm-0">
+    <div class="numbers">
+        <p class="card-category">Montant Entreprise</p>
+        <h4 class="card-title">{{ number_format($totalPartieEtat) }} F CFA</h4>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="static-modal" class="modal fade" tabindex="-1" aria-labelledby="static-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-xl font-semibold text-gray-900 text-center" id="static-modal-label">
+                    Montant dû aux entreprises
+                </h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table id="basic-datatables" class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Entreprise</th>
+                            <th>Durée Convention</th>
+                            <th>Montant Total Annuelle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($entreprises as $entreprise)
+                            <tr>
+                                <td>{{ $entreprise->nomentreprise ?? ' - ' }}</td>
+                                <td>{{ $entreprise->archive->isNotEmpty() ? $entreprise->archive->first()->dureeConv : ' - ' }}</td>
+                                <td>{{ number_format($entreprise->totalPartieEtat) }} F CFA</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+                     
+                     
+
+
+
+
+
                     </div>
                   </div>
                 </div>
@@ -393,6 +438,7 @@
       <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->
+   
     <script src="assets/js/core/jquery-3.7.1.min.js"></script>
     <script src="assets/js/core/popper.min.js"></script>
     <script src="assets/js/core/bootstrap.min.js"></script>
@@ -429,31 +475,67 @@
     <script src="assets/js/setting-demo.js"></script>
     <script src="assets/js/demo.js"></script>
     <script>
-      $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
-        type: "line",
-        height: "70",
-        width: "100%",
-        lineWidth: "2",
-        lineColor: "#177dff",
-        fillColor: "rgba(23, 125, 255, 0.14)",
-      });
+      $(document).ready(function () {
+        $("#basic-datatables").DataTable({
+    language: {
+      lengthMenu: "Afficher _MENU_ entrées",
+      paginate: {
+        previous: "Précédent",
+        next: "Suivant"
+      }
+    }
+  });
+        $("#multi-filter-select").DataTable({
+          pageLength: 5,
+          initComplete: function () {
+            this.api()
+              .columns()
+              .every(function () {
+                var column = this;
+                var select = $(
+                  '<select class="form-select"><option value=""></option></select>'
+                )
+                  .appendTo($(column.footer()).empty())
+                  .on("change", function () {
+                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
 
-      $("#lineChart2").sparkline([99, 125, 122, 105, 110, 124, 115], {
-        type: "line",
-        height: "70",
-        width: "100%",
-        lineWidth: "2",
-        lineColor: "#f3545d",
-        fillColor: "rgba(243, 84, 93, .14)",
-      });
+                    column
+                      .search(val ? "^" + val + "$" : "", true, false)
+                      .draw();
+                  });
 
-      $("#lineChart3").sparkline([105, 103, 123, 100, 95, 105, 115], {
-        type: "line",
-        height: "70",
-        width: "100%",
-        lineWidth: "2",
-        lineColor: "#ffa534",
-        fillColor: "rgba(255, 165, 52, .14)",
+                column
+                  .data()
+                  .unique()
+                  .sort()
+                  .each(function (d, j) {
+                    select.append(
+                      '<option value="' + d + '">' + d + "</option>"
+                    );
+                  });
+              });
+          },
+        });
+
+        // Add Row
+        $("#add-row").DataTable({
+          pageLength: 5,
+        });
+
+        var action =
+          '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+
+        $("#addRowButton").click(function () {
+          $("#add-row")
+            .dataTable()
+            .fnAddData([
+              $("#addName").val(),
+              $("#addPosition").val(),
+              $("#addOffice").val(),
+              action,
+            ]);
+          $("#addRowModal").modal("hide");
+        });
       });
     </script>
   </body>
