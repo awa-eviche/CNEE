@@ -7,8 +7,7 @@
                 src="{{ asset('assets/img/kaiadmin/logo_light.svg')}}"
                 alt="navbar brand"
                 class="navbar-brand"
-                height="20"
-              />
+                height="20"/>
             </a>
             <div class="nav-toggle">
               <button class="btn btn-toggle toggle-sidebar">
@@ -22,7 +21,6 @@
               <i class="gg-more-vertical-alt"></i>
             </button>
           </div>
-          <!-- End Logo Header -->
         </div>
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
           <div class="sidebar-content">
@@ -33,9 +31,7 @@
     <p>Tableau de Bord</p>
 </a>
 
-                <div class="collapse" id="dashboard">
-                
-                </div>
+               
               </li>
               <li class="nav-section">
                 <span class="sidebar-mini-icon">
@@ -111,7 +107,7 @@
 @endif
 @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
               <li class="nav-item">
-                <a data-bs-toggle="collapse" href="#tables">
+                <a data-bs-toggle="collapse" href="#tables" aria-expanded="false"> 
                   <i class="fas fa-table"></i>
                   <p>Gestion demandes</p>
                   <span class="caret"></span>
@@ -215,3 +211,4 @@
           
         </div>
       </div>
+      

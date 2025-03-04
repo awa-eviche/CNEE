@@ -102,8 +102,8 @@
 @endphp
 @if(isset($allocation) && $allocation->trimestre == $key)
     @if($allocation->paye)
-    <button class="btn btn-secondary" disabled>Déjà payé</button>
-    <p class="text-success mb-0 ">Montant payé : {{ $allocation->montant_paye }} F CFA</p>
+    <button class="btn btn-danger" disabled>Déjà payé</button>
+    <!-- <p class="text-success mb-0 ">Montant payé : {{ $allocation->montant_paye }} F CFA</p> -->
     @else
         <form method="POST" action="{{ route('allocation.payer', ['id' => $entreprise->id, 'trimestre' => $key]) }}">
             @csrf

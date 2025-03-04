@@ -43,9 +43,15 @@ public function retenus()
 {
     return $this->hasMany(Retenu::class);
 }
-public function allocations()
+
+public function allocation()
 {
-    return $this->hasMany(Allocation::class);
+    return $this->hasMany(Allocation::class, 'entreprise_id');
+}
+
+public function archive()
+{
+    return $this->hasMany(Archive::class, 'entreprise_id');
 }
 
 }
