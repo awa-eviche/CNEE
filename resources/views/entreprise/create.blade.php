@@ -290,7 +290,7 @@
 	<script src="{{ asset('assets1/js/main.js')}}"></script>
     <script>
     const departements = {
-        "Dakar": ["Dakar", "Guédiawaye", "Pikine", "Rufisque"],
+        "Dakar": ["Dakar", "Guédiawaye", "Pikine", "Rufisque","Keur Massar"],
         "Diourbel": ["Diourbel", "Mbacké", "Touba","Bambey"],
         "Fatick": ["Fatick", "Gossas", "Foundiougne", "Mbour"],
         "Kaolack": ["Kaolack", "Nioro du Rip", "Kaffrine"],
