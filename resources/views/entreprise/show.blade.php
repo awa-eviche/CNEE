@@ -223,47 +223,48 @@
                   </div> 
                   @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
                   <div class="card-action  d-flex gap-2"">
-                 <form action="{{ route('entreprise.valider', $entreprise->id) }}" method="post" id="validerForm">
-                   @csrf
-                  <button type="submit" class="btn btn-success"  id="validerButton">
-                      Valider et envoyer un e-mail
-                  </button>
-                  </form>
-                   <form action="{{ route('entreprise.rejeter', $entreprise->id) }}" method="post">
-                      @csrf
-<!-- Bouton d'ouverture du modal -->
-<a  href="#"data-bs-toggle="modal" data-bs-target="#authentication-modal" 
-    class="btn btn-primary">
-    Rejeter et envoyer un mail
-</a>
+                  @if($entreprise->statut === 'en attente')
+    <form action="{{ route('entreprise.valider', $entreprise->id) }}" method="post" id="validerForm">
+        @csrf
+        <button type="submit" class="btn btn-success" id="validerButton">
+            Valider et envoyer un e-mail
+        </button>
+    </form>
 
-<!-- Modal -->
-<div id="authentication-modal" class="modal fade" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <!-- En-tête du modal -->
-            <div class="modal-header">
-                <h3 class="modal-title text-xl font-semibold">Envoyer le motif du rejet</h3>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
-            </div>
+    <form action="{{ route('entreprise.rejeter', $entreprise->id) }}" method="post">
+        @csrf
+        <!-- Bouton d'ouverture du modal -->
+        <a href="#" data-bs-toggle="modal" data-bs-target="#authentication-modal" class="btn btn-primary">
+            Rejeter et envoyer un mail
+        </a>
 
-            <!-- Corps du modal -->
-            <div class="modal-body">
-                <form action="#" class="space-y-4">
-                    <div class="mb-3">
-                        <label for="motif" class="form-label">Motif</label>
-                        <textarea id="motif" name="motif" class="form-control" rows="3"></textarea>
+        <!-- Modal -->
+        <div id="authentication-modal" class="modal fade" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <!-- En-tête du modal -->
+                    <div class="modal-header">
+                        <h3 class="modal-title text-xl font-semibold">Envoyer le motif du rejet</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-100">Envoyer</button>
-                </form>
+                    <!-- Corps du modal -->
+                    <div class="modal-body">
+                        <form action="{{ route('entreprise.rejeter', $entreprise->id) }}" method="post" class="space-y-4">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="motif" class="form-label">Motif</label>
+                                <textarea id="motif" name="motif" class="form-control" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Envoyer</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    </form>
+@endif
 
-
-                    </form> 
 
                      <form action="{{ route('entreprise.desactiver', $entreprise->id) }}" method="post">
         @csrf

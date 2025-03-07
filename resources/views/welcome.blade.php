@@ -110,14 +110,20 @@
                     </div>
                   </li>
                  
-                </ul><!-- Ul end -->
+                </ul>
+               
+
             </div><!-- header right end -->
           </div><!-- logo area end -->
   
       </div><!-- Row end -->
     </div><!-- Container end -->
   </div>
-
+  @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
   <div class="site-navigation">
     <div class="container">
         <div class="row">
