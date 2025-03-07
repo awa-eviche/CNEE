@@ -99,7 +99,7 @@ class EntrepriseController extends Controller
     }
     $entreprise->save();
     Mail::to($entreprise->email)->send(new \App\Mail\EntrepriseInscriteMail($entreprise));
-    return redirect()->to('/')->with('success', 'Entreprise enregistrée avec succès.');
+    return redirect()->to('/')->with('success', 'Votre Entreprise est enregistrée avec succès.');
 }
 
 public function show(Entreprise $entreprise)
