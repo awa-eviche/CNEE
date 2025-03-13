@@ -104,8 +104,8 @@ class EntrepriseController extends Controller
 
 public function show(Entreprise $entreprise)
     {
-        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
-        Entreprise::where('is_new', true)->update(['is_new' => false]);
+    $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
+     Entreprise::where('is_new', true)->update(['is_new' => false]);
      $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
     $nouveauxEntreprises = $entreprisesEnAttente; 
     $demandeEnAttente = Demande::where('is_new', true)->count();
