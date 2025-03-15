@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\Demande; 
 use App\Models\Entreprise; 
 use App\Models\Classification;
+use App\Models\Secteur;
 
 class ClassificationController extends Controller
 {
     public function index()
     {
+        $secteurs=Secteur::all();
         $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
         Entreprise::where('is_new', true)->update(['is_new' => false]);
      $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
@@ -20,11 +22,12 @@ class ClassificationController extends Controller
     $totalNotifications = $demandeEnAttente;
     $nouvellesDemandes = $demandeEnAttente; 
         $classifications = Classification::all();
-        return view('classification.index', compact('classifications','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
+        return view('classification.index', compact('classifications','secteurs','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
     }
 
     public function create()
     {
+        $secteurs=Secteur::all();
         $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
         Entreprise::where('is_new', true)->update(['is_new' => false]);
      $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
@@ -34,7 +37,7 @@ class ClassificationController extends Controller
     $totalNotifications = $demandeEnAttente;
     $nouvellesDemandes = $demandeEnAttente; 
         $classifications = Classification::all();
-        return view('classification.create', compact('classifications','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
+        return view('classification.create', compact('classifications','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente','secteurs'));
     }
 
     public function store(Request $request)
@@ -43,7 +46,7 @@ class ClassificationController extends Controller
         $request->validate([
            
             'libelle' => 'required|string|unique:classifications,libelle|max:255',
-
+            'secteur_id' => 'required|string',
         ]);
         $classification = Classification::create($request->all());
         return redirect()->route('classification.index', compact('classification'))
@@ -53,7 +56,7 @@ class ClassificationController extends Controller
 
     public function edit(Classification $classification)
     {
-        
+        $secteurs=Secteur::all();
         $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
         Entreprise::where('is_new', true)->update(['is_new' => false]);
      $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
@@ -62,14 +65,14 @@ class ClassificationController extends Controller
     Demande::where('is_new', true)->update(['is_new' => false]);
     $totalNotifications = $demandeEnAttente;
     $nouvellesDemandes = $demandeEnAttente; 
-        return view('classification.edit', compact('classification','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
+        return view('classification.edit', compact('classification','secteurs','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
     }
 
     public function update(Request $request, Classification $classification)
     {
         $request->validate([
             'libelle' => 'required|string|max:255',
-           
+           'secteur_id' => 'required|string',
         ]);
 
         $classification->update($request->all());

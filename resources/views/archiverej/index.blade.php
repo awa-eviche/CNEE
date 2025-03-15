@@ -47,67 +47,72 @@
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
               <div>
-                <h3 class="fw-bold mb-3">Gestion des classifications</h3>
+                <h3 class="fw-bold mb-3">Gestion des archives rejetées</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
               </div>
-              <div class="ms-md-auto py-2 py-md-0 " >
+              <div class="ms-md-auto py-2 py-md-0">
+    <a href="{{ route('archiverej.create') }}" class="btn btn-primary btn-round">
+        <i class="fa fa-plus"></i> Ajouter une archive rejetées
+    </a>
+</div>
+
+              <!-- <div class="ms-md-auto py-2 py-md-0">
             
-                <a href="{{route('classification.create')}}" class="btn btn-primary btn-round"> <i class="fa fa-plus"></i> Ajouter une nouvelle classification</a>
-              </div> 
+                <a href="#" class="btn btn-primary btn-round">Ajouter</a>
+              </div> -->
             </div>
             <div class="row">
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4 class="card-title" style="text-align:center">Liste des classifications</h4>
+                    <h4 class="card-title" style="text-align:center">Liste des archives pour entreprise rejetés</h4>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
                       <table
                         id="basic-datatables"
-                        class="display table table-striped table-hover"    style="table-layout: fixed; width: 100%;"  >
+                        class="display table table-striped table-hover">
                         <thead>
-                        <tr>
-            <th style="width: 50%;">Libellé</th>
-            <th style="width: 50%;">secteur</th>
-            <th style="width: 50%;">Actions</th>
-        </tr>
+                          <tr>
+                          <th>Entreprise rejetés</th>
+                          <th>Type</th>
+                          <th>Fichier</th>
+
+                          
+                           
+                            <th>Actions</th>
+                          </tr>
                         </thead>
                         <tfoot>
-                        <tr>
-                            <th>Libellé</th>
-                            <th>Secteur</th>
+                          <tr>
+                          <th>Entreprise rejetés</th>
+                          <th>Type</th>
+                          <th>Fichier</th>
                             <th>Actions</th>
-                            
-                          </tr>
+                    </tr>
                         </tfoot>
-<tbody>
-@foreach ($classifications as $classification)
-    <tr >
-        <td>{{ $classification->libelle ?? ' - ' }}</td>
-        <td>{{ $classification->secteur->libelle ?? ' - ' }}</td>
-        <td class="text-center">
-    
-    <div class="d-flex justify-content-center gap-2">
-       
-        <a href="{{ route('classification.edit', $classification->id) }}" class="btn btn-sm btn-primary">
-            Modifier
-        </a>
-        <form action="{{ route('classification.destroy', $classification->id) }}" method="POST">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Voulez-vous vraiment supprimer ce classification ?')">
-                Supprimer
-            </button>
-        </form>
-    </div>
-</td>
-
-    </tr>
-@endforeach
+                        <tbody>
+   
+          
+            @foreach($archiverej as $archive)
+          
+                <tr>
+                <td>{{ $archive->entreprise->nomentreprise ?? ' - ' }}</td>
+                    <td>{{ $archive->type ?? ' - ' }}</td>
+                    <td>   
+                    <a href="{{ asset('storage/' . $archive->file) }}" target="_blank" class="btn btn-primary">
+            Voir le fichier : {{ basename($archive->file) }}
+        </a>                    </td>
+                    <td>
+                        <a href="{{ route('archiverej.show',$archive->id) }}" class="btn btn-info btn-sm voir-plus">Voir Plus</a>
+                    </td>
+                </tr>
+            @endforeach
+     
 </tbody>
 
-                      </table>
+                    </table>
+                    
                     </div>
                   </div>
                 </div>
@@ -122,12 +127,9 @@
             
           </div>
         </div>
-     
- <!--! footer-->
+ 
         @include('layouts.footer')
       </div>
-
-      <!-- Custom template | don't include it in your project! -->
       <div class="custom-template">
         <div class="title">Settings</div>
         <div class="custom-content">
@@ -386,17 +388,10 @@
         fillColor: "rgba(255, 165, 52, .14)",
       });
     </script>
-      <script>
+  <script>
       $(document).ready(function () {
-        $("#basic-datatables").DataTable({
-    language: {
-      lengthMenu: "Afficher _MENU_ entrées",
-      paginate: {
-        previous: "Précédent",
-        next: "Suivant"
-      }
-    }
-  });
+        $("#basic-datatables").DataTable({});
+
         $("#multi-filter-select").DataTable({
           pageLength: 5,
           initComplete: function () {
@@ -450,7 +445,7 @@
         });
       });
     </script>
-     <script>
+  <script>
     document.addEventListener("DOMContentLoaded", function () {
         @if(session('success'))
             $.notify({
@@ -467,6 +462,6 @@
             });
         @endif
     });
-</script><!--! footer-->
+</script>
   </body>
 </html>

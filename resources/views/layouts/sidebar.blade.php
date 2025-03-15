@@ -103,10 +103,18 @@
 
                 @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
                 <li class="nav-item">
-                    <a href="{{ route('archive.index') }}">
-                        <i class="fas fa-file"></i>
-                        <p>Gestion archives</p>
-                    </a>
+                  
+            <a class="menu-toggle" data-bs-toggle="collapse" href="#charts"  aria-expanded="{{ request()->is('archive*') || request()->is('archivrej*') || request()->is('archive*') ? 'true' : 'false' }}">
+        <i class="fas fa-file"></i>
+        <p>Gestion Archives</p>
+        <span class="caret"></span>
+         </a>
+         <div class="collapse {{ request()->is('archive*') || request()->is('archiverej*')  ? 'show' : '' }}"id="charts">
+        <ul class="nav nav-collapse">
+            <li><a href="{{ route('archive.index') }}" class="{{ request()->is('archive*') ? 'active' : '' }}"><span class="sub-item">Archives validés</span></a></li>
+            <li><a href="{{ route('archiverej.index') }}" class="{{ request()->is('archiverej') ? 'active' : '' }}"><span class="sub-item">Archives rejetés</span></a></li>
+        </ul>
+    </div>
                 </li>
                 @endif
 

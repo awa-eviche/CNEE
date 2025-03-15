@@ -63,46 +63,59 @@ $nouvellesDemandes = $demandeEnAttente;
 
 public function store(Request $request)
 {
-
+    // Validation en précisant que 'mois' est un tableau
     $validatedData = $request->validate([
-        'entreprise_id' => 'required|exists:entreprises,id',
-        'secteur_id' => 'required|exists:secteurs,id',
-        'retenu_id' => 'required|exists:retenus,id',
+        'entreprise_id'     => 'required|exists:entreprises,id',
+        'secteur_id'        => 'required|exists:secteurs,id',
+        'retenu_id'         => 'required|exists:retenus,id',
         'classification_id' => 'required|exists:classifications,id',
-        'partieEtat' => 'required',
-        'ContrePartie' => 'required',
-        'montantTotal' => 'required',
-        'mois' => 'required|in:Janvier,Février,Mars,Avril,Mai,Juin,Juillet,Aout,Septembre,Octobre,Novembre,Décembre',
+        'partieEtat'        => 'required|numeric',
+        'ContrePartie'      => 'required|numeric',
+        'montantTotal'      => 'required|numeric',
+        'mois'              => 'required|array|min:1',
+        'mois.*'            => 'in:Janvier,Février,Mars,Avril,Mai,Juin,Juillet,Aout,Septembre,Octobre,Novembre,Décembre',
     ]);
+
+    // Calculer le multiplicateur en fonction du nombre de mois sélectionnés
+    $multiplier = count($validatedData['mois']);
+
+    // Multiplier les valeurs saisies pour correspondre aux mois sélectionnés
+    $validatedData['ContrePartie'] = $validatedData['ContrePartie'] * $multiplier;
+    $validatedData['partieEtat']     = $validatedData['partieEtat'] * $multiplier;
+
+    // Définir le trimestre à partir du premier mois sélectionné
     $trimestres = [
-        'Janvier' => 'Q1', 'Février' => 'Q1', 'Mars' => 'Q1',
-        'Avril' => 'Q2', 'Mai' => 'Q2', 'Juin' => 'Q2',
-        'Juillet' => 'Q3', 'Aout' => 'Q3', 'Septembre' => 'Q3',
-        'Octobre' => 'Q4', 'Novembre' => 'Q4', 'Décembre' => 'Q4',
+        'Janvier'   => 'Q1', 'Février'  => 'Q1', 'Mars'     => 'Q1',
+        'Avril'     => 'Q2', 'Mai'      => 'Q2', 'Juin'     => 'Q2',
+        'Juillet'   => 'Q3', 'Aout'     => 'Q3', 'Septembre'=> 'Q3',
+        'Octobre'   => 'Q4', 'Novembre' => 'Q4', 'Décembre' => 'Q4',
     ];
+    $premierMois = $validatedData['mois'][0];
+    $validatedData['trimestre'] = $trimestres[$premierMois];
 
-    $validatedData['trimestre'] = $trimestres[$validatedData['mois']];
-
+    // Vérifier l'existence d'une archive et la validité de la convention
     $archive = Archive::where('entreprise_id', $validatedData['entreprise_id'])->first();
     if (!$archive) {
         return redirect()->back()->with('error', 'Aucune archive trouvée pour cette entreprise.');
     }
-
     if (now()->toDateString() > $archive->finconvention) {
-        return redirect()->route('allocation.index')->with('success', 'L\'enregistrement d\'allocations est impossible car la convention est expirée.');
+        return redirect()->route('allocation.index')
+                         ->with('success', 'L\'enregistrement d\'allocations est impossible car la convention est expirée.');
     }
 
-    $allocationCreated = Allocation::create($validatedData);
+    // Joindre les mois sélectionnés dans une seule chaîne, par exemple "Janvier, Février, Mars"
+    $validatedData['mois'] = implode(', ', $validatedData['mois']);
 
-    if ($allocationCreated) {
-        return redirect()->route('allocation.index')->with('success', 'Allocation ajoutée avec succès.');
-    } else {
-        return redirect()->back()->with('error', 'Une erreur est survenue lors de l\'enregistrement.');
-    }
+    // Créer une seule allocation avec tous les mois dans la même colonne
+    Allocation::create($validatedData);
+
+    return redirect()->route('allocation.index')
+                     ->with('success', 'Allocation ajoutée avec succès.');
 }
 
 
-  public function calculerMontantsParTrimestre($id)
+
+public function calculerMontantsParTrimestre($id)
 {
     $montantParTrimestre = [
         'Q1' => 0, 
@@ -111,52 +124,41 @@ public function store(Request $request)
         'Q4' => 0,
         'message' => null
     ];
+
     $archive = Archive::where('entreprise_id', $id)->first();
     if (!$archive) {
         $montantParTrimestre['message'] = 'Aucune convention trouvée pour cette entreprise.';
         return $montantParTrimestre;
     }
+
     $dateFinConvention = $archive->finconvention; 
     $dateActuelle = date('Y-m-d');
     $estExpire = $dateActuelle > $dateFinConvention;
     $allocations = Allocation::where('entreprise_id', $id)->get();
+
     if ($allocations->isEmpty()) {
         $montantParTrimestre['message'] = 'Aucune allocation valide trouvée.';
         return $montantParTrimestre;
     } 
-    $moisMap = [
-        'Janvier' => 1, 'Février' => 2, 'Mars' => 3,
-        'Avril' => 4, 'Mai' => 5, 'Juin' => 6,
-        'Juillet' => 7, 'Aout' => 8, 'Septembre' => 9,
-        'Octobre' => 10, 'Novembre' => 11, 'Décembre' => 12,
-    ];
- foreach ($allocations as $allocation) {
-        $moisNom = $allocation->mois ?? null;
-        $montant = floatval($allocation->partieEtat); 
 
-        if ($moisNom && isset($moisMap[$moisNom])) {
-            $mois = $moisMap[$moisNom];
-
-            if ($mois >= 1 && $mois <= 3) {
-                $montantParTrimestre['Q1'] += $montant;
-            } elseif ($mois >= 4 && $mois <= 6) {
-                $montantParTrimestre['Q2'] += $montant;
-            } elseif ($mois >= 7 && $mois <= 9) {
-                $montantParTrimestre['Q3'] += $montant;
-            } elseif ($mois >= 10 && $mois <= 12) {
-                $montantParTrimestre['Q4'] += $montant;
-            }
+    // Utiliser le champ 'trimestre' défini lors de l'enregistrement
+    foreach ($allocations as $allocation) {
+        $trimestreAllocation = $allocation->trimestre;
+        $montant = floatval($allocation->partieEtat);
+        if (isset($montantParTrimestre[$trimestreAllocation])) {
+            $montantParTrimestre[$trimestreAllocation] += $montant;
         } else {
-            error_log("Mois non reconnu: $moisNom");
+            error_log("Trimestre non reconnu: $trimestreAllocation");
         }
     }
 
     if ($estExpire) {
-        $montantParTrimestre['message'] = ' La convention est expirée, mais voici les montants passés.';
+        $montantParTrimestre['message'] = 'La convention est expirée, mais voici les montants passés.';
     }
 
     return $montantParTrimestre;
 }
+
 
 public function calculerTotalPartieEtat($id)
 {
@@ -201,6 +203,7 @@ $nouvellesDemandes = $demandeEnAttente;
 
 public function payerTrimestre(Request $request, $id, $trimestre)
 {
+    // Récupérer les allocations non payées pour le trimestre donné
     $allocations = Allocation::where('entreprise_id', $id)
         ->where('trimestre', $trimestre)
         ->where('paye', false)
@@ -210,14 +213,17 @@ public function payerTrimestre(Request $request, $id, $trimestre)
         return redirect()->back()->with('error', 'Aucune allocation trouvée pour ce trimestre.');
     }
 
+    // Calculer le montant total du trimestre (le champ partieEtat contient déjà le montant total pour l'allocation)
     $montantTotalTrimestre = $allocations->sum('partieEtat');
 
+    // Calculer le montant total restant de l'entreprise avant paiement
     $totalPartieEtat = $this->calculerTotalPartieEtat($id);
 
     if ($montantTotalTrimestre > $totalPartieEtat) {
         return redirect()->back()->with('error', 'Le montant total à payer dépasse le total disponible.');
     }
 
+    // Marquer chaque allocation comme payée
     foreach ($allocations as $allocation) {
         $allocation->paye = true;
         $allocation->montant_paye = $allocation->partieEtat; 

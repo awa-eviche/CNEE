@@ -75,7 +75,18 @@
                        
                      
                       </div>
-                     
+                      <div class="col-md-6 col-6">
+                     <div class="form-group" >
+                          <label for="libelle">Intitule du secteur</label>
+                          <select class="form-control"  id="secteur_id" name="secteur_id">
+        <option value="">Choisir un secteur</option>
+        @foreach($secteurs as $secteur)
+            <option value="{{ $secteur->id }}">{{ $secteur->libelle}}</option>
+        @endforeach
+    </select>
+                         
+                        </div>
+                     </div>
                      
                     </div>
                   </div>
