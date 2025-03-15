@@ -60,7 +60,9 @@ class ArchiveController extends Controller
     $archive->debutconvention = $request->debutconvention;
     $archive->finconvention = $request->finconvention;
     if ($request->hasFile('file')) {
-        $filename = $request->file('file')->store('files', 'public');
+        $file = $request->file('file');
+        $filename = $file->getClientOriginalName(); 
+        $file->storeAs('files', $filename, 'public'); 
         $archive->file = $filename; 
     }
     $archive->save();

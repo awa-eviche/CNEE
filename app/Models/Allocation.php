@@ -15,7 +15,6 @@ class Allocation extends Model
         "retenu_id",
         "secteur_id",
         "classification_id",
-       
         "partieEtat",
         "ContrePartie",
         "montantTotal",

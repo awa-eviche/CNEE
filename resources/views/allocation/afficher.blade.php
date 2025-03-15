@@ -71,18 +71,32 @@
     <input type="text" class="form-control"  id="entreprise_id" name="entreprise_id"  value="{{ $entreprise->nomentreprise}}" disabled>
     <input type="hidden" class="form-control"  id="entreprise_id" name="entreprise_id" value="{{ $entreprise->id}}" >
 </div>
+<div class="form-group">
+    <label for="retenu_id">Demandeur</label>
+    <select class="form-control" name="retenu_id" id="retenu_id">
+        <option value="">Selectionner un de vos demandeurs</option>
+        @foreach($retenu as $rete)
+            @php
+                // Conversion de la date d'échéance en timestamp
+                $dateEcheanceTimestamp = strtotime($rete->dateecheance);
+                // Timestamp actuel
+                $nowTimestamp = time();
+                // Calcul de la différence en jours
+                $daysDifference = abs($dateEcheanceTimestamp - $nowTimestamp) / (60 * 60 * 24);
+                // Définir le seuil (par exemple 10 jours)
+                $isNear = $daysDifference <= 10;
+            @endphp
+            <option value="{{ $rete->id }}" @if($isNear) style="color: red;" @endif>
+                {{ $rete->demandeurprofil->demandeur->prenom }} 
+                {{ $rete->demandeurprofil->demandeur->nom }}
+                @if($isNear)
+                  -  {{ date('Y-m-d', $dateEcheanceTimestamp) }}
+                @endif
+            </option>
+        @endforeach
+    </select>
+</div>
 
-                        <div class="form-group">
-                          <label for="nom">Demandeur</label>
-                       
-                            <select   class="form-control" name="retenu_id" id="">
-                     
-                                <option value=""> Selectionner un de vos demandeurs</option>
-                                @foreach($retenu as $rete)
-                                <option value="{{ $rete->id }}">{{ $rete->demandeurprofil->demandeur->prenom}}  {{ $rete->demandeurprofil->demandeur->nom}}</option>
-                                @endforeach
-                            </select>
-                        </div>
                         <div class="form-group">
                           <label for="datenaissance">Secteur d'activité</label>
                           <select   class="form-control" name="secteur_id" id="">
@@ -96,7 +110,7 @@
                       
                         <div class="form-group">
                           <label for="datenaissance">Partie entreprise</label>
-                          <input type="text" class="form-control" id="ContrePartie" name="ContrePartie" placeholder="Votre part entreprise"  oninput="calculerMontantTotal()" />
+                          <input type="text" class="form-control" id="ContrePartie" name="ContrePartie" placeholder="Votre part entreprise" oninput="calculerMontantTotal()" />
                         </div>
 
                         
@@ -117,32 +131,36 @@
                    </select>
                         </div>
                         <div class="form-group">
-                          <label for="datenaissance">Mois</label>
-                          <select  class="form-control" name="mois" id="">
-                              <option value="">Selectionner un mois</option>
-                              <option value="Janvier">Janvier</option>
-                              <option value="Février">Février</option>
-                              <option value="Mars">Mars</option>
-                              <option value="Avril">Avril</option>
-                              <option value="Mai">Mai</option>
-                              <option value="Juin">Juin</option>
-                              <option value="Juillet">Juillet</option>
-                              <option value="Aout">Aout</option>
-                              <option value="Septembre">Septembre</option>
-                              <option value="Octobre">Octobre</option>
-                              <option value="Novembre">Novembre</option>
-                              <option value="Décembre">Décembre</option>
-                            </select>                                  
-                          </div>
+  <label for="datenaissance">Mois</label>
+  <select class="form-control" name="mois[]"  id="mois"   multiple  onchange="calculerMontantTotal()">
+      <option value="">Selectionner un mois</option>
+      <option value="Janvier">Janvier</option>
+      <option value="Février">Février</option>
+      <option value="Mars">Mars</option>
+      <option value="Avril">Avril</option>
+      <option value="Mai">Mai</option>
+      <option value="Juin">Juin</option>
+      <option value="Juillet">Juillet</option>
+      <option value="Aout">Aout</option>
+      <option value="Septembre">Septembre</option>
+      <option value="Octobre">Octobre</option>
+      <option value="Novembre">Novembre</option>
+      <option value="Décembre">Décembre</option>
+  </select>                                  
+</div>
+
                       
                         <div class="form-group">
                           <label for="datenaissance">Contre partie Etat</label>
                           <input type="text" class="form-control" id="partieEtat" name="partieEtat" placeholder="Votre Durée de la convention" oninput="calculerMontantTotal()" />
                         </div>
                         <div class="form-group">
-                          <label for="datenaissance">Montant Total</label>
-                          <input type="text" class="form-control" id="montantTotal" name="montantTotal" placeholder="Votre Durée de la convention" readonly/>
-                        </div>
+  <label for="montantTotalAffiche">Montant Total</label>
+  <input type="text" class="form-control" id="montantTotalAffiche" placeholder="Votre Durée de la convention" readonly/>
+</div>
+
+<!-- Montant Total réel (caché) : soumis -->
+<input type="hidden" id="montantTotal" name="montantTotal" />
                        
 
                         </div>
@@ -441,17 +459,30 @@
     });
 </script>
 <script>
-        function calculerMontantTotal() {
-            // Récupérer les valeurs des champs
-            const partieEtat = parseFloat(document.getElementById('partieEtat').value) || 0;
-            const contrePartie = parseFloat(document.getElementById('ContrePartie').value) || 0;
+function calculerMontantTotal() {
+    // Récupération des valeurs des inputs
+    let contrePartie = parseFloat(document.getElementById('ContrePartie').value) || 0;
+    let partieEtat   = parseFloat(document.getElementById('partieEtat').value) || 0;
+    
+    // Somme des deux valeurs
+    let baseValue = contrePartie + partieEtat;
+    
+    // Récupération du select des mois et calcul du nombre de mois sélectionnés
+    let moisSelect = document.getElementById('mois');
+    let selectedMois = Array.from(moisSelect.selectedOptions).filter(option => option.value !== "");
+    let multiplier = selectedMois.length;
+    
+    // Calcul du montant total (numérique)
+    let montantTotal = baseValue * multiplier;
+    
+    // Format d'affichage : "baseValue * multiplier = montantTotal"
+    let formattedResult = baseValue + " * " + multiplier + " = " + montantTotal;
+    
+    // Mise à jour des champs
+    document.getElementById('montantTotalAffiche').value = formattedResult;
+    document.getElementById('montantTotal').value = montantTotal; // Ce champ sera validé comme numérique
+}
+</script>
 
-            // Calculer le montant total
-            const montantTotal = partieEtat + contrePartie;
-
-            // Afficher le montant total dans le champ correspondant
-            document.getElementById('montantTotal').value = montantTotal;
-        }
-    </script>
   </body>
 </html>

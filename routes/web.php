@@ -12,8 +12,7 @@ use App\Http\Controllers\DemandeurProfilController;
 use App\Http\Controllers\SecteurController;
 use App\Http\Controllers\ClassificationController;
 use App\Http\Controllers\AllocationController;
-
-
+use App\Http\Controllers\ArchiveRejController;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\FichierController;
 use App\Http\Controllers\AdminController;
@@ -52,6 +51,7 @@ Route::post('/archives/{archive}/fichiers', [FichierController::class, 'store'])
 Route::group([],function () {
     
     Route::resource('entreprise', EntrepriseController::class);
+    Route::resource('archiverej', ArchiveRejController::class);
     Route::resource('profil', ProfilController::class);
     Route::resource('niveau', NiveauxController::class);    
     Route::resource('demandeur', DemandeurController::class);

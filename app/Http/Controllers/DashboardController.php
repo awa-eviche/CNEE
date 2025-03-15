@@ -41,9 +41,11 @@ $user = Auth::user();
         $totalPartieEtat = Allocation::sum('partieEtat'); 
     }
 
-    $entreprises = Entreprise::with(['allocation', 'archive'])
+    $entreprises = Entreprise::where('statut', 'validé')
+    ->with(['allocation', 'archive'])
     ->withSum('allocation as totalPartieEtat', 'partieEtat')
     ->get();
+
     
 
  return view('dashboard', compact('entreprise', 'entreprises','demande', 'retenu', 'demandeur','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente','totalPartieEtat'));
