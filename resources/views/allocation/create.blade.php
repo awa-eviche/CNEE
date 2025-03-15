@@ -89,7 +89,7 @@
           
           <tr>
               <td>{{ $alloc->retenu->demandeurprofil->demandeur->prenom?? ' - ' }} {{ $alloc->retenu->demandeurprofil->demandeur->nom?? ' - ' }}</td>
-              <td>{{ $alloc->secteur->libelle?? ' - ' }}</td>
+              <td>{{ $alloc->classification->secteur->libelle?? ' - ' }}</td>
               <td>{{ $alloc->classification->libelle?? ' - ' }}</td>
               <td>{{ $alloc->partieEtat?? ' - ' }}</td>
               <td>{{ $alloc->ContrePartie?? ' - ' }}</td>

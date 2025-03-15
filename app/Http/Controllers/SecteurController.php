@@ -11,30 +11,16 @@ class SecteurController extends Controller
 {
     public function index()
     {   
-        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
-        Entreprise::where('is_new', true)->update(['is_new' => false]);
-     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
-    $nouveauxEntreprises = $entreprisesEnAttente; 
-    $demandeEnAttente = Demande::where('is_new', true)->count();
-    Demande::where('is_new', true)->update(['is_new' => false]);
-    $totalNotifications = $demandeEnAttente;
-    $nouvellesDemandes = $demandeEnAttente; 
+       
         $secteurs = Secteur::all();
-        return view('secteur.index', compact('secteurs','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
+        return view('secteur.index', compact('secteurs'));
     }
 
     public function create()
     {
         $secteurs = Secteur::all();
-        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
-        Entreprise::where('is_new', true)->update(['is_new' => false]);
-     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
-    $nouveauxEntreprises = $entreprisesEnAttente; 
-    $demandeEnAttente = Demande::where('is_new', true)->count();
-    Demande::where('is_new', true)->update(['is_new' => false]);
-    $totalNotifications = $demandeEnAttente;
-    $nouvellesDemandes = $demandeEnAttente; 
-        return view('secteur.create', compact('secteurs','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
+       
+        return view('secteur.create', compact('secteurs'));
     }
 
     public function store(Request $request)
@@ -53,16 +39,9 @@ class SecteurController extends Controller
 
     public function edit(Secteur $secteur)
     {
-        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
-        Entreprise::where('is_new', true)->update(['is_new' => false]);
-     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
-    $nouveauxEntreprises = $entreprisesEnAttente; 
-    $demandeEnAttente = Demande::where('is_new', true)->count();
-    Demande::where('is_new', true)->update(['is_new' => false]);
-    $totalNotifications = $demandeEnAttente;
-    $nouvellesDemandes = $demandeEnAttente; 
+       
   
-        return view('secteur.edit', compact('secteur','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
+        return view('secteur.edit', compact('secteur'));
     }
 
     public function update(Request $request, Secteur $secteur)

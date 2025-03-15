@@ -13,31 +13,17 @@ class ArchiveRejController extends Controller
 {
     public function index()
     {
-        $entreprises = Entreprise::all();
+        $entreprises = Entreprise::where('statut', 'rejeté')->get();
         $archiverej = ArchiveRej::all(); 
-        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
-     Entreprise::where('is_new', true)->update(['is_new' => false]);
-     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
-    $nouveauxEntreprises = $entreprisesEnAttente; 
-    $demandeEnAttente = Demande::where('is_new', true)->count();
-    Demande::where('is_new', true)->update(['is_new' => false]);
-    $totalNotifications = $demandeEnAttente;
-    $nouvellesDemandes = $demandeEnAttente; 
-        return view('archiverej.index', compact('entreprises', 'archiverej','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
+      
+        return view('archiverej.index', compact('entreprises', 'archiverej'));
     }
 
     public function create()
     {
-    $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
-    Entreprise::where('is_new', true)->update(['is_new' => false]);
-     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
-    $nouveauxEntreprises = $entreprisesEnAttente; 
-    $demandeEnAttente = Demande::where('is_new', true)->count();
-    Demande::where('is_new', true)->update(['is_new' => false]);
-    $totalNotifications = $demandeEnAttente;
-    $nouvellesDemandes = $demandeEnAttente; 
+   
     $entreprises = Entreprise::where('statut', 'rejeté')->get();
-        return view('archiverej.create', compact('entreprises','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
+        return view('archiverej.create', compact('entreprises'));
     }
 
     public function store(Request $request)
@@ -66,28 +52,14 @@ class ArchiveRejController extends Controller
     
     public function show(Archiverej  $archiverej)
     {
-        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
-        Entreprise::where('is_new', true)->update(['is_new' => false]);
-     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
-    $nouveauxEntreprises = $entreprisesEnAttente; 
-    $demandeEnAttente = Demande::where('is_new', true)->count();
-    Demande::where('is_new', true)->update(['is_new' => false]);
-    $totalNotifications = $demandeEnAttente;
-    $nouvellesDemandes = $demandeEnAttente; 
-        return view('archiverej.show',compact('archiverej','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
+       
+        return view('archiverej.show',compact('archiverej'));
     }
     public function edit(Archiverej  $archiverej)
     {
-        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
-        Entreprise::where('is_new', true)->update(['is_new' => false]);
-     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
-    $nouveauxEntreprises = $entreprisesEnAttente; 
-    $demandeEnAttente = Demande::where('is_new', true)->count();
-    Demande::where('is_new', true)->update(['is_new' => false]);
-    $totalNotifications = $demandeEnAttente;
-    $nouvellesDemandes = $demandeEnAttente; 
+       
         $entreprises = Entreprise::all();
-        return view('archiverej.edit', compact('archiverej','entreprises','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
+        return view('archiverej.edit', compact('archiverej','entreprises'));
     }
     public function update(Request $request, Archiverej $archiverej)
 {

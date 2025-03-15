@@ -15,15 +15,8 @@ class DemandeurProfilController extends Controller
     public function index()
     {
         $demandeurprofil=DemandeurProfil::all();
-        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
-        Entreprise::where('is_new', true)->update(['is_new' => false]);
-     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
-    $nouveauxEntreprises = $entreprisesEnAttente; 
-    $demandeEnAttente = Demande::where('is_new', true)->count();
-    Demande::where('is_new', true)->update(['is_new' => false]);
-    $totalNotifications = $demandeEnAttente;
-    $nouvellesDemandes = $demandeEnAttente; 
-        return view('demandeurprofil.index',compact('demandeurprofil','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
+       
+        return view('demandeurprofil.index',compact('demandeurprofil'));
     }
     
     public function create($demandeur_id)

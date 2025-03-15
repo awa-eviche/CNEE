@@ -4,19 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Secteur;
+use App\Models\Entreprise;
 class ArchiveRej extends Model
 {
     use HasFactory;
     protected $fillable = [
         "type",
         "file",
-        "secteur_id",  
+        "entreprise_id",  
      
 
     ];
-    public function secteur()
+    public function entreprise()
     {
-        return $this->belongsTo(Secteur::class);
+        return $this->belongsTo(Entreprise::class);
     }
 }

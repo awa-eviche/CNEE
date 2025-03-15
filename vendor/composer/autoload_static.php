@@ -607,6 +607,7 @@ class ComposerStaticInit65e85f9f959c0b087110331754d451cf
         'App\\Http\\Controllers\\EntrepriseController' => __DIR__ . '/../..' . '/app/Http/Controllers/EntrepriseController.php',
         'App\\Http\\Controllers\\FichierController' => __DIR__ . '/../..' . '/app/Http/Controllers/FichierController.php',
         'App\\Http\\Controllers\\NiveauxController' => __DIR__ . '/../..' . '/app/Http/Controllers/NiveauxController.php',
+        'App\\Http\\Controllers\\NotificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/NotificationController.php',
         'App\\Http\\Controllers\\ProfilController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfilController.php',
         'App\\Http\\Controllers\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfileController.php',
         'App\\Http\\Controllers\\ReponseController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReponseController.php',

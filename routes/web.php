@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EntrepriseController;
@@ -88,7 +88,5 @@ Route::group([],function () {
     Route::get('/demanderetenu/{id}', [DemandeController::class, 'listeRetenusDemandeur'])->name('demandeurretenu');
     Route::post('/allocation/payer/{id}/{trimestre}', [AllocationController::class, 'payerTrimestre'])->name('allocation.payer');
 
-    Route::get('/notifications', [EntrepriseController::class, 'index'])->name('notifications');
-
-
+    Route::get('/notifications/read/{type}', [NotificationController::class, 'markReadByType'])->name('notifications.read.type');
 require __DIR__.'/auth.php';
