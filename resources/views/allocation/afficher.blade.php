@@ -77,11 +77,11 @@
         <option value="">Selectionner un de vos demandeurs</option>
         @foreach($retenu as $rete)
             @php
-                // Conversion de la date d'échéance en timestamp
+                
                 $dateEcheanceTimestamp = strtotime($rete->dateecheance);
-                // Timestamp actuel
+              
                 $nowTimestamp = time();
-                // Calcul de la différence en jours
+               
                 $daysDifference = abs($dateEcheanceTimestamp - $nowTimestamp) / (60 * 60 * 24);
                 // Définir le seuil (par exemple 10 jours)
                 $isNear = $daysDifference <= 10;
@@ -99,13 +99,8 @@
 
                         <div class="form-group">
                           <label for="datenaissance">Secteur d'activité</label>
-                          <select   class="form-control" name="secteur_id" id="">
-                     
-                            <option value=""> Selectionner un secteur</option>
-                            @foreach($secteur as $sect)
-                            <option value="{{ $sect->id }}"> {{ $sect->libelle}}</option>
-                            @endforeach
-                          </select>
+                          <input type="text" class="form-control"id="secteurAfficheDisplay"  readonly>
+                          <input type="hidden" class="form-control" id="secteurAffiche"  name="secteur_id"  value="{{ old('secteur_id', $secteur_id ?? '') }}" >
                         </div>
                       
                         <div class="form-group">
@@ -121,15 +116,19 @@
                       <div class="col-md-6 col-6">
                         
                       <div class="form-group">
-                          <label for="anneeAdhesion">Classification</label>
-                          <select   class="form-control" name="classification_id" id="">
-                     
-                     <option value=""> Selectionner une classification</option>
-                     @foreach($classification as $classe)
-                     <option value="{{ $classe->id }}"> {{ $classe->libelle}}</option>
-                     @endforeach
-                   </select>
-                        </div>
+  <label for="classification">Classification</label>
+  <select class="form-control" name="classification_id" id="classification" onchange="updateSecteur()">
+  <option value="">Selectionner une classification</option>
+      @foreach($classification as $classe)
+        <option value="{{ $classe->id }}" 
+                data-secteur="{{ $classe->secteur->libelle ?? '' }}"
+                data-secteur-id="{{ $classe->secteur->id ?? '' }}">
+          {{ $classe->libelle }}
+        </option>
+    @endforeach
+  </select>
+</div>
+
                         <div class="form-group">
   <label for="datenaissance">Mois</label>
   <select class="form-control" name="mois[]"  id="mois"   multiple  onchange="calculerMontantTotal()">
@@ -159,7 +158,7 @@
   <input type="text" class="form-control" id="montantTotalAffiche" placeholder="Votre Durée de la convention" readonly/>
 </div>
 
-<!-- Montant Total réel (caché) : soumis -->
+
 <input type="hidden" id="montantTotal" name="montantTotal" />
                        
 
@@ -460,29 +459,55 @@
 </script>
 <script>
 function calculerMontantTotal() {
-    // Récupération des valeurs des inputs
+   
     let contrePartie = parseFloat(document.getElementById('ContrePartie').value) || 0;
     let partieEtat   = parseFloat(document.getElementById('partieEtat').value) || 0;
-    
-    // Somme des deux valeurs
+   
     let baseValue = contrePartie + partieEtat;
-    
-    // Récupération du select des mois et calcul du nombre de mois sélectionnés
+ 
     let moisSelect = document.getElementById('mois');
     let selectedMois = Array.from(moisSelect.selectedOptions).filter(option => option.value !== "");
     let multiplier = selectedMois.length;
     
-    // Calcul du montant total (numérique)
+ 
     let montantTotal = baseValue * multiplier;
     
-    // Format d'affichage : "baseValue * multiplier = montantTotal"
+ 
     let formattedResult = baseValue + " * " + multiplier + " = " + montantTotal;
-    
-    // Mise à jour des champs
+   
     document.getElementById('montantTotalAffiche').value = formattedResult;
-    document.getElementById('montantTotal').value = montantTotal; // Ce champ sera validé comme numérique
+    document.getElementById('montantTotal').value = montantTotal; 
 }
 </script>
+<script>
+function updateSecteur() {
+    var classificationSelect = document.getElementById("classification");
+    var selectedOption = classificationSelect.options[classificationSelect.selectedIndex];
+    
+    // Récupérer le libellé et l'ID du secteur depuis les attributs data de l'option sélectionnée
+    var secteurLibelle = selectedOption.getAttribute("data-secteur") || '';
+    var secteurId = selectedOption.getAttribute("data-secteur-id") || '';
+    
+    // Mettre à jour l'input d'affichage et l'input caché
+    document.getElementById("secteurAfficheDisplay").value = secteurLibelle;
+    document.getElementById("secteurAffiche").value = secteurId;
+}
+</script>
+<script>
+function updateSecteur() {
+    var classificationSelect = document.getElementById("classification");
+    var selectedOption = classificationSelect.options[classificationSelect.selectedIndex];
+    
+    // Récupérer le libellé et l'id du secteur depuis les attributs data
+    var secteurLibelle = selectedOption.getAttribute("data-secteur") || '';
+    var secteurId = selectedOption.getAttribute("data-secteur-id") || '';
+    
+    // Mettre à jour l'input d'affichage (read-only) et l'input caché
+    document.getElementById("secteurAfficheDisplay").value = secteurLibelle;
+    document.getElementById("secteurAffiche").value = secteurId;
+}
+</script>
+
 
   </body>
 </html>

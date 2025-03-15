@@ -96,21 +96,20 @@
                     <div class="d-flex justify-content-between mt-2">
                     <p class="text-muted mb-0">{{ $montantsTrimestriels[$key] ?? 0 }} F CFA</p>
 
-@php
-    // Récupérer l'allocation pour le trimestre actuel
-    $allocation = $allocations->where('trimestre', $key)->first();
+                    @php
+    // Vérifier s'il existe une allocation non payée pour ce trimestre
+    $nonPaidAllocation = $allocations->where('trimestre', $key)->where('paye', false)->first();
 @endphp
-@if(isset($allocation) && $allocation->trimestre == $key)
-    @if($allocation->paye)
+
+@if($nonPaidAllocation)
+    <form method="POST" action="{{ route('allocation.payer', ['id' => $entreprise->id, 'trimestre' => $key]) }}">
+        @csrf
+        <button class="btn btn-primary">Payer</button>
+    </form>
+@else
     <button class="btn btn-danger" disabled>Déjà payé</button>
-    <!-- <p class="text-success mb-0 ">Montant payé : {{ $allocation->montant_paye }} F CFA</p> -->
-    @else
-        <form method="POST" action="{{ route('allocation.payer', ['id' => $entreprise->id, 'trimestre' => $key]) }}">
-            @csrf
-            <button class="btn btn-primary">Payer</button>
-        </form>
-    @endif
 @endif
+
 
 
 

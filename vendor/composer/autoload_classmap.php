@@ -30,6 +30,7 @@ return array(
     'App\\Http\\Controllers\\EntrepriseController' => $baseDir . '/app/Http/Controllers/EntrepriseController.php',
     'App\\Http\\Controllers\\FichierController' => $baseDir . '/app/Http/Controllers/FichierController.php',
     'App\\Http\\Controllers\\NiveauxController' => $baseDir . '/app/Http/Controllers/NiveauxController.php',
+    'App\\Http\\Controllers\\NotificationController' => $baseDir . '/app/Http/Controllers/NotificationController.php',
     'App\\Http\\Controllers\\ProfilController' => $baseDir . '/app/Http/Controllers/ProfilController.php',
     'App\\Http\\Controllers\\ProfileController' => $baseDir . '/app/Http/Controllers/ProfileController.php',
     'App\\Http\\Controllers\\ReponseController' => $baseDir . '/app/Http/Controllers/ReponseController.php',

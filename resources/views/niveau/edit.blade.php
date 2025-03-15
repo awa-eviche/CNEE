@@ -17,7 +17,7 @@
             <div class="logo-header" data-background-color="dark">
               <a href="index.html" class="logo">
                 <img
-                  src="{{ asset('assets/img/kaiadmin/logo_light.svg')}}"
+                  src="assets/img/kaiadmin/logo_light.svg"
                   alt="navbar brand"
                   class="navbar-brand"
                   height="20"
@@ -39,6 +39,8 @@
           </div>
           <!-- Navbar Header -->
           @include('layouts.nav')
+          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
           <!-- End Navbar -->
         </div>
         <div class="container">
@@ -47,46 +49,42 @@
               class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4"
             >
               <div>
-                <h3 class="fw-bold mb-3">Gestion des profils</h3>
+                <h3 class="fw-bold mb-3">Gestion des niveaux</h3>
                 <h6 class="op-7 mb-2">Convention Nationale Etat Employeur</h6>
-            </div>
+              </div>
+              <!-- <div class="ms-md-auto py-2 py-md-0">
+            
+                <a href="#" class="btn btn-primary btn-round">Ajouter</a>
+              </div> -->
             </div>
             <div class="row">
             <form action="{{ route('niveau.update', $niveau->id) }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    @method('PUT')
-
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <h3 class="bg-gray-100 p-2 text-sm font-bold text-first-orange">
-        Modification du profil
-    </h3>
-    <div class="col-md-6 col-6">
-    <div class="form-group">
-        <label for="libelle">Intitulé du Profil</label>
-        <input
-            type="text"
-            class="form-control"
-            id="libelle"
-            name="libelle"
-            value="{{ old('libelle', $niveau->libelle) }}"
-            required
-        />
-    </div>
-
-    <div class="card-action">
-        <button type="submit" class="btn btn-success">Modifer</button>
-    </div>
-</form>
-
+                @csrf
+                @method('PUT')
+              <div class="col-md-12">
+                <div class="card">
+                
+                  <div class="card-body">
+                    <div class="row"
+                      <div class="col-md-6 col-6">
+                        <div class="form-group" >
+                          <label for="libelle">Intitule du niveau</label>
+                          <input
+                            type="text" class="form-control" id="libelle" placeholder="" name="libelle"   value="{{ old('libelle', $niveau->libelle) }}" />
+                         
+                        </div>
+                       
+                     
+                      </div>
+                     
+                      
+                    </div>
+                    
+                  </div>
+                  <div class="card-action" type="submit">
+                    <button class="btn btn-success">Modifier</button>
+                  
+                  </div>
                 </div>
               </div>
             </div>

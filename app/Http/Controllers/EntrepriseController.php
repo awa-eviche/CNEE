@@ -5,40 +5,37 @@ use App\Models\Entreprise;
 use App\Models\Demande; 
 use Illuminate\Http\Request;
 use App\Mail\EntrepriseInscriteMail;
+use App\Notifications\NouvelleEntrepriseNotification;
 use App\Mail\ValiderEntrepriseMail;
 use App\Mail\RejeterEntrepriseMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use App\Models\User; 
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 class EntrepriseController extends Controller
 {
     public function index()
-    {
-        $entreprises=Entreprise::all();
-        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
-        Entreprise::where('is_new', true)->update(['is_new' => false]);
-     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
-    $nouveauxEntreprises = $entreprisesEnAttente; 
-    $demandeEnAttente = Demande::where('is_new', true)->count();
-    Demande::where('is_new', true)->update(['is_new' => false]);
-    $totalNotifications = $demandeEnAttente;
-    $nouvellesDemandes = $demandeEnAttente; 
-     return view('entreprise.index',compact('entreprises','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
-    }
+{
+
+
+    $user = Auth::user();
+    // Utilisez la propriété unreadNotifications sans parenthèses pour obtenir la collection
+    $user->unreadNotifications
+         ->where('type', 'App\Notifications\NouvelleEntrepriseNotification')
+         ->markAsRead();
+
+    $entreprises = Entreprise::all();
+
+    return view('entreprise.index', compact('entreprises'));
+}
+
     public function create()
     {
         //$entreprises = Entreprise::where('nomentreprise', auth()->user()->name)->get();
          $entreprises=Entreprise::all();
-         $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
-        Entreprise::where('is_new', true)->update(['is_new' => false]);
-     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
-    $nouveauxEntreprises = $entreprisesEnAttente; 
-    $demandeEnAttente = Demande::where('is_new', true)->count();
-    Demande::where('is_new', true)->update(['is_new' => false]);
-    $totalNotifications = $demandeEnAttente;
-    $nouvellesDemandes = $demandeEnAttente; 
-        return view('entreprise.create',compact('entreprises','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
+        
+        return view('entreprise.create',compact('entreprises'));
     }
 
     public function store(Request $request)
@@ -75,7 +72,7 @@ class EntrepriseController extends Controller
     $entreprise->ninea = $request->ninea;
     $entreprise->regitcom = $request->regitcom;
     $entreprise->nombreemployer = $request->nombreemployer;
-    $entreprise->is_new = true;
+
     
     if ($request->hasFile('dossier')) {
         $file = $request->file('dossier');
@@ -99,20 +96,19 @@ class EntrepriseController extends Controller
     }
     $entreprise->save();
     Mail::to($entreprise->email)->send(new \App\Mail\EntrepriseInscriteMail($entreprise));
+    $superAdmins = User::where('role_id', 1)->get();
+    
+    
+    foreach ($superAdmins as $admin) {
+        $admin->notify(new NouvelleEntrepriseNotification($entreprise));
+    }
     return redirect()->to('/')->with('success', 'Votre Entreprise est enregistrée avec succès.');
 }
 
 public function show(Entreprise $entreprise)
     {
-    $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
-     Entreprise::where('is_new', true)->update(['is_new' => false]);
-     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
-    $nouveauxEntreprises = $entreprisesEnAttente; 
-    $demandeEnAttente = Demande::where('is_new', true)->count();
-    Demande::where('is_new', true)->update(['is_new' => false]);
-    $totalNotifications = $demandeEnAttente;
-    $nouvellesDemandes = $demandeEnAttente; 
-        return view('entreprise.show',compact('entreprise','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
+   
+        return view('entreprise.show',compact('entreprise'));
     }
 
     public function validerEntreprise($id)

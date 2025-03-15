@@ -9,16 +9,9 @@ class NiveauxController extends Controller
 {
     public function index()
     { 
-        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
-        Entreprise::where('is_new', true)->update(['is_new' => false]);
-     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
-    $nouveauxEntreprises = $entreprisesEnAttente; 
-    $demandeEnAttente = Demande::where('is_new', true)->count();
-    Demande::where('is_new', true)->update(['is_new' => false]);
-    $totalNotifications = $demandeEnAttente;
-    $nouvellesDemandes = $demandeEnAttente; 
+        
         $niveau=Niveaux::all();
-        return view('niveau.index',compact('niveau','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
+        return view('niveau.index',compact('niveau'));
     }
     public function create()
     {
@@ -40,16 +33,9 @@ class NiveauxController extends Controller
 
     public function edit(Niveaux $niveau)
     {
-        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
-        Entreprise::where('is_new', true)->update(['is_new' => false]);
-     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
-    $nouveauxEntreprises = $entreprisesEnAttente; 
-    $demandeEnAttente = Demande::where('is_new', true)->count();
-    Demande::where('is_new', true)->update(['is_new' => false]);
-    $totalNotifications = $demandeEnAttente;
-    $nouvellesDemandes = $demandeEnAttente; 
+        
   
-        return view('niveau.edit', compact('niveau','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
+        return view('niveau.edit', compact('niveau'));
     }
 
     public function update(Request $request, Niveaux $niveau)

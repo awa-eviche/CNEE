@@ -12,45 +12,26 @@ use App\Models\Classification;
 use App\Models\Archive;
 class AllocationController extends Controller
 {
- public function index()
-    {
+ public function index(Request $request)
+    {  
+        
+
         $entreprises = Entreprise::where('statut', 'validé')
             ->withCount('retenus') 
             ->get();
-            $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
-            Entreprise::where('is_new', true)->update(['is_new' => false]);
-         $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
-        $nouveauxEntreprises = $entreprisesEnAttente; 
-        $demandeEnAttente = Demande::where('is_new', true)->count();
-        Demande::where('is_new', true)->update(['is_new' => false]);
-        $totalNotifications = $demandeEnAttente;
-        $nouvellesDemandes = $demandeEnAttente; 
-        return view('allocation.index', compact('entreprises','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
+         
+        return view('allocation.index', compact('entreprises'));
     }   
 public function create($id)
 {
-    $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
-    Entreprise::where('is_new', true)->update(['is_new' => false]);
- $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
-$nouveauxEntreprises = $entreprisesEnAttente; 
-$demandeEnAttente = Demande::where('is_new', true)->count();
-Demande::where('is_new', true)->update(['is_new' => false]);
-$totalNotifications = $demandeEnAttente;
-$nouvellesDemandes = $demandeEnAttente; 
+   
     $entreprise = Entreprise::findOrFail($id);
     $allocations = $entreprise->allocation()->where('entreprise_id', $id)->get();
-    return view('allocation.create', compact('entreprise','allocations','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
+    return view('allocation.create', compact('entreprise','allocations'));
 }
 public function afficher($id)
 {
-    $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
-    Entreprise::where('is_new', true)->update(['is_new' => false]);
- $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
-$nouveauxEntreprises = $entreprisesEnAttente; 
-$demandeEnAttente = Demande::where('is_new', true)->count();
-Demande::where('is_new', true)->update(['is_new' => false]);
-$totalNotifications = $demandeEnAttente;
-$nouvellesDemandes = $demandeEnAttente; 
+    
     $dateAujourdhui = date('Y-m-d'); 
 
     $entreprise = Entreprise::findOrFail($id);
@@ -58,7 +39,7 @@ $nouvellesDemandes = $demandeEnAttente;
     $classification = Classification::all();
     $retenu = $entreprise->retenus()->whereDate('dateecheance', '>=', $dateAujourdhui)->get();
 
-    return view('allocation.afficher', compact('entreprise', 'secteur', 'classification', 'retenu','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
+    return view('allocation.afficher', compact('entreprise', 'secteur', 'classification', 'retenu'));
 }
 
 public function store(Request $request)
@@ -183,21 +164,14 @@ public function calculerTotalPartieEtat($id)
  
 public function montant($id)
 {
-    $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
-    Entreprise::where('is_new', true)->update(['is_new' => false]);
- $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
-$nouveauxEntreprises = $entreprisesEnAttente; 
-$demandeEnAttente = Demande::where('is_new', true)->count();
-Demande::where('is_new', true)->update(['is_new' => false]);
-$totalNotifications = $demandeEnAttente;
-$nouvellesDemandes = $demandeEnAttente; 
+   
     $montantsTrimestriels = $this->calculerMontantsParTrimestre($id);
     $montantAnnuel = $montantAnnuelData['montant_annuel'] ?? 0;
     $totalPartieEtat = $this->calculerTotalPartieEtat($id); 
     $entreprise = Entreprise::findOrFail($id);
     $allocations = $entreprise->allocation()->where('entreprise_id', $id)->get();
     $trimestre = ['Q1', 'Q2', 'Q3', 'Q4'];
-    return view('allocation.montant', compact('entreprise', 'allocations', 'montantsTrimestriels', 'montantAnnuel', 'totalPartieEtat', 'trimestre','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
+    return view('allocation.montant', compact('entreprise', 'allocations', 'montantsTrimestriels', 'montantAnnuel', 'totalPartieEtat', 'trimestre'));
 }
 
 

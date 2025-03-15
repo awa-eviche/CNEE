@@ -16,14 +16,7 @@ class DashboardController extends Controller
      public function index()
 {
 
-$entreprisesEnAttente = Entreprise::where('is_new', true)->count();
-Entreprise::where('is_new', true)->update(['is_new' => false]);
- $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
-$nouveauxEntreprises = $entreprisesEnAttente; 
-$demandeEnAttente = Demande::where('is_new', true)->count();
-Demande::where('is_new', true)->update(['is_new' => false]);
-$totalNotifications = $demandeEnAttente;
-$nouvellesDemandes = $demandeEnAttente; 
+
 $user = Auth::user();
 
     if ($user->role->code === "superadmin")
@@ -48,7 +41,7 @@ $user = Auth::user();
 
     
 
- return view('dashboard', compact('entreprise', 'entreprises','demande', 'retenu', 'demandeur','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente','totalPartieEtat'));
+ return view('dashboard', compact('entreprise', 'entreprises','demande', 'retenu', 'demandeur','totalPartieEtat'));
 
 }
 
