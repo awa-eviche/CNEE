@@ -73,18 +73,20 @@
                             type="email" class="form-control" id="type" name="email" placeholder="Enter votre email" value="{{ $user->email ?? ' - ' }}"/>
                          
                         </div>
+                        @if (auth()->user()->role && auth()->user()->role->name == 'superadmin')
                         <div class="form-group">
                           <label for="statut">Statut</label>
                           <select class="form-control"  id="statut" name="statut" value="{{ $user->statut ?? ' - ' }}">
-        <option value="">Choisir votre statut</option>
+            <option value="">Choisir votre statut</option>
        
             <option value="DE">DE</option>
             <option value="Chef de bureau">Chef de bureau</option>
             <option value="Chef de division">Chef de division</option>
             <option value="Agent">Agent</option>
        
-    </select>                      
-</div>
+            </select>                      
+           </div>
+           @endif
                       </div>
 
                       
@@ -92,14 +94,11 @@
                         
                       <div class="form-group">
                           <label for="anneeAdhesion">Role</label>
-                          <select class="form-control"  id="role_id" name="role_id" >
-        <option value="">Choisir un role</option>
-        @foreach($roles as $role)
-            @if($role->name === 'admin' || $role->name === 'superadmin')
-                <option value="{{ $role->id }}">{{ $role->name }}</option>
-            @endif
-        @endforeach
-    </select>
+                          
+                          <input type="text" class="form-control" value="{{ $user->role->name }}" readonly>
+
+<input type="hidden" name="role_id" value="{{ $user->role_id }}">
+
                         </div>
                         <div class="form-group">
                           <label>Créer le mot de passe</label>

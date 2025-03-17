@@ -47,22 +47,24 @@ public function store(Request $request)
     // Validation en précisant que 'mois' est un tableau
     $validatedData = $request->validate([
         'entreprise_id'     => 'required|exists:entreprises,id',
-        'secteur_id'        => 'required|exists:secteurs,id',
+     
         'retenu_id'         => 'required|exists:retenus,id',
         'classification_id' => 'required|exists:classifications,id',
+        'secteur_id'        => 'required|exists:secteurs,id',
         'partieEtat'        => 'required|numeric',
         'ContrePartie'      => 'required|numeric',
         'montantTotal'      => 'required|numeric',
         'mois'              => 'required|array|min:1',
         'mois.*'            => 'in:Janvier,Février,Mars,Avril,Mai,Juin,Juillet,Aout,Septembre,Octobre,Novembre,Décembre',
     ]);
-
-    // Calculer le multiplicateur en fonction du nombre de mois sélectionnés
+    
     $multiplier = count($validatedData['mois']);
 
-    // Multiplier les valeurs saisies pour correspondre aux mois sélectionnés
-    $validatedData['ContrePartie'] = $validatedData['ContrePartie'] * $multiplier;
-    $validatedData['partieEtat']     = $validatedData['partieEtat'] * $multiplier;
+// Multiplier la valeur de ContrePartie par le multiplicateur
+$validatedData['ContrePartie'] = $validatedData['ContrePartie'] * $multiplier;
+
+// Multiplier la valeur de partieEtat par le multiplicateur
+$validatedData['partieEtat'] = $validatedData['partieEtat'] * $multiplier;
 
     // Définir le trimestre à partir du premier mois sélectionné
     $trimestres = [
@@ -73,7 +75,7 @@ public function store(Request $request)
     ];
     $premierMois = $validatedData['mois'][0];
     $validatedData['trimestre'] = $trimestres[$premierMois];
-
+  
     // Vérifier l'existence d'une archive et la validité de la convention
     $archive = Archive::where('entreprise_id', $validatedData['entreprise_id'])->first();
     if (!$archive) {
@@ -93,6 +95,7 @@ public function store(Request $request)
     return redirect()->route('allocation.index')
                      ->with('success', 'Allocation ajoutée avec succès.');
 }
+
 
 
 

@@ -56,120 +56,111 @@
               </div> -->
             </div>
             <div class="row">
-            <form action="{{ route('allocation.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-           
-              <div class="col-md-12">
-                <div class="card">
-                 
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-md-6 col-6">
-                      <div class="form-group">
- <label for="profil_id">Entreprises </label>
- 
-    <input type="text" class="form-control"  id="entreprise_id" name="entreprise_id"  value="{{ $entreprise->nomentreprise}}" disabled>
-    <input type="hidden" class="form-control"  id="entreprise_id" name="entreprise_id" value="{{ $entreprise->id}}" >
-</div>
-<div class="form-group">
-    <label for="retenu_id">Demandeur</label>
-    <select class="form-control" name="retenu_id" id="retenu_id">
-        <option value="">Selectionner un de vos demandeurs</option>
-        @foreach($retenu as $rete)
-            @php
-                
-                $dateEcheanceTimestamp = strtotime($rete->dateecheance);
-              
-                $nowTimestamp = time();
-               
-                $daysDifference = abs($dateEcheanceTimestamp - $nowTimestamp) / (60 * 60 * 24);
-                // Définir le seuil (par exemple 10 jours)
-                $isNear = $daysDifference <= 10;
-            @endphp
-            <option value="{{ $rete->id }}" @if($isNear) style="color: red;" @endif>
-                {{ $rete->demandeurprofil->demandeur->prenom }} 
-                {{ $rete->demandeurprofil->demandeur->nom }}
-                @if($isNear)
-                  -  {{ date('Y-m-d', $dateEcheanceTimestamp) }}
-                @endif
-            </option>
-        @endforeach
-    </select>
-</div>
+            <form id="allocationForm" action="{{ route('allocation.store') }}" method="POST" enctype="multipart/form-data">
+  @csrf
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <!-- Colonne gauche -->
+          <div class="col-md-6 col-6">
+            <!-- Entreprise -->
+            <div class="form-group">
+              <label>Entreprises</label>
+              <input type="text" class="form-control" value="{{ $entreprise->nomentreprise }}" disabled>
+              <input type="hidden" name="entreprise_id" value="{{ $entreprise->id }}">
+            </div>
+            <!-- Demandeur -->
+            <div class="form-group">
+              <label>Demandeur</label>
+              <select class="form-control" name="retenu_id" id="retenu_id" required>
+                <option value="">Sélectionner un de vos demandeurs</option>
+                @foreach($retenu as $rete)
+                  @php
+                      $dateEcheanceTimestamp = strtotime($rete->dateecheance);
+                      $nowTimestamp = time();
+                      $daysDifference = abs($dateEcheanceTimestamp - $nowTimestamp) / (60 * 60 * 24);
+                      $isNear = $daysDifference <= 10;
+                  @endphp
+                  <option value="{{ $rete->id }}" @if($isNear) style="color: red;" @endif>
+                      {{ $rete->demandeurprofil->demandeur->prenom }} {{ $rete->demandeurprofil->demandeur->nom }}
+                      @if($isNear)
+                        - {{ date('Y-m-d', $dateEcheanceTimestamp) }}
+                      @endif
+                  </option>
+                @endforeach
+              </select>
+            </div>
+            <!-- Secteur d'activité -->
+            <div class="form-group">
+              <label>Secteur d'activité</label>
+              <!-- Champ visible affichant le libellé (non soumis) -->
+              <input type="text" class="form-control" id="secteurAfficheDisplay" placeholder="Secteur" readonly>
+              <!-- Champ hidden transmettant l'ID du secteur -->
+              <input type="hidden" id="secteurAffiche" name="secteur_id" value="{{ old('secteur_id') }}">
+            </div>
+            <!-- Partie entreprise -->
+            <div class="form-group">
+              <label>Partie entreprise</label>
+              <input type="text" required class="form-control" id="ContrePartie" name="ContrePartie" placeholder="Votre part entreprise" oninput="calculerMontantTotal()">
+            </div>
+          </div>
+          <!-- Colonne droite -->
+          <div class="col-md-6 col-6">
+            <!-- Classification -->
+            <div class="form-group">
+              <label>Classification</label>
+              <select class="form-control" name="classification_id" id="classification" onchange="updateSecteur()" required>
+                <option value="">Sélectionner une classification</option>
+                @foreach($classification as $classe)
+                  <option value="{{ $classe->id }}" 
+                          data-secteur="{{ $classe->secteur->libelle ?? '' }}"
+                          data-secteur-id="{{ $classe->secteur->id ?? '' }}">
+                    {{ $classe->libelle }}
+                  </option>
+                @endforeach
+              </select>
+            </div>
+            <!-- Mois -->
+            <div class="form-group">
+              <label>Mois</label>
+              <select class="form-control" name="mois[]" id="mois" multiple onchange="calculerMontantTotal()" required>
+                <option value="">Sélectionner un mois</option>
+                <option value="Janvier">Janvier</option>
+                <option value="Février">Février</option>
+                <option value="Mars">Mars</option>
+                <option value="Avril">Avril</option>
+                <option value="Mai">Mai</option>
+                <option value="Juin">Juin</option>
+                <option value="Juillet">Juillet</option>
+                <option value="Aout">Aout</option>
+                <option value="Septembre">Septembre</option>
+                <option value="Octobre">Octobre</option>
+                <option value="Novembre">Novembre</option>
+                <option value="Décembre">Décembre</option>
+              </select>
+            </div>
+            <!-- Contre partie Etat -->
+            <div class="form-group">
+              <label>Contre partie Etat</label>
+              <input type="text" class="form-control" id="partieEtat" name="partieEtat" placeholder="Votre Durée de la convention" oninput="calculerMontantTotal()">
+            </div>
+            <!-- Montant Total -->
+            <div class="form-group">
+              <label>Montant Total</label>
+              <input type="text" class="form-control" id="montantTotalAffiche" placeholder="Calculé automatiquement" readonly>
+            </div>
+            <input type="hidden" id="montantTotal" name="montantTotal">
+          </div>
+        </div>
+      </div>
+      <div class="card-action">
+        <button class="btn btn-success">Enregister</button>
+      </div>
+    </div>
+  </div>
+</form>
 
-                        <div class="form-group">
-                          <label for="datenaissance">Secteur d'activité</label>
-                          <input type="text" class="form-control"id="secteurAfficheDisplay"  readonly>
-                          <input type="hidden" class="form-control" id="secteurAffiche"  name="secteur_id"  value="{{ old('secteur_id', $secteur_id ?? '') }}" >
-                        </div>
-                      
-                        <div class="form-group">
-                          <label for="datenaissance">Partie entreprise</label>
-                          <input type="text" class="form-control" id="ContrePartie" name="ContrePartie" placeholder="Votre part entreprise" oninput="calculerMontantTotal()" />
-                        </div>
-
-                        
-
-                      </div>
-                      
-                      
-                      <div class="col-md-6 col-6">
-                        
-                      <div class="form-group">
-  <label for="classification">Classification</label>
-  <select class="form-control" name="classification_id" id="classification" onchange="updateSecteur()">
-  <option value="">Selectionner une classification</option>
-      @foreach($classification as $classe)
-        <option value="{{ $classe->id }}" 
-                data-secteur="{{ $classe->secteur->libelle ?? '' }}"
-                data-secteur-id="{{ $classe->secteur->id ?? '' }}">
-          {{ $classe->libelle }}
-        </option>
-    @endforeach
-  </select>
-</div>
-
-                        <div class="form-group">
-  <label for="datenaissance">Mois</label>
-  <select class="form-control" name="mois[]"  id="mois"   multiple  onchange="calculerMontantTotal()">
-      <option value="">Selectionner un mois</option>
-      <option value="Janvier">Janvier</option>
-      <option value="Février">Février</option>
-      <option value="Mars">Mars</option>
-      <option value="Avril">Avril</option>
-      <option value="Mai">Mai</option>
-      <option value="Juin">Juin</option>
-      <option value="Juillet">Juillet</option>
-      <option value="Aout">Aout</option>
-      <option value="Septembre">Septembre</option>
-      <option value="Octobre">Octobre</option>
-      <option value="Novembre">Novembre</option>
-      <option value="Décembre">Décembre</option>
-  </select>                                  
-</div>
-
-                      
-                        <div class="form-group">
-                          <label for="datenaissance">Contre partie Etat</label>
-                          <input type="text" class="form-control" id="partieEtat" name="partieEtat" placeholder="Votre Durée de la convention" oninput="calculerMontantTotal()" />
-                        </div>
-                        <div class="form-group">
-  <label for="montantTotalAffiche">Montant Total</label>
-  <input type="text" class="form-control" id="montantTotalAffiche" placeholder="Votre Durée de la convention" readonly/>
-</div>
-
-
-<input type="hidden" id="montantTotal" name="montantTotal" />
-                       
-
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-action">
-                    <button class="btn btn-success">Enregister</button> 
-                  </div>
-                  </div>
-                  </form>
                 </div>
               </div>
             </div>
@@ -459,55 +450,34 @@
 </script>
 <script>
 function calculerMontantTotal() {
-   
     let contrePartie = parseFloat(document.getElementById('ContrePartie').value) || 0;
     let partieEtat   = parseFloat(document.getElementById('partieEtat').value) || 0;
-   
     let baseValue = contrePartie + partieEtat;
- 
+    
     let moisSelect = document.getElementById('mois');
     let selectedMois = Array.from(moisSelect.selectedOptions).filter(option => option.value !== "");
     let multiplier = selectedMois.length;
     
- 
     let montantTotal = baseValue * multiplier;
-    
- 
     let formattedResult = baseValue + " * " + multiplier + " = " + montantTotal;
-   
+    
     document.getElementById('montantTotalAffiche').value = formattedResult;
-    document.getElementById('montantTotal').value = montantTotal; 
+    document.getElementById('montantTotal').value = montantTotal;
 }
-</script>
-<script>
-function updateSecteur() {
-    var classificationSelect = document.getElementById("classification");
-    var selectedOption = classificationSelect.options[classificationSelect.selectedIndex];
-    
-    // Récupérer le libellé et l'ID du secteur depuis les attributs data de l'option sélectionnée
-    var secteurLibelle = selectedOption.getAttribute("data-secteur") || '';
-    var secteurId = selectedOption.getAttribute("data-secteur-id") || '';
-    
-    // Mettre à jour l'input d'affichage et l'input caché
-    document.getElementById("secteurAfficheDisplay").value = secteurLibelle;
-    document.getElementById("secteurAffiche").value = secteurId;
-}
-</script>
-<script>
-function updateSecteur() {
-    var classificationSelect = document.getElementById("classification");
-    var selectedOption = classificationSelect.options[classificationSelect.selectedIndex];
-    
-    // Récupérer le libellé et l'id du secteur depuis les attributs data
-    var secteurLibelle = selectedOption.getAttribute("data-secteur") || '';
-    var secteurId = selectedOption.getAttribute("data-secteur-id") || '';
-    
-    // Mettre à jour l'input d'affichage (read-only) et l'input caché
-    document.getElementById("secteurAfficheDisplay").value = secteurLibelle;
-    document.getElementById("secteurAffiche").value = secteurId;
-}
-</script>
 
+function updateSecteur() {
+    var classificationSelect = document.getElementById("classification");
+    var selectedOption = classificationSelect.options[classificationSelect.selectedIndex];
+    
+    // Récupérer le libellé et l'ID du secteur depuis les attributs data
+    var secteurLibelle = selectedOption.getAttribute("data-secteur") || '';
+    var secteurId = selectedOption.getAttribute("data-secteur-id") || '';
+    
+    // Mettre à jour le champ visible (affichage) et le champ hidden (valeur envoyée)
+    document.getElementById("secteurAfficheDisplay").value = secteurLibelle;
+    document.getElementById("secteurAffiche").value = secteurId;
+}
+</script>
 
   </body>
 </html>
