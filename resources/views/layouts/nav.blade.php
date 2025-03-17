@@ -65,19 +65,13 @@
   </ul>
 </li>
 
-      <a class="dropdown-item d-flex align-items-center justify-content-between" href="{{ route('logout') }}"
-         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-         <i class="fas fa-power-off" style="font-size:125%"></i>
-      </a>
-      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-          @csrf
-      </form>
+      
 
       <!-- Dropdown Profil utilisateur -->
       <li class="nav-item topbar-user dropdown hidden-caret">
         <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
           <div class="avatar-sm">
-            <img src="{{ asset('assets/img/profile.jpg') }}" alt="..." class="avatar-img rounded-circle" />
+            <img src="{{ asset('assets/img/profile.png') }}" alt="..." class="avatar-img rounded-circle" />
           </div>
           <span class="profile-username">
             <span class="op-7">Bonjour,</span>
@@ -89,19 +83,27 @@
             <li>
               <div class="user-box">
                 <div class="avatar-lg">
-                  <img src="{{ asset('assets/img/profile.jpg') }}" alt="image profile" class="avatar-img rounded" />
+                  <img src="{{ asset('assets/img/profile.png') }}" alt="image profile" class="avatar-img rounded" />
                 </div>
                 <div class="u-text">
-                  <h4>Hizrian</h4>
-                  <p class="text-muted">hello@example.com</p>
-                  <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                  <h4>{{ Auth::user()->name }}</h4>
+                  <p class="text-muted">{{ Auth::user()->email }}</p>
+                  <a href="{{ route('admin.edit', Auth::user()->id) }}" class="btn btn-xs btn-secondary btn-sm">Mon Profil</a>
                 </div>
               </div>
             </li>
             <li>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Account Setting</a>
-              <div class="dropdown-divider"></div>
+              
+              <a class="dropdown-item d-flex align-items-center" href="{{ route('logout') }}"
+   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+   <i class="fas fa-power-off" style="font-size:125%"></i>
+   <span class="ms-2">Se déconnecter</span>
+</a>
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+   @csrf
+</form>
+
             </li>
           </div>
         </ul>

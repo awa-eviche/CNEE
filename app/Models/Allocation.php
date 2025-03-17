@@ -23,6 +23,10 @@ class Allocation extends Model
         "trimestre",
         "montant_paye",
     ];
+    protected $attributes = [
+        'paye' => false,  // false sera converti en 0 dans la BDD
+    ];
+
     protected $casts = [
         'paye' => 'boolean',
     ];
