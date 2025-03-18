@@ -16,7 +16,7 @@ use App\Http\Controllers\ArchiveRejController;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\FichierController;
 use App\Http\Controllers\AdminController;
-
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,7 +31,7 @@ use App\Http\Controllers\AdminController;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::middleware(['auth', 'check.session'])->group(function () {
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
@@ -89,4 +89,9 @@ Route::group([],function () {
     Route::post('/allocation/payer/{id}/{trimestre}', [AllocationController::class, 'payerTrimestre'])->name('allocation.payer');
 
     Route::get('/notifications/read/{type}', [NotificationController::class, 'markReadByType'])->name('notifications.read.type');
+    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+
+
+Route::get('/register', [AuthenticatedSessionController::class, 'register'])->name('register');
+});
 require __DIR__.'/auth.php';
