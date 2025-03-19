@@ -5,7 +5,7 @@
   <!-- Basic Page Needs
 ================================================== -->
   <meta charset="utf-8">
-  <title>Convention Etat Employeur</title>
+  <title>Convention Nationale  Etat Employeur</title>
 
   <!-- Mobile Specific Metas
 ================================================== -->
@@ -97,7 +97,7 @@
                     <div class="info-box">
                       <div class="info-box-content">
                           <p class="info-box-title">Adresse Mail</p>
-                          <p class="info-box-subtitle"><a href="mailto:de@gmail.com">direction.emploi@mefpai.gouv.sn</a></p>
+                          <p class="info-box-subtitle"><a href="mailto:de@gmail.com">direction.emploi@formation.gouv.sn</a></p>
                       </div>
                     </div>
                   </li>

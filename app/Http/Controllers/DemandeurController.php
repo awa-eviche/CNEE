@@ -16,19 +16,12 @@ class DemandeurController extends Controller
 {
     public function index()
     {
-        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
-        Entreprise::where('is_new', true)->update(['is_new' => false]);
-     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
-    $nouveauxEntreprises = $entreprisesEnAttente; 
-    $demandeEnAttente = Demande::where('is_new', true)->count();
-    Demande::where('is_new', true)->update(['is_new' => false]);
-    $totalNotifications = $demandeEnAttente;
-    $nouvellesDemandes = $demandeEnAttente; 
+       
         $demandeur=Demandeur::all();
         $profiles = \App\Models\Profil::all();
         $niveaux = \App\Models\Niveaux::all();
 
-        return view('demandeur.index',compact('demandeur','profiles','niveaux','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
+        return view('demandeur.index',compact('demandeur','profiles','niveaux',));
     }
 
     public function create()
@@ -122,15 +115,9 @@ class DemandeurController extends Controller
 
     public function show(Demandeur $demandeur)
     {
-        $entreprisesEnAttente = Entreprise::where('is_new', true)->count();
-        Entreprise::where('is_new', true)->update(['is_new' => false]);
-     $totalNotifications = $entreprisesEnAttente + Demande::where('is_new', true)->count();
-    $nouveauxEntreprises = $entreprisesEnAttente; 
-    $demandeEnAttente = Demande::where('is_new', true)->count();
-    Demande::where('is_new', true)->update(['is_new' => false]);
-    $totalNotifications = $demandeEnAttente;
-    $nouvellesDemandes = $demandeEnAttente;   
-        return view('demandeur.show',compact('demandeur','entreprisesEnAttente', 'totalNotifications', 'nouveauxEntreprises','nouvellesDemandes','demandeEnAttente'));
+        
+     
+        return view('demandeur.show',compact('demandeur', 'nouveauxEntreprises',));
     }
 
 

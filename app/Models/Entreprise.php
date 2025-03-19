@@ -27,7 +27,7 @@ class Entreprise extends Model
             "dossier", 
             "quitus", 
             "attestation",
-            "is_new", 
+           
              
         ];
         public function archives()
