@@ -15,11 +15,15 @@ class AllocationController extends Controller
  public function index(Request $request)
     {  
         
+        $query = Entreprise::query()->where('statut', 'validé');
 
-        $entreprises = Entreprise::where('statut', 'validé')
-            ->withCount('retenus') 
-            ->get();
-         
+        // Si un nom est fourni dans la requête, on filtre
+        if ($request->filled('nomentreprise')) {
+            $query->where('nomentreprise', 'like', '%' . $request->nomentreprise . '%');
+        }
+    
+        $entreprises = $query->withCount('retenus')->get();
+        $entreprises = $query->paginate(5);
         return view('allocation.index', compact('entreprises'));
     }   
 public function create($id)
