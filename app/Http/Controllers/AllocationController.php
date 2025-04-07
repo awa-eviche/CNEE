@@ -44,7 +44,6 @@ public function afficher($id)
 
 public function store(Request $request)
 {
-    // Validation en précisant que 'mois' est un tableau
     $validatedData = $request->validate([
         'entreprise_id'     => 'required|exists:entreprises,id',
      
@@ -60,13 +59,8 @@ public function store(Request $request)
     
     $multiplier = count($validatedData['mois']);
 
-// Multiplier la valeur de ContrePartie par le multiplicateur
 $validatedData['ContrePartie'] = $validatedData['ContrePartie'] * $multiplier;
-
-// Multiplier la valeur de partieEtat par le multiplicateur
 $validatedData['partieEtat'] = $validatedData['partieEtat'] * $multiplier;
-
-    // Définir le trimestre à partir du premier mois sélectionné
     $trimestres = [
         'Janvier'   => 'Q1', 'Février'  => 'Q1', 'Mars'     => 'Q1',
         'Avril'     => 'Q2', 'Mai'      => 'Q2', 'Juin'     => 'Q2',
@@ -75,8 +69,6 @@ $validatedData['partieEtat'] = $validatedData['partieEtat'] * $multiplier;
     ];
     $premierMois = $validatedData['mois'][0];
     $validatedData['trimestre'] = $trimestres[$premierMois];
-  
-    // Vérifier l'existence d'une archive et la validité de la convention
     $archive = Archive::where('entreprise_id', $validatedData['entreprise_id'])->first();
     if (!$archive) {
         return redirect()->back()->with('error', 'Aucune archive trouvée pour cette entreprise.');
@@ -86,10 +78,7 @@ $validatedData['partieEtat'] = $validatedData['partieEtat'] * $multiplier;
                          ->with('success', 'L\'enregistrement d\'allocations est impossible car la convention est expirée.');
     }
 
-    // Joindre les mois sélectionnés dans une seule chaîne, par exemple "Janvier, Février, Mars"
     $validatedData['mois'] = implode(', ', $validatedData['mois']);
-
-    // Créer une seule allocation avec tous les mois dans la même colonne
     Allocation::create($validatedData);
 
     return redirect()->route('allocation.index')
