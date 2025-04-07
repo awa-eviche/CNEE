@@ -27,7 +27,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::resource('entreprise', EntrepriseController::class);
 Route::get('/', function () {
     return view('welcome');
 });
@@ -50,7 +50,7 @@ Route::post('/archives/{archive}/fichiers', [FichierController::class, 'store'])
 
 Route::group([],function () {
     
-    Route::resource('entreprise', EntrepriseController::class);
+   
     Route::resource('archiverej', ArchiveRejController::class);
     Route::resource('profil', ProfilController::class);
     Route::resource('niveau', NiveauxController::class);    
