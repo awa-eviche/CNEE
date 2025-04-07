@@ -5,7 +5,7 @@
   <!-- Basic Page Needs
 ================================================== -->
   <meta charset="utf-8">
-  <title>Convention Etat Employeur</title>
+  <title>Convention Nationale  Etat Employeur</title>
 
   <!-- Mobile Specific Metas
 ================================================== -->
@@ -15,7 +15,7 @@
 
   <!-- Favicon
 ================================================== -->
-  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="icon" type="image/png" href="images/faviconcnee.png">
 
   <!-- CSS
 ================================================== -->
@@ -78,8 +78,8 @@
       <div class="logo-area">
           <div class="row align-items-center">
             <div class="logo col-lg-3 text-center text-lg-left mb-3 mb-md-5 mb-lg-0">
-                <a class="d-block" href="index.html">
-                  <img loading="lazy" width="1000px"src="images/Cap.PNG" alt="Constra">
+                <a class="d-block" href="/">
+                  <img loading="lazy" width="1000px"src="images/banniere.png" alt="Constra">
                 </a>
             </div><!-- logo end -->
   
@@ -97,7 +97,7 @@
                     <div class="info-box">
                       <div class="info-box-content">
                           <p class="info-box-title">Adresse Mail</p>
-                          <p class="info-box-subtitle"><a href="mailto:de@gmail.com">direction.emploi@mefpai.gouv.sn</a></p>
+                          <p class="info-box-subtitle"><a href="mailto:de@gmail.com">direction.emploi@formation.gouv.sn</a></p>
                       </div>
                     </div>
                   </li>
@@ -153,7 +153,7 @@
 <!--/ Header end -->
 
 <div class="banner-carousel banner-carousel-1 mb-0">
-  <div class="banner-carousel-item" style="background-image:url(images/slider-main/bg2.jpg)">
+  <div class="banner-carousel-item" style="background-image:url(images/COUVERTURE.png)">
     <div class="slider-content">
         <div class="container h-100">
           <div class="row align-items-center h-100">
@@ -229,7 +229,7 @@ entre l’Etat et le Patronat sénégalais en vue d’assurer une promotion acti
         <div class="row justify-content-between">
           <div class="col-lg-4 col-md-6 footer-widget footer-about">
             <h3 class="widget-title">A propos de nous</h3>
-            <img loading="lazy" width="200px" class="footer-logo" src="images/Cap.PNG" alt="">
+            <img loading="lazy" width="200px" class="footer-logo" src="images/banniere.png" alt="">
             <p>Convention Etat Employeur</p>
             <div class="footer-social">
               <ul>

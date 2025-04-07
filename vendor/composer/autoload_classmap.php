@@ -66,6 +66,8 @@ return array(
     'App\\Models\\Role' => $baseDir . '/app/Models/Role.php',
     'App\\Models\\Secteur' => $baseDir . '/app/Models/Secteur.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
+    'App\\Notifications\\NouvelleDemandeNotification' => $baseDir . '/app/Notifications/NouvelleDemandeNotification.php',
+    'App\\Notifications\\NouvelleEntrepriseNotification' => $baseDir . '/app/Notifications/NouvelleEntrepriseNotification.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',

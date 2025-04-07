@@ -643,6 +643,8 @@ class ComposerStaticInit65e85f9f959c0b087110331754d451cf
         'App\\Models\\Role' => __DIR__ . '/../..' . '/app/Models/Role.php',
         'App\\Models\\Secteur' => __DIR__ . '/../..' . '/app/Models/Secteur.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
+        'App\\Notifications\\NouvelleDemandeNotification' => __DIR__ . '/../..' . '/app/Notifications/NouvelleDemandeNotification.php',
+        'App\\Notifications\\NouvelleEntrepriseNotification' => __DIR__ . '/../..' . '/app/Notifications/NouvelleEntrepriseNotification.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',

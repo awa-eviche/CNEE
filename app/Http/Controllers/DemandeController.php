@@ -131,7 +131,7 @@ public function enregistrerReponses(Request $request)
             $reponses = $reponses->where('demande_id', $demandeId);
         }
     
-        return view('demande.recu', compact('reponses', 'entrepriseId'));
+        return view('demande.recu', compact('reponses', 'entrepriseId','demandeId'));
     }
     
     public function enregistrerRetenu(Request $request)
