@@ -70,26 +70,57 @@
               <input type="text" class="form-control" value="{{ $entreprise->nomentreprise }}" disabled>
               <input type="hidden" name="entreprise_id" value="{{ $entreprise->id }}">
             </div>
-            <!-- Demandeur -->
+            
             <div class="form-group">
               <label>Demandeur</label>
               <select class="form-control" name="retenu_id" id="retenu_id" required>
-                <option value="">Sélectionner un de vos demandeurs</option>
-                @foreach($retenu as $rete)
-                  @php
-                      $dateEcheanceTimestamp = strtotime($rete->dateecheance);
-                      $nowTimestamp = time();
-                      $daysDifference = abs($dateEcheanceTimestamp - $nowTimestamp) / (60 * 60 * 24);
-                      $isNear = $daysDifference <= 10;
-                  @endphp
-                  <option value="{{ $rete->id }}" @if($isNear) style="color: red;" @endif>
-                      {{ $rete->demandeurprofil->demandeur->prenom }} {{ $rete->demandeurprofil->demandeur->nom }}
-                      @if($isNear)
-                        - {{ date('Y-m-d', $dateEcheanceTimestamp) }}
-                      @endif
-                  </option>
-                @endforeach
-              </select>
+    <option value="">Sélectionner un de vos demandeurs</option>
+    @foreach($retenu as $rete)
+        @php
+            // Conversion de la date d'échéance en timestamp
+            $dateEcheanceTimestamp = strtotime($rete->dateecheance);
+            
+            // Déterminer le trimestre de la date d'échéance
+            $dueMonth = (int) date('n', $dateEcheanceTimestamp);
+            if ($dueMonth <= 3) {
+                $dueQuarter = 1;
+            } elseif ($dueMonth <= 6) {
+                $dueQuarter = 2;
+            } elseif ($dueMonth <= 9) {
+                $dueQuarter = 3;
+            } else {
+                $dueQuarter = 4;
+            }
+            
+            // Déterminer le trimestre courant
+            $currentMonth = (int) date('n');
+            if ($currentMonth <= 3) {
+                $currentQuarter = 1;
+            } elseif ($currentMonth <= 6) {
+                $currentQuarter = 2;
+            } elseif ($currentMonth <= 9) {
+                $currentQuarter = 3;
+            } else {
+                $currentQuarter = 4;
+            }
+            
+            // Si la date d'échéance est dans le trimestre à venir, on affiche en rouge avec la date
+            if ($dueQuarter > $currentQuarter) {
+                $color = "red";
+                $displayDate = " - " . date('Y-m-d', $dateEcheanceTimestamp);
+            } else {
+                // Dans le trimestre courant ou passé : affichage en noir sans date
+                $color = "black";
+                $displayDate = "";
+            }
+        @endphp
+        <option value="{{ $rete->id }}" style="color: {{ $color }};">
+            {{ $rete->demandeurprofil->demandeur->prenom }} {{ $rete->demandeurprofil->demandeur->nom }}{{ $displayDate }}
+        </option>
+    @endforeach
+</select>
+
+
             </div>
             <!-- Secteur d'activité -->
             <div class="form-group">

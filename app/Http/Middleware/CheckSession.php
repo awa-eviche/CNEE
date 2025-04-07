@@ -10,7 +10,7 @@ class CheckSession
     public function handle($request, Closure $next)
     {
         if (!Auth::check()) {
-            return redirect()->route('login'); // Redirige vers la page de connexion
+            return redirect()->route('login');
         }
 
         return $next($request);
